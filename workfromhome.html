@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>WFH day tracker</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+  :root {
+    --bg-page: #f5f3ee;
+    --bg-primary: #ffffff;
+    --bg-secondary: #ece9e1;
+    --bg-info: #e6f1fb;
+    --text-info: #0c447c;
+    --bg-success: #eaf3de;
+    --text-success: #27500a;
+    --bg-warning: #d9f0ec;
+    --text-warning: #0b4f47;
+    --text-primary: #232220;
+    --text-secondary: #5f5e5a;
+    --text-tertiary: #888780;
+    --border: rgba(0,0,0,0.12);
+    --radius-md: 8px;
+    --radius-lg: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-page: #15140f;
+      --bg-primary: #201f1b;
+      --bg-secondary: #2c2b26;
+      --bg-info: #0c447c;
+      --text-info: #b5d4f4;
+      --bg-success: #27500a;
+      --text-success: #c0dd97;
+      --bg-warning: #0b4f47;
+      --text-warning: #a8e0d4;
+      --text-primary: #f1efe8;
+      --text-secondary: #b4b2a9;
+      --text-tertiary: #8a8980;
+      --border: rgba(255,255,255,0.14);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  h1 { font-size: 22px; font-weight: 500; margin: 0 0 4px; }
+  .date { font-size: 13px; color: var(--text-secondary); margin: 0 0 1.75rem; }
+  .streak-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .streak-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-warning); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .streak-icon i { font-size: 20px; color: var(--text-warning); }
+  .streak-num { font-size: 22px; font-weight: 500; margin: 0; }
+  .streak-num span.label { font-size: 14px; color: var(--text-secondary); font-weight: 400; }
+  .streak-sub { margin: 0; font-size: 11px; color: var(--text-tertiary); }
+  .chain { display: flex; gap: 6px; margin-bottom: 1.75rem; }
+  .dot { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; background: transparent; border: 0.5px solid var(--border); }
+  .dot.complete { background: var(--bg-success); border: 0.5px solid var(--border); }
+  .dot.today-incomplete { border: 1.5px solid var(--text-success); }
+  .card { background: var(--bg-primary); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 1.75rem; }
+  .card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .card-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--bg-warning); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .card-icon i { font-size: 17px; color: var(--text-warning); }
+  .card-title { font-weight: 500; font-size: 15px; margin: 0; }
+  .card-task { font-size: 14px; color: var(--text-secondary); margin: 0 0 10px 42px; }
+  .card button { margin-left: 42px; }
+  button { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: var(--radius-md); border: 0.5px solid var(--border); background: transparent; color: var(--text-primary); cursor: pointer; }
+  button:hover { background: var(--bg-secondary); }
+  button:active { transform: scale(0.98); }
+  .row { padding: 11px 0; border-bottom: 0.5px solid var(--border); transition: opacity 0.15s; }
+  .row:last-child { border-bottom: none; }
+  .row-top { display: flex; align-items: center; gap: 12px; }
+  .row-bottom { display: flex; align-items: center; gap: 8px; margin-left: 46px; margin-top: 8px; }
+  .icon-circle { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .icon-circle i { font-size: 17px; }
+  .ic-secondary { background: var(--bg-secondary); }
+  .ic-secondary i { color: var(--text-secondary); }
+  .ic-info { background: var(--bg-info); }
+  .ic-info i { color: var(--text-info); }
+  .ic-success { background: var(--bg-success); }
+  .ic-success i { color: var(--text-success); }
+  .ic-warning { background: var(--bg-warning); }
+  .ic-warning i { color: var(--text-warning); }
+  .row-text { flex: 1; min-width: 0; }
+  .row-title { font-weight: 500; font-size: 14px; margin: 0; }
+  .row-sub { font-size: 12px; color: var(--text-secondary); margin: 2px 0 0; }
+  .row-time { font-size: 12px; color: var(--text-tertiary); white-space: nowrap; }
+  .timer-display { font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; min-width: 56px; }
+  .timer-btn { width: 30px; height: 30px; border-radius: 50%; border: 0.5px solid var(--border); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; flex-shrink: 0; }
+  .timer-btn i { font-size: 14px; color: var(--text-secondary); }
+  .timer-btn:hover { background: var(--bg-secondary); }
+  .timer-btn.done-toggle.active { background: var(--bg-success); border-color: transparent; }
+  .timer-btn.done-toggle.active i { color: var(--text-success); }
+  .row.complete { opacity: 0.5; }
+  .row.complete .row-title { text-decoration: line-through; }
+  .footer-note { font-size: 11px; color: var(--text-tertiary); text-align: center; margin-top: 2rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>WFH day tracker</h1>
+  <p class="date" id="today-date"></p>
+
+  <div class="streak-row">
+    <div class="streak-icon"><i class="ti ti-flame" aria-hidden="true"></i></div>
+    <div>
+      <p class="streak-num"><span id="streak-count">0</span> <span class="label">day streak</span></p>
+      <p class="streak-sub">writing · reading · cleaning · movement</p>
+    </div>
+  </div>
+  <div class="chain" id="chain-dots"></div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon"><i class="ti ti-broom" aria-hidden="true"></i></div>
+      <p class="card-title">Cleaning burst</p>
+    </div>
+    <p class="card-task" id="reset-task">Tap for a tiny task — set a timer, stop when it rings.</p>
+    <button onclick="pickTask()">New task ↻</button>
+  </div>
+
+  <div class="row" data-idx="0" data-duration="1800">
+    <div class="row-top">
+      <div class="icon-circle ic-secondary"><i class="ti ti-bath" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Shower + dress</p><p class="row-sub">30 min</p></div>
+      <span class="row-time">6:00</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">30:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="1" data-duration="1200">
+    <div class="row-top">
+      <div class="icon-circle ic-success"><i class="ti ti-walk" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Morning walk</p><p class="row-sub">Warm up for the day · 20 min</p></div>
+      <span class="row-time">6:30</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">20:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="2" data-duration="1200">
+    <div class="row-top">
+      <div class="icon-circle ic-secondary"><i class="ti ti-coffee" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Coffee, settle in</p><p class="row-sub">No screens yet</p></div>
+      <span class="row-time">6:50</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">20:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="3" data-duration="1200">
+    <div class="row-top">
+      <div class="icon-circle ic-info"><i class="ti ti-book-2" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Morning page or chapter</p><p class="row-sub">Patio, before email</p></div>
+      <span class="row-time">7:10</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">20:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="4" data-duration="300">
+    <div class="row-top">
+      <div class="icon-circle ic-warning"><i class="ti ti-broom" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Cleaning burst</p><p class="row-sub">One small task, timer on</p></div>
+      <span class="row-time">7:30</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">05:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="5" data-duration="5400">
+    <div class="row-top">
+      <div class="icon-circle ic-secondary"><i class="ti ti-folder" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Work block 1</p><p class="row-sub">Email check, then focused work</p></div>
+      <span class="row-time">7:45</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">1:30:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="6" data-duration="2100">
+    <div class="row-top">
+      <div class="icon-circle ic-success"><i class="ti ti-barbell" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Real workout</p><p class="row-sub">Living room, full session</p></div>
+      <span class="row-time">9:15</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">35:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="7" data-duration="300">
+    <div class="row-top">
+      <div class="icon-circle ic-warning"><i class="ti ti-broom" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Cleaning burst</p><p class="row-sub">One small task, timer on</p></div>
+      <span class="row-time">9:50</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">05:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="8" data-duration="5400">
+    <div class="row-top">
+      <div class="icon-circle ic-secondary"><i class="ti ti-folder" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Work block 2</p><p class="row-sub">Focused work, inbox closed</p></div>
+      <span class="row-time">10:00</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">1:30:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="9" data-duration="2700">
+    <div class="row-top">
+      <div class="icon-circle ic-info"><i class="ti ti-book-2" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Lunch + a few pages</p><p class="row-sub">Den couch, no laptop</p></div>
+      <span class="row-time">11:30</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">45:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="10" data-duration="300">
+    <div class="row-top">
+      <div class="icon-circle ic-warning"><i class="ti ti-broom" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Cleaning burst</p><p class="row-sub">One small task, timer on</p></div>
+      <span class="row-time">12:15</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">05:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="11" data-duration="5400">
+    <div class="row-top">
+      <div class="icon-circle ic-secondary"><i class="ti ti-folder" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Work block 3</p><p class="row-sub">Email check, then focused work</p></div>
+      <span class="row-time">12:20</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">1:30:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="12" data-duration="300">
+    <div class="row-top">
+      <div class="icon-circle ic-warning"><i class="ti ti-broom" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Cleaning burst</p><p class="row-sub">One small task, timer on</p></div>
+      <span class="row-time">1:50</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">05:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="13" data-duration="2400">
+    <div class="row-top">
+      <div class="icon-circle ic-info"><i class="ti ti-pencil" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Creative writing or fiction</p><p class="row-sub">Patio, change of scenery</p></div>
+      <span class="row-time">1:55</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">40:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="14" data-duration="300">
+    <div class="row-top">
+      <div class="icon-circle ic-warning"><i class="ti ti-broom" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Cleaning burst</p><p class="row-sub">One small task, timer on</p></div>
+      <span class="row-time">2:35</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">05:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="15" data-duration="3600">
+    <div class="row-top">
+      <div class="icon-circle ic-secondary"><i class="ti ti-folder" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Work block 4</p><p class="row-sub">Wrap up, set up for tomorrow</p></div>
+      <span class="row-time">3:00</span>
+    </div>
+    <div class="row-bottom">
+      <span class="timer-display">1:00:00</span>
+      <button class="timer-btn play-pause" onclick="toggleTimer(this)" aria-label="Start timer"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+      <button class="timer-btn reset" onclick="resetTimer(this)" aria-label="Reset timer"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="row" data-idx="16">
+    <div class="row-top">
+      <div class="icon-circle ic-secondary"><i class="ti ti-moon" aria-hidden="true"></i></div>
+      <div class="row-text"><p class="row-title">Close the laptop</p><p class="row-sub">Free for the evening</p></div>
+      <span class="row-time">4:00</span>
+    </div>
+    <div class="row-bottom">
+      <button class="timer-btn done-toggle" onclick="toggleComplete(this)" aria-label="Mark done"><i class="ti ti-check" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <p class="footer-note">Progress is saved in this browser only. Use the same browser/device each day to keep the streak.</p>
+</div>
+
+<script>
+document.getElementById('today-date').textContent = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+
+const resetTasks = ["Clear one counter or surface","Wash today's dishes, no more","Toss anything expired from the fridge","Wipe down the bathroom sink","Pick up and put away 10 things","Clear the one chair or table that's become a pile","Empty one trash bin","Make the bed","Wipe the kitchen counters","Sort one stack of mail or papers"];
+let lastIdx = -1;
+function pickTask(){
+  let idx = Math.floor(Math.random() * resetTasks.length);
+  while(idx === lastIdx && resetTasks.length > 1){ idx = Math.floor(Math.random() * resetTasks.length); }
+  lastIdx = idx;
+  document.getElementById('reset-task').textContent = resetTasks[idx];
+}
+
+const CHAIN_IDX = [1,3,4,6,7,9,10,12,13,14];
+const CHAIN_THRESHOLD = 0.7;
+let historyData = {};
+const timers = {};
+
+function formatDate(d){
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return y + '-' + m + '-' + day;
+}
+function dateKeyOffset(offsetDays){
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  return formatDate(d);
+}
+function formatTime(s){
+  const h = Math.floor(s/3600);
+  const m = Math.floor((s%3600)/60);
+  const sec = s%60;
+  if(h>0){ return String(h)+':'+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0'); }
+  return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
+}
+function getRow(idx){ return document.querySelector('.row[data-idx="'+idx+'"]'); }
+
+function updateDisplay(idx){
+  const row = getRow(idx);
+  const t = timers[idx];
+  if(!row || !t) return;
+  const disp = row.querySelector('.timer-display');
+  if(disp) disp.textContent = formatTime(t.remaining);
+  const icon = row.querySelector('.play-pause i');
+  if(icon) icon.className = 'ti ' + (t.status === 'running' ? 'ti-player-pause' : 'ti-player-play');
+}
+
+function tick(idx){
+  const t = timers[idx];
+  if(!t) return;
+  t.remaining -= 1;
+  if(t.remaining <= 0){
+    t.remaining = 0;
+    clearInterval(t.intervalId);
+    t.intervalId = null;
+    t.status = 'idle';
+    updateDisplay(idx);
+    setComplete(idx, true);
+    return;
+  }
+  updateDisplay(idx);
+}
+
+function toggleTimer(btn){
+  const row = btn.closest('.row');
+  const idx = row.dataset.idx;
+  const t = timers[idx];
+  if(!t) return;
+  if(t.status === 'running'){
+    clearInterval(t.intervalId);
+    t.intervalId = null;
+    t.status = 'paused';
+  } else {
+    if(t.remaining <= 0){ t.remaining = t.duration; }
+    t.status = 'running';
+    t.intervalId = setInterval(function(){ tick(idx); }, 1000);
+  }
+  updateDisplay(idx);
+}
+
+function resetTimer(btn){
+  const row = btn.closest('.row');
+  const idx = row.dataset.idx;
+  const t = timers[idx];
+  if(!t) return;
+  if(t.intervalId){ clearInterval(t.intervalId); t.intervalId = null; }
+  t.remaining = t.duration;
+  t.status = 'idle';
+  updateDisplay(idx);
+}
+
+function toggleComplete(btn){
+  const row = btn.closest('.row');
+  const idx = row.dataset.idx;
+  const current = row.classList.contains('complete');
+  setComplete(idx, !current);
+}
+
+function setComplete(idx, value){
+  const row = getRow(idx);
+  if(!row) return;
+  row.classList.toggle('complete', value);
+  const doneBtn = row.querySelector('.done-toggle');
+  if(doneBtn) doneBtn.classList.toggle('active', value);
+  saveProgress();
+}
+
+function getAllComplete(){
+  const rows = document.querySelectorAll('.row[data-idx]');
+  const items = [];
+  rows.forEach(function(row){
+    const idx = parseInt(row.dataset.idx, 10);
+    items[idx] = row.classList.contains('complete');
+  });
+  return items;
+}
+
+function saveProgress(){
+  const items = getAllComplete();
+  let chainChecked = 0;
+  CHAIN_IDX.forEach(function(i){ if(items[i]) chainChecked++; });
+  const percent = chainChecked / CHAIN_IDX.length;
+  const complete = percent >= CHAIN_THRESHOLD;
+  const todayKey = formatDate(new Date());
+  historyData[todayKey] = { items: items, percent: percent, complete: complete };
+  try { localStorage.setItem('streak-history', JSON.stringify(historyData)); } catch(e){}
+  renderChain();
+  renderStreak();
+}
+
+function restoreToday(){
+  const todayKey = formatDate(new Date());
+  const entry = historyData[todayKey];
+  if(entry && entry.items){
+    entry.items.forEach(function(done, idx){
+      if(!done) return;
+      const row = getRow(idx);
+      if(row){
+        row.classList.add('complete');
+        const doneBtn = row.querySelector('.done-toggle');
+        if(doneBtn) doneBtn.classList.add('active');
+      }
+    });
+  }
+}
+
+function computeStreak(){
+  const todayKey = formatDate(new Date());
+  const todayEntry = historyData[todayKey];
+  let streak = 0;
+  let offset = -1;
+  if(todayEntry && todayEntry.complete){ streak = 1; }
+  while(true){
+    const key = dateKeyOffset(offset);
+    const entry = historyData[key];
+    if(entry && entry.complete){ streak++; offset--; }
+    else break;
+  }
+  return streak;
+}
+function renderStreak(){
+  document.getElementById('streak-count').textContent = computeStreak();
+}
+function renderChain(){
+  const container = document.getElementById('chain-dots');
+  container.innerHTML = '';
+  const todayKey = formatDate(new Date());
+  for(let i = 13; i >= 0; i--){
+    const key = dateKeyOffset(-i);
+    const entry = historyData[key];
+    const isToday = key === todayKey;
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (entry && entry.complete ? ' complete' : (isToday ? ' today-incomplete' : ''));
+    container.appendChild(dot);
+  }
+}
+
+function initTimers(){
+  document.querySelectorAll('.row[data-duration]').forEach(function(row){
+    const idx = row.dataset.idx;
+    const duration = parseInt(row.dataset.duration, 10);
+    timers[idx] = { remaining: duration, duration: duration, status: 'idle', intervalId: null };
+    updateDisplay(idx);
+  });
+}
+
+function loadHistory(){
+  try {
+    const raw = localStorage.getItem('streak-history');
+    historyData = raw ? JSON.parse(raw) : {};
+  } catch(e){
+    historyData = {};
+  }
+  initTimers();
+  restoreToday();
+  renderChain();
+  renderStreak();
+}
+loadHistory();
+</script>
+</body>
+</html>

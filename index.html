@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+<style>
+  :root {
+    --bg: #eeece4;
+    --card-bg: #ffffff;
+    --border: #c8c5b8;
+    --text: #1a1a18;
+    --text-secondary: #4a4945;
+    --accent: #3c3489;
+    --section-gap: 28px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 24px 64px;
+    background: var(--bg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--text);
+    font-size: 16px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--section-gap);
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--accent);
+  }
+  .header .date {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .grid {
+    column-width: 220px;
+    column-gap: 14px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-left: 5px solid var(--card-color, var(--accent));
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    break-inside: avoid;
+    display: inline-block;
+    width: 100%;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .card-header i {
+    font-size: 20px;
+    color: var(--card-color, var(--accent));
+  }
+  .card-header h2 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 0.01em;
+    color: var(--card-color, var(--text));
+  }
+  ul.links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  ul.links li a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+    background: var(--card-bg);
+    border: 2px solid var(--card-color, var(--border));
+    transition: background 0.12s ease, transform 0.06s ease;
+  }
+  ul.links li a:hover {
+    background: var(--card-color, var(--accent));
+    color: #ffffff;
+  }
+  ul.links li a:active {
+    transform: scale(0.98);
+  }
+  ul.links li a:hover i.link-icon,
+  ul.links li a:hover i.ext {
+    color: #ffffff;
+  }
+  ul.links li a i.link-icon {
+    font-size: 16px;
+    color: var(--card-color, var(--text-secondary));
+    flex-shrink: 0;
+  }
+  ul.links li a .ext {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--text-secondary);
+    opacity: 0;
+    transition: opacity 0.12s ease;
+  }
+  ul.links li a:hover .ext {
+    opacity: 1;
+  }
+  .full-width {
+    grid-column: 1 / -1;
+  }
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>Dashboard</h1>
+    <span class="date" id="today"></span>
+  </div>
+
+  <div class="grid">
+
+    <div class="card" style="--card-color:#6c5ce7;">
+      <div class="card-header">
+        <i class="ti ti-checkbox"></i>
+        <h2>Every day</h2>
+      </div>
+      <ul class="links">
+        <li><a href="workfromhome.html" target="_blank"><i class="ti ti-calendar-event link-icon"></i>Daily schedule tracker<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://calendar.google.com/calendar/u/0/r" target="_blank"><i class="ti ti-calendar link-icon"></i>Google Calendar<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://keep.google.com/u/0/" target="_blank"><i class="ti ti-note link-icon"></i>Google Keep<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#e0407a;">
+      <div class="card-header">
+        <i class="ti ti-shirt-sport"></i>
+        <h2>Roller derby</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://app.slack.com/client/TLKNPKZBN/CL8QY8PLK" target="_blank"><i class="ti ti-brand-slack link-icon"></i>Slack<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.facebook.com/groups/NERollerDerby" target="_blank"><i class="ti ti-brand-facebook link-icon"></i>NE Roller Derby group<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.facebook.com/groups/derbyhell" target="_blank"><i class="ti ti-brand-facebook link-icon"></i>Derby Hell group<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://sites.google.com/view/bsbtraining/home" target="_blank"><i class="ti ti-school link-icon"></i>BSB training<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://docs.google.com/spreadsheets/d/1FOxOhqTrwWdaRW5XJtHvpZkfspJiQ7uQttI1NF4ZlAw/edit" target="_blank"><i class="ti ti-table link-icon"></i>Officiating history (OHD)<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#10b981;">
+      <div class="card-header">
+        <i class="ti ti-heart"></i>
+        <h2>Fitness</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://robin-hershkowitz.github.io/HIIT/" target="_blank"><i class="ti ti-bolt link-icon"></i>HIIT workout tool<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.katalystfitnessma.com/schedule" target="_blank"><i class="ti ti-calendar link-icon"></i>Katalyst Fitness schedule<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#0ea5e9;">
+      <div class="card-header">
+        <i class="ti ti-ice-skating"></i>
+        <h2>Skating</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://calendly.com/bruisedboutique" target="_blank"><i class="ti ti-calendar-time link-icon"></i>Bruised Boutique booking<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://calendly.com/bruisedboutique-ramp" target="_blank"><i class="ti ti-calendar-time link-icon"></i>Bruised Boutique ramp<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.instagram.com/woo_skates/" target="_blank"><i class="ti ti-brand-instagram link-icon"></i>Woo Skates<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#c2750a;">
+      <div class="card-header">
+        <i class="ti ti-book"></i>
+        <h2>Reading</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://z-library.sk/" target="_blank"><i class="ti ti-file-text link-icon"></i>Z-Library<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.amazon.com/hz/mycd/digital-console/contentlist/pdocs/dateDsc?pageNumber=1" target="_blank"><i class="ti ti-brand-amazon link-icon"></i>Amazon digital content<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#2563eb;">
+      <div class="card-header">
+        <i class="ti ti-ticket"></i>
+        <h2>Events &amp; community</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://lecturesontap.com/samedaytix" target="_blank"><i class="ti ti-ticket link-icon"></i>Lectures on Tap tickets<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.eventbrite.com/u/897504862/" target="_blank"><i class="ti ti-ticket link-icon"></i>My Eventbrite tickets<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfdWwMidPkRCY34wRrykDHII1XCUmwlRzu7v0LhV7WFYI-mfQ/viewform" target="_blank"><i class="ti ti-clipboard-text link-icon"></i>Availability form<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.heylo.com/topics/f6d7daad-0c9c-412e-9577-7dadd8e949f3" target="_blank"><i class="ti ti-users link-icon"></i>Heylo group<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://portersquarebooks.com/porter-square-books-book-clubs" target="_blank"><i class="ti ti-books link-icon"></i>Porter Square book clubs<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://docs.google.com/spreadsheets/d/1IoTvWcZq3ydvj6MtL2CZOjVr6IawkbKwg5lgSTXcjUY/edit?usp=drive_link" target="_blank"><i class="ti ti-table link-icon"></i>QT library book processing signup<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.galacticrollerdisco.com/" target="_blank"><i class="ti ti-disco link-icon"></i>Galactic Roller Disco<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#ef4444;">
+      <div class="card-header">
+        <i class="ti ti-home"></i>
+        <h2>Home admin</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://www.eversource.com/cg/customer/Account#/select" target="_blank"><i class="ti ti-bolt link-icon"></i>Eversource account<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <footer>Last edited <span id="edited"></span></footer>
+</div>
+
+<script>
+  const today = new Date();
+  document.getElementById('today').textContent = today.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  document.getElementById('edited').textContent = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+</script>
+
+</body>
+</html>

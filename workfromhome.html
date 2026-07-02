@@ -300,20 +300,22 @@
 <script>
 // ─── Activity definitions ───────────────────────────────────────
 const ACTIVITIES = [
-  { id: 'walk',    label: 'Morning walk',      color: '#6c5ce7', minutes: 20, note: 'Patio → neighborhood. No phone.' },
-  { id: 'write',   label: 'Writing',           color: '#e0407a', minutes: 30, note: 'Patio. Keep prompt open.' },
-  { id: 'read',    label: 'Reading',           color: '#c2750a', minutes: 30, note: 'Den couch. No laptop.' },
-  { id: 'clean1',  label: 'Cleaning burst 1',  color: '#10b981', minutes: 5,  note: 'One area. Timer only.' },
-  { id: 'clean2',  label: 'Cleaning burst 2',  color: '#10b981', minutes: 5,  note: 'One area. Timer only.' },
-  { id: 'clean3',  label: 'Cleaning burst 3',  color: '#10b981', minutes: 5,  note: 'One area. Timer only.' },
-  { id: 'move',    label: 'Movement',          color: '#0ea5e9', minutes: 35, note: 'Living room.' },
-  { id: 'work1',   label: 'Work block 1',      color: '#2563eb', minutes: 90 },
-  { id: 'work2',   label: 'Work block 2',      color: '#2563eb', minutes: 90 },
-  { id: 'work3',   label: 'Work block 3',      color: '#2563eb', minutes: 90 },
-  { id: 'email1',  label: 'Email check-in 1',  color: '#7c3aed', minutes: 20, note: 'Close when done.' },
-  { id: 'email2',  label: 'Email check-in 2',  color: '#7c3aed', minutes: 20, note: 'Close when done.' },
-  { id: 'lunch',   label: 'Lunch break',       color: '#f59e0b', minutes: 30, note: 'Away from desk.' },
-  { id: 'wrapup',  label: 'Wrap-up',           color: '#ef4444', minutes: 15, note: 'Notes for tomorrow.' },
+  { id: 'shower',  label: 'Shower & dress',    color: '#0d9488', minutes: 30, note: 'In and out. No dawdling.' },
+  { id: 'bed',     label: 'Make bed',           color: '#0d9488', minutes: 5,  note: 'Just the bed. Nothing else.' },
+  { id: 'walk',    label: 'Morning walk',       color: '#6c5ce7', minutes: 20, note: 'Patio → neighborhood. No phone.' },
+  { id: 'write',   label: 'Writing',            color: '#e0407a', minutes: 30, note: 'Patio. Keep prompt open.' },
+  { id: 'read',    label: 'Reading',            color: '#c2750a', minutes: 30, note: 'Den couch. No laptop.' },
+  { id: 'clean1',  label: 'Cleaning burst 1',   color: '#10b981', minutes: 5,  note: 'One area. Timer only.' },
+  { id: 'clean2',  label: 'Cleaning burst 2',   color: '#10b981', minutes: 5,  note: 'One area. Timer only.' },
+  { id: 'clean3',  label: 'Cleaning burst 3',   color: '#10b981', minutes: 5,  note: 'One area. Timer only.' },
+  { id: 'move',    label: 'Movement',           color: '#0ea5e9', minutes: 35, note: 'Living room.' },
+  { id: 'work1',   label: 'Work block 1',       color: '#2563eb', minutes: 90 },
+  { id: 'work2',   label: 'Work block 2',       color: '#2563eb', minutes: 90 },
+  { id: 'work3',   label: 'Work block 3',       color: '#2563eb', minutes: 90 },
+  { id: 'email1',  label: 'Email check-in 1',   color: '#7c3aed', minutes: 20, note: 'Close when done.' },
+  { id: 'email2',  label: 'Email check-in 2',   color: '#7c3aed', minutes: 20, note: 'Close when done.' },
+  { id: 'lunch',   label: 'Lunch break',        color: '#f59e0b', minutes: 30, note: 'Away from desk.' },
+  { id: 'wrapup',  label: 'Wrap-up',            color: '#ef4444', minutes: 15, note: 'Notes for tomorrow.' },
 ];
 
 const NOURISHMENT = ['walk','write','read','clean1','clean2','clean3','move'];

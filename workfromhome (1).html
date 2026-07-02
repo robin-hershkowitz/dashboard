@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Day</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #eeece4;
+    --card-bg: #ffffff;
+    --border: #c8c5b8;
+    --text: #1a1a18;
+    --text-secondary: #4a4945;
+    --accent: #3c3489;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    padding: 32px 24px 80px;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 28px;
+  }
+  .header h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 34px;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--accent);
+    letter-spacing: -0.01em;
+  }
+  .header .date {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  /* Streak bar */
+  .streak-bar {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .streak-label {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+  .streak-count {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .streak-unit {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+  .chain {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: var(--border);
+    transform: rotate(45deg);
+  }
+  .dot.complete { background: var(--accent); }
+  .dot.today-incomplete { background: var(--border); outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  /* Progress */
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+  .progress-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  /* Timer grid */
+  .grid {
+    column-width: 240px;
+    column-gap: 14px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-left: 5px solid var(--card-color, var(--accent));
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    break-inside: avoid;
+    display: inline-block;
+    width: 100%;
+  }
+  .card.done {
+    opacity: 0.6;
+  }
+  .card.done .card-title {
+    text-decoration: line-through;
+    text-decoration-color: var(--card-color, var(--accent));
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .card-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--card-color, var(--text));
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .swatch {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--card-color, var(--accent));
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+  .done-check {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--card-color, var(--accent));
+    background: transparent;
+    color: var(--card-color, var(--accent));
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: background 0.12s, color 0.12s;
+    flex-shrink: 0;
+  }
+  .done-check.active {
+    background: var(--card-color, var(--accent));
+    color: #fff;
+  }
+
+  /* Timer display */
+  .timer-display {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .timer-display.running {
+    color: var(--card-color, var(--accent));
+  }
+  .timer-display.done-time {
+    color: #10b981;
+  }
+
+  /* Timer controls */
+  .timer-controls {
+    display: flex;
+    gap: 6px;
+  }
+  .btn {
+    flex: 1;
+    padding: 8px 0;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s, color 0.12s, transform 0.06s;
+    letter-spacing: -0.005em;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-start {
+    background: var(--card-color, var(--accent));
+    color: #fff;
+    border-color: var(--card-color, var(--accent));
+  }
+  .btn-start:hover {
+    filter: brightness(1.1);
+  }
+  .btn-reset {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: var(--border);
+  }
+  .btn-reset:hover {
+    border-color: var(--text-secondary);
+    color: var(--text);
+  }
+
+  /* Notes toggle */
+  .card-note {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  a.back {
+    font-size: 13px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  a.back:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>My Day</h1>
+    <span class="date" id="today"></span>
+  </div>
+
+  <!-- Streak -->
+  <div class="streak-bar">
+    <div>
+      <div class="streak-label">Streak</div>
+      <div class="streak-count" id="streak-count">0</div>
+      <div class="streak-unit">days</div>
+    </div>
+    <div class="chain" id="chain-dots"></div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-row">
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <div class="progress-label" id="progress-label">0 / 0 done</div>
+  </div>
+
+  <!-- Timer cards -->
+  <div class="grid" id="timer-grid"></div>
+
+  <footer><a class="back" href="index.html">← Dashboard</a></footer>
+</div>
+
+<script>
+// ─── Activity definitions ───────────────────────────────────────
+const ACTIVITIES = [
+  { id: 'walk',    label: 'Morning walk',      color: '#6c5ce7', minutes: 20, note: 'Patio → neighborhood. No phone.' },
+  { id: 'write',   label: 'Writing',           color: '#e0407a', minutes: 30, note: 'Patio. Keep prompt open.' },
+  { id: 'read',    label: 'Reading',           color: '#c2750a', minutes: 30, note: 'Den couch. No laptop.' },
+  { id: 'clean1',  label: 'Cleaning burst 1',  color: '#10b981', minutes: 5,  note: 'One area. Timer only.' },
+  { id: 'clean2',  label: 'Cleaning burst 2',  color: '#10b981', minutes: 5,  note: 'One area. Timer only.' },
+  { id: 'clean3',  label: 'Cleaning burst 3',  color: '#10b981', minutes: 5,  note: 'One area. Timer only.' },
+  { id: 'move',    label: 'Movement',          color: '#0ea5e9', minutes: 35, note: 'Living room.' },
+  { id: 'work1',   label: 'Work block 1',      color: '#2563eb', minutes: 90 },
+  { id: 'work2',   label: 'Work block 2',      color: '#2563eb', minutes: 90 },
+  { id: 'work3',   label: 'Work block 3',      color: '#2563eb', minutes: 90 },
+  { id: 'email1',  label: 'Email check-in 1',  color: '#7c3aed', minutes: 20, note: 'Close when done.' },
+  { id: 'email2',  label: 'Email check-in 2',  color: '#7c3aed', minutes: 20, note: 'Close when done.' },
+  { id: 'lunch',   label: 'Lunch break',       color: '#f59e0b', minutes: 30, note: 'Away from desk.' },
+  { id: 'wrapup',  label: 'Wrap-up',           color: '#ef4444', minutes: 15, note: 'Notes for tomorrow.' },
+];
+
+const NOURISHMENT = ['walk','write','read','clean1','clean2','clean3','move'];
+const THRESHOLD = 0.7;
+
+// ─── State ───────────────────────────────────────────────────────
+let timers = {}; // id → { remaining, status, intervalId }
+let doneSet = new Set();
+let historyData = {};
+
+// ─── Storage ─────────────────────────────────────────────────────
+function todayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function saveToday() {
+  historyData[todayKey()] = {
+    done: [...doneSet],
+    complete: nourishment_complete()
+  };
+  try { localStorage.setItem('myDay-history', JSON.stringify(historyData)); } catch(e){}
+}
+function loadHistory() {
+  try {
+    const raw = localStorage.getItem('myDay-history');
+    historyData = raw ? JSON.parse(raw) : {};
+  } catch(e) { historyData = {}; }
+  const today = historyData[todayKey()];
+  if (today && today.done) {
+    today.done.forEach(id => doneSet.add(id));
+  }
+}
+function nourishment_complete() {
+  const count = NOURISHMENT.filter(id => doneSet.has(id)).length;
+  return count / NOURISHMENT.length >= THRESHOLD;
+}
+
+// ─── Streak ──────────────────────────────────────────────────────
+function computeStreak() {
+  const d = new Date();
+  let streak = 0;
+  for (let i = 0; i < 365; i++) {
+    const key = [
+      d.getFullYear(),
+      String(d.getMonth()+1).padStart(2,'0'),
+      String(d.getDate()).padStart(2,'0')
+    ].join('-');
+    const entry = historyData[key];
+    if (entry && entry.complete) {
+      streak++;
+      d.setDate(d.getDate() - 1);
+    } else {
+      if (i === 0) { d.setDate(d.getDate() - 1); continue; } // today not done yet
+      break;
+    }
+  }
+  return streak;
+}
+function renderStreak() {
+  document.getElementById('streak-count').textContent = computeStreak();
+}
+function renderChain() {
+  const container = document.getElementById('chain-dots');
+  container.innerHTML = '';
+  const today = todayKey();
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const key = [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-');
+    const entry = historyData[key];
+    const isToday = key === today;
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (entry && entry.complete ? ' complete' : (isToday ? ' today-incomplete' : ''));
+    container.appendChild(dot);
+  }
+}
+
+// ─── Progress ────────────────────────────────────────────────────
+function renderProgress() {
+  const total = ACTIVITIES.length;
+  const done = doneSet.size;
+  const pct = total ? Math.round(done / total * 100) : 0;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `${done} / ${total} done`;
+}
+
+// ─── Timer helpers ────────────────────────────────────────────────
+function fmt(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+function getDisplay(id) { return document.getElementById(`disp-${id}`); }
+function getCard(id) { return document.getElementById(`card-${id}`); }
+function getCheck(id) { return document.getElementById(`check-${id}`); }
+function getStartBtn(id) { return document.getElementById(`start-${id}`); }
+
+function tick(id) {
+  const t = timers[id];
+  if (t.remaining <= 0) {
+    clearInterval(t.intervalId);
+    t.status = 'idle';
+    t.remaining = 0;
+    getDisplay(id).classList.remove('running');
+    getDisplay(id).classList.add('done-time');
+    getDisplay(id).textContent = 'Done!';
+    getStartBtn(id).textContent = 'Restart';
+    markDone(id, true);
+    return;
+  }
+  t.remaining--;
+  getDisplay(id).textContent = fmt(t.remaining);
+}
+
+function toggleTimer(id) {
+  const t = timers[id];
+  const btn = getStartBtn(id);
+  if (t.status === 'running') {
+    clearInterval(t.intervalId);
+    t.status = 'paused';
+    btn.textContent = 'Resume';
+    getDisplay(id).classList.remove('running');
+  } else {
+    if (t.remaining === 0) {
+      // restart
+      const act = ACTIVITIES.find(a => a.id === id);
+      t.remaining = act.minutes * 60;
+      getDisplay(id).classList.remove('done-time');
+    }
+    t.status = 'running';
+    btn.textContent = 'Pause';
+    getDisplay(id).classList.add('running');
+    t.intervalId = setInterval(() => tick(id), 1000);
+    getDisplay(id).textContent = fmt(t.remaining);
+  }
+}
+
+function resetTimer(id) {
+  const t = timers[id];
+  clearInterval(t.intervalId);
+  const act = ACTIVITIES.find(a => a.id === id);
+  t.remaining = act.minutes * 60;
+  t.status = 'idle';
+  getDisplay(id).classList.remove('running', 'done-time');
+  getDisplay(id).textContent = fmt(t.remaining);
+  getStartBtn(id).textContent = 'Start';
+}
+
+function markDone(id, val) {
+  const check = getCheck(id);
+  const card = getCard(id);
+  if (val) {
+    doneSet.add(id);
+    check.classList.add('active');
+    check.textContent = '✓';
+    card.classList.add('done');
+  } else {
+    doneSet.delete(id);
+    check.classList.remove('active');
+    check.textContent = '';
+    card.classList.remove('done');
+  }
+  saveToday();
+  renderProgress();
+  renderStreak();
+  renderChain();
+}
+
+function toggleDone(id) {
+  markDone(id, !doneSet.has(id));
+}
+
+// ─── Build UI ─────────────────────────────────────────────────────
+function buildCards() {
+  const grid = document.getElementById('timer-grid');
+  ACTIVITIES.forEach(act => {
+    const secs = act.minutes * 60;
+    timers[act.id] = { remaining: secs, status: 'idle', intervalId: null };
+
+    const card = document.createElement('div');
+    card.className = 'card' + (doneSet.has(act.id) ? ' done' : '');
+    card.id = `card-${act.id}`;
+    card.style.setProperty('--card-color', act.color);
+
+    const isDone = doneSet.has(act.id);
+
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="card-title">
+          <span class="swatch"></span>
+          ${act.label}
+        </div>
+        <button class="done-check ${isDone ? 'active' : ''}" id="check-${act.id}" title="Mark done">${isDone ? '✓' : ''}</button>
+      </div>
+      <div class="timer-display" id="disp-${act.id}">${fmt(secs)}</div>
+      <div class="timer-controls">
+        <button class="btn btn-start" id="start-${act.id}">Start</button>
+        <button class="btn btn-reset" id="reset-${act.id}">Reset</button>
+      </div>
+      ${act.note ? `<div class="card-note">${act.note}</div>` : ''}
+    `;
+
+    grid.appendChild(card);
+
+    card.querySelector(`#check-${act.id}`).addEventListener('click', () => toggleDone(act.id));
+    card.querySelector(`#start-${act.id}`).addEventListener('click', () => toggleTimer(act.id));
+    card.querySelector(`#reset-${act.id}`).addEventListener('click', () => resetTimer(act.id));
+  });
+}
+
+// ─── Init ─────────────────────────────────────────────────────────
+document.getElementById('today').textContent = new Date().toLocaleDateString('en-US', {
+  weekday: 'long', month: 'long', day: 'numeric'
+});
+
+loadHistory();
+buildCards();
+renderProgress();
+renderStreak();
+renderChain();
+</script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #1a1814;
+    --card-bg: #242018;
+    --border: rgba(255,247,235,0.12);
+    --text: #f5efe4;
+    --text-secondary: #9a9186;
+    --accent: #a89cf7;
+    --section-gap: 28px;
+  }
+
+  body {
+    margin: 0;
+    padding: 32px 24px 64px;
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    font-size: 16px;
+  }
+
+  .wrap { max-width: 880px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .header h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+    font-size: 34px;
+    font-weight: 600;
+    font-style: italic;
+    margin: 0;
+    color: var(--accent);
+    letter-spacing: -0.01em;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .header-date {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .weather {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .weather i { font-size: 16px; color: var(--accent); }
+  .sun-times {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .sun-times i { font-size: 14px; color: #e8a23a; }
+
+  /* Countdowns */
+  .countdowns {
+    margin-bottom: 24px;
+  }
+  .countdown-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-left: 5px solid var(--accent);
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .countdown-item {
+    display: flex;
+    flex-direction: column;
+    min-width: 110px;
+  }
+  .countdown-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--cd-color, var(--text-secondary));
+    margin-bottom: 2px;
+  }
+  .countdown-days {
+    font-family: 'Fraunces', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--cd-color, var(--accent));
+    line-height: 1;
+  }
+  .countdown-unit { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+  .countdown-date { font-size: 12px; color: var(--text-secondary); margin-top: 3px; }
+
+  /* Grid */
+  .grid {
+    column-width: 220px;
+    column-gap: 14px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-left: 5px solid var(--card-color, var(--accent));
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    break-inside: avoid;
+    display: inline-block;
+    width: 100%;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .card-header i {
+    font-size: 20px;
+    color: var(--card-color, var(--accent));
+  }
+  .swatch {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--card-color, var(--accent));
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+  .card-header h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.005em;
+    color: var(--card-color, var(--text));
+  }
+
+  /* Links as buttons */
+  ul.links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  ul.links li a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 15px;
+    font-weight: 500;
+    font-style: normal;
+    letter-spacing: 0.01em;
+    background: rgba(255,247,235,0.04);
+    border: 2px solid transparent;
+    transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease, transform 0.06s ease;
+  }
+  ul.links li a:hover {
+    background: var(--card-color, var(--accent));
+    border-color: var(--card-color, var(--accent));
+    color: #ffffff;
+  }
+  ul.links li a:active { transform: scale(0.98); }
+  ul.links li a:hover i.link-icon,
+  ul.links li a:hover i.ext { color: #ffffff; }
+  ul.links li a i.link-icon {
+    font-size: 15px;
+    color: var(--card-color, var(--text-secondary));
+    flex-shrink: 0;
+  }
+  ul.links li a .ext {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--text-secondary);
+    opacity: 0;
+    transition: opacity 0.12s ease;
+  }
+  ul.links li a:hover .ext { opacity: 1; }
+
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>Dashboard</h1>
+    <div class="header-right">
+      <div class="weather" id="weather"><i class="ti ti-cloud"></i><span>...</span></div>
+      <div class="sun-times" id="sun-times"></div>
+      <span class="header-date" id="today"></span>
+    </div>
+  </div>
+
+  <div class="countdowns">
+    <div class="countdown-card" id="countdowns"></div>
+  </div>
+
+  <div class="grid">
+
+    <div class="card" style="--card-color:#6c5ce7;">
+      <div class="card-header">
+        <i class="ti ti-checkbox"></i><span class="swatch"></span>
+        <h2>Every day</h2>
+      </div>
+      <ul class="links">
+        <li><a href="workfromhome.html" target="_blank"><i class="ti ti-calendar-event link-icon"></i>Daily schedule tracker<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="atwork.html" target="_blank"><i class="ti ti-building link-icon"></i>At work day<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://calendar.google.com/calendar/u/0/r" target="_blank"><i class="ti ti-calendar link-icon"></i>Google Calendar<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://keep.google.com/u/0/" target="_blank"><i class="ti ti-note link-icon"></i>Google Keep<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://web.whatsapp.com/" target="_blank"><i class="ti ti-brand-whatsapp link-icon"></i>WhatsApp<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#e0407a;">
+      <div class="card-header">
+        <i class="ti ti-shirt-sport"></i><span class="swatch"></span>
+        <h2>Roller derby</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://discord.com/channels/1097218881367580833/1101901899638251520" target="_blank"><i class="ti ti-brand-discord link-icon"></i>Bay State Discord<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://sites.google.com/view/bsbtraining/home" target="_blank"><i class="ti ti-school link-icon"></i>BSB training<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://app.slack.com/client/TLKNPKZBN" target="_blank"><i class="ti ti-brand-slack link-icon"></i>NHRD Slack<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.facebook.com/groups/NERollerDerby" target="_blank"><i class="ti ti-brand-facebook link-icon"></i>NE Roller Derby group<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.facebook.com/groups/derbyhell" target="_blank"><i class="ti ti-brand-facebook link-icon"></i>Derby Hell group<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://docs.google.com/spreadsheets/d/1FOxOhqTrwWdaRW5XJtHvpZkfspJiQ7uQttI1NF4ZlAw/edit" target="_blank"><i class="ti ti-table link-icon"></i>Officiating history<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#10b981;">
+      <div class="card-header">
+        <i class="ti ti-heart"></i><span class="swatch"></span>
+        <h2>Fitness</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://robin-hershkowitz.github.io/HIIT/" target="_blank"><i class="ti ti-bolt link-icon"></i>HIIT workout tool<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://claude.ai/project/019e9d6b-e779-74d6-9c80-a73cb27d1981" target="_blank"><i class="ti ti-pencil link-icon"></i>HIIT Planning<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.katalystfitnessma.com/schedule" target="_blank"><i class="ti ti-calendar link-icon"></i>Katalyst Fitness schedule<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#0ea5e9;">
+      <div class="card-header">
+        <i class="ti ti-ice-skating"></i><span class="swatch"></span>
+        <h2>Skating</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://calendly.com/bruisedboutique" target="_blank"><i class="ti ti-calendar-time link-icon"></i>Bruised Boutique booking<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://calendly.com/bruisedboutique-ramp" target="_blank"><i class="ti ti-calendar-time link-icon"></i>Bruised Boutique ramp<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.instagram.com/woo_skates/" target="_blank"><i class="ti ti-brand-instagram link-icon"></i>Woo Skates<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.instagram.com/skatehags/?hl=en" target="_blank"><i class="ti ti-brand-instagram link-icon"></i>Skate Hags<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.instagram.com/sk8_mate/" target="_blank"><i class="ti ti-brand-instagram link-icon"></i>Sk8 Mate<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.galacticrollerdisco.com/" target="_blank"><i class="ti ti-disco link-icon"></i>Galactic Roller Disco<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#c2750a;">
+      <div class="card-header">
+        <i class="ti ti-book"></i><span class="swatch"></span>
+        <h2>Reading</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://z-library.sk/" target="_blank"><i class="ti ti-file-text link-icon"></i>Z-Library<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://claude.ai/project/019ed7ff-6f5c-7345-b368-eb96ba22a413" target="_blank"><i class="ti ti-book link-icon"></i>Reading tracker<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://app.thestorygraph.com/" target="_blank"><i class="ti ti-chart-line link-icon"></i>StoryGraph<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.amazon.com/hz/mycd/digital-console/contentlist/pdocs/dateDsc?pageNumber=1" target="_blank"><i class="ti ti-brand-amazon link-icon"></i>Amazon digital content<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#0d9488;">
+      <div class="card-header">
+        <i class="ti ti-pencil"></i><span class="swatch"></span>
+        <h2>Writing</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://www.patreon.com/c/cronedidion" target="_blank"><i class="ti ti-brand-patreon link-icon"></i>Crone Didion Patreon<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://claude.ai/project/019eda8c-e20e-74ad-a9e2-3c64a88dd9c6" target="_blank"><i class="ti ti-pencil link-icon"></i>Daily Writing<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#db2777;">
+      <div class="card-header">
+        <i class="ti ti-microphone-2"></i><span class="swatch"></span>
+        <h2>Podcasts</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://www.patreon.com/cw/RealityGays" target="_blank"><i class="ti ti-brand-patreon link-icon"></i>Reality Gays<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.patreon.com/cw/IHateBillMaher" target="_blank"><i class="ti ti-brand-patreon link-icon"></i>I Hate Bill Maher<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#2563eb;">
+      <div class="card-header">
+        <i class="ti ti-ticket"></i><span class="swatch"></span>
+        <h2>Events &amp; community</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://www.eventbrite.com/u/897504862/" target="_blank"><i class="ti ti-ticket link-icon"></i>My Eventbrite tickets<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.heylo.com/topics/f6d7daad-0c9c-412e-9577-7dadd8e949f3" target="_blank"><i class="ti ti-users link-icon"></i>Ample Access Heylo<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://portersquarebooks.com/porter-square-books-book-clubs" target="_blank"><i class="ti ti-books link-icon"></i>Porter Square book clubs<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.literaryboston.com/readings" target="_blank"><i class="ti ti-books link-icon"></i>Literary Boston readings<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://bookclubs.com/clubs" target="_blank"><i class="ti ti-books link-icon"></i>My book clubs<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#7c3aed;">
+      <div class="card-header">
+        <i class="ti ti-books"></i><span class="swatch"></span>
+        <h2>QT library</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://docs.google.com/spreadsheets/d/1IoTvWcZq3ydvj6MtL2CZOjVr6IawkbKwg5lgSTXcjUY/edit?usp=drive_link" target="_blank"><i class="ti ti-table link-icon"></i>Book processing signup<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://discord.com/channels/1091408754727198781/1091408755461193764" target="_blank"><i class="ti ti-brand-discord link-icon"></i>Discord channel<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#ef4444;">
+      <div class="card-header">
+        <i class="ti ti-home"></i><span class="swatch"></span>
+        <h2>Home admin</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://www.eversource.com/cg/customer/Account#/select" target="_blank"><i class="ti ti-bolt link-icon"></i>Eversource<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://avalonaccess.com/Dashboard" target="_blank"><i class="ti ti-building-community link-icon"></i>Avalon Access<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <footer>Updated <span id="edited"></span></footer>
+</div>
+
+<script>
+  const today = new Date();
+  document.getElementById('today').textContent = today.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  document.getElementById('edited').textContent = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+  const LAT = 42.2793, LON = -71.4162;
+  const WMO = {
+    0:{'i':'ti-sun','l':'Clear'},1:{'i':'ti-sun','l':'Mostly clear'},2:{'i':'ti-cloud','l':'Partly cloudy'},
+    3:{'i':'ti-cloud','l':'Overcast'},45:{'i':'ti-cloud-fog','l':'Fog'},48:{'i':'ti-cloud-fog','l':'Fog'},
+    51:{'i':'ti-cloud-drizzle','l':'Drizzle'},53:{'i':'ti-cloud-drizzle','l':'Drizzle'},55:{'i':'ti-cloud-drizzle','l':'Drizzle'},
+    61:{'i':'ti-cloud-rain','l':'Rain'},63:{'i':'ti-cloud-rain','l':'Rain'},65:{'i':'ti-cloud-rain','l':'Heavy rain'},
+    71:{'i':'ti-snowflake','l':'Snow'},73:{'i':'ti-snowflake','l':'Snow'},75:{'i':'ti-snowflake','l':'Heavy snow'},
+    80:{'i':'ti-cloud-rain','l':'Showers'},81:{'i':'ti-cloud-rain','l':'Showers'},82:{'i':'ti-cloud-rain','l':'Heavy showers'},
+    95:{'i':'ti-cloud-storm','l':'Thunderstorm'},99:{'i':'ti-cloud-storm','l':'Thunderstorm'},
+  };
+
+  async function fetchWeather() {
+    try {
+      const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,weathercode&daily=sunrise,sunset&temperature_unit=fahrenheit&timezone=America%2FNew_York`);
+      const d = await r.json();
+      const temp = Math.round(d.current.temperature_2m);
+      const info = WMO[d.current.weathercode] || {i:'ti-cloud',l:''};
+      const fmt = s => new Date(s).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+      document.getElementById('weather').innerHTML = `<i class="ti ${info.i}"></i><span>${temp}°F ${info.l}</span>`;
+      document.getElementById('sun-times').innerHTML = `<i class="ti ti-sunrise"></i>${fmt(d.daily.sunrise[0])} <i class="ti ti-sunset"></i>${fmt(d.daily.sunset[0])}`;
+    } catch(e) {}
+  }
+
+  const COUNTDOWNS = [
+    { label: 'NY Trip',      date: '2026-07-17', color: '#db2777' },
+    { label: 'Florida Trip', date: '2026-08-12', color: '#0ea5e9' },
+    { label: 'BOW',          date: '2026-09-11', color: '#10b981' },
+  ];
+  function daysUntil(d) {
+    const t = new Date(d+'T00:00:00'), n = new Date(); n.setHours(0,0,0,0);
+    return Math.ceil((t-n)/86400000);
+  }
+  function fmtDate(d) {
+    return new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  }
+  const cdContainer = document.getElementById('countdowns');
+  COUNTDOWNS.forEach(cd => {
+    const days = daysUntil(cd.date);
+    const el = document.createElement('div');
+    el.className = 'countdown-item';
+    el.style.setProperty('--cd-color', cd.color);
+    el.innerHTML = `
+      <div class="countdown-label">${cd.label}</div>
+      <div class="countdown-days">${days > 0 ? days : 'Today!'}</div>
+      ${days > 0 ? '<div class="countdown-unit">days away</div>' : ''}
+      <div class="countdown-date">${fmtDate(cd.date)}</div>
+    `;
+    cdContainer.appendChild(el);
+  });
+
+  fetchWeather();
+</script>
+</body>
+</html>

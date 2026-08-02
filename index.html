@@ -119,7 +119,70 @@
   .countdown-unit { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
   .countdown-date { font-size: 12px; color: var(--text-secondary); margin-top: 3px; }
 
-  /* Grid */
+  /* Book club countdown -- compact 2-column */
+  .bc-countdown-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-left: 5px solid var(--accent);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+  }
+  .bc-header {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+  .bc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-flow: column;
+    gap: 8px 16px;
+  }
+  .bc-item {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    min-width: 0;
+  }
+  .bc-days {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--cd-color, var(--accent));
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .bc-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .bc-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .bc-book {
+    font-size: 10px;
+    color: var(--text-secondary);
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .bc-date {
+    font-size: 10px;
+    color: var(--text-secondary);
+  }
+
   .grid {
     column-width: 220px;
     column-gap: 14px;
@@ -234,6 +297,13 @@
     <div class="countdown-card" id="countdowns"></div>
   </div>
 
+  <div class="countdowns" style="margin-top: 14px;">
+    <div class="bc-countdown-card" id="bookclub-countdowns">
+      <div class="bc-header">Book club countdowns</div>
+      <div class="bc-grid" id="bc-grid"></div>
+    </div>
+  </div>
+
   <div class="grid">
 
     <div class="card" style="--card-color:#6c5ce7;">
@@ -335,11 +405,24 @@
       <ul class="links">
         <li><a href="https://www.eventbrite.com/u/897504862/" target="_blank"><i class="ti ti-ticket link-icon"></i>My Eventbrite tickets<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://www.heylo.com/topics/f6d7daad-0c9c-412e-9577-7dadd8e949f3" target="_blank"><i class="ti ti-users link-icon"></i>Ample Access Heylo<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://portersquarebooks.com/porter-square-books-book-clubs" target="_blank"><i class="ti ti-books link-icon"></i>Porter Square book clubs<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://www.literaryboston.com/readings" target="_blank"><i class="ti ti-books link-icon"></i>Literary Boston readings<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://bookclubs.com/clubs" target="_blank"><i class="ti ti-books link-icon"></i>My book clubs<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://purplecouchbookshop.com/events-calendar-2/" target="_blank"><i class="ti ti-books link-icon"></i>Purple Couch Bookstore Events<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://ccae.org/" target="_blank"><i class="ti ti-school link-icon"></i>Cambridge Center for Adult Education<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.hopartscenter.org/" target="_blank"><i class="ti ti-music link-icon"></i>Hop Arts Center<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="card" style="--card-color:#c2750a;">
+      <div class="card-header">
+        <i class="ti ti-book"></i><span class="swatch"></span>
+        <h2>Bookstores</h2>
+      </div>
+      <ul class="links">
+        <li><a href="https://portersquarebooks.com/porter-square-books-book-clubs" target="_blank"><i class="ti ti-books link-icon"></i>Porter Square book clubs<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://purplecouchbookshop.com/events-calendar-2/" target="_blank"><i class="ti ti-books link-icon"></i>Purple Couch Events<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://tridentbookscafe.com/events" target="_blank"><i class="ti ti-books link-icon"></i>Trident Booksellers Events<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.eventbrite.com/o/ten-trees-books-90035506473" target="_blank"><i class="ti ti-books link-icon"></i>Ten Trees Books Events<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://anunlikelystory.indiecommerce.com/events" target="_blank"><i class="ti ti-books link-icon"></i>Unlikely Story Events<i class="ti ti-external-link ext"></i></a></li>
       </ul>
     </div>
 
@@ -410,19 +493,57 @@
     return new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
   }
   const cdContainer = document.getElementById('countdowns');
-  COUNTDOWNS.forEach(cd => {
-    const days = daysUntil(cd.date);
-    const el = document.createElement('div');
-    el.className = 'countdown-item';
-    el.style.setProperty('--cd-color', cd.color);
-    el.innerHTML = `
-      <div class="countdown-label">${cd.label}</div>
-      <div class="countdown-days">${days > 0 ? days : 'Today!'}</div>
-      ${days > 0 ? '<div class="countdown-unit">days away</div>' : ''}
-      <div class="countdown-date">${fmtDate(cd.date)}</div>
-    `;
-    cdContainer.appendChild(el);
-  });
+  const upcomingCD = COUNTDOWNS.filter(cd => daysUntil(cd.date) >= 0);
+  if (upcomingCD.length === 0) {
+    cdContainer.parentElement.style.display = 'none';
+  } else {
+    upcomingCD.forEach(cd => {
+      const days = daysUntil(cd.date);
+      const el = document.createElement('div');
+      el.className = 'countdown-item';
+      el.style.setProperty('--cd-color', cd.color);
+      el.innerHTML = `
+        <div class="countdown-label">${cd.label}</div>
+        <div class="countdown-days">${days === 0 ? 'Today!' : days}</div>
+        ${days > 0 ? '<div class="countdown-unit">days away</div>' : ''}
+        <div class="countdown-date">${fmtDate(cd.date)}</div>
+      `;
+      cdContainer.appendChild(el);
+    });
+  }
+
+  const BOOKCLUBS = [
+    { label: 'Culture Club', book: 'The Original — Nell Stevens', date: '2026-08-02', color: '#e0407a' },
+    { label: 'Horror Book Club', book: 'The Ruins', date: '2026-08-28', color: '#ef4444' },
+    { label: 'Ten Trees Classics', book: 'Poe: Selected Works', date: '2026-09-03', color: '#c2750a' },
+    { label: 'Dark Pages Society', book: 'Midnight Message — Avina St. Graves', date: '2026-09-05', color: '#7c3aed' },
+    { label: 'Ten Trees Fantasy/Sci-Fi', book: 'The Midnight Train', date: '2026-09-15', color: '#6c5ce7' },
+    { label: 'Dreadfully Queer', book: 'Muñeca — Cynthia Gómez', date: '2026-09-16', color: '#0d9488' },
+    { label: 'Sci-Fi/Fantasy (Porter Square)', book: 'All That We See or Seem', date: '2026-09-21', color: '#2563eb' },
+  ];
+
+  const bcGrid = document.getElementById('bc-grid');
+  const bcCard = document.getElementById('bookclub-countdowns');
+  const upcomingBC = BOOKCLUBS.filter(bc => daysUntil(bc.date) >= 0);
+  if (upcomingBC.length === 0) {
+    bcCard.style.display = 'none';
+  } else {
+    upcomingBC.forEach(bc => {
+      const days = daysUntil(bc.date);
+      const el = document.createElement('div');
+      el.className = 'bc-item';
+      el.style.setProperty('--cd-color', bc.color);
+      el.innerHTML = `
+        <div class="bc-days">${days === 0 ? '!' : days}</div>
+        <div class="bc-text">
+          <div class="bc-label">${bc.label}</div>
+          ${bc.book ? `<div class="bc-book">${bc.book}</div>` : ''}
+          <div class="bc-date">${days === 0 ? 'Today!' : fmtDate(bc.date)}</div>
+        </div>
+      `;
+      bcGrid.appendChild(el);
+    });
+  }
 
   fetchWeather();
 </script>

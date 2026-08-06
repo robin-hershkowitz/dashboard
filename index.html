@@ -58,9 +58,11 @@
     flex-wrap: wrap;
   }
   .header-date {
-    font-size: 14px;
-    color: var(--text-secondary);
-    font-weight: 500;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
   }
   .weather {
     font-size: 14px;
@@ -227,6 +229,47 @@
     color: var(--card-color, var(--text));
   }
 
+  /* Icon strip */
+  .icon-strip {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .icon-strip a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 80px;
+    padding: 12px 8px;
+    border-radius: 12px;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition: border-color 0.12s, color 0.12s, background 0.12s;
+  }
+  .icon-strip a i {
+    font-size: 28px;
+    color: var(--ic-color, var(--accent));
+  }
+  .icon-strip a img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+  }
+  .icon-strip a:hover {
+    border-color: var(--ic-color, var(--accent));
+    color: var(--text);
+    background: rgba(255,247,235,0.07);
+  }
+
   /* Links as buttons */
   ul.links {
     list-style: none;
@@ -279,6 +322,57 @@
     font-size: 13px;
     color: var(--text-secondary);
   }
+
+  /* RSS feeds */
+  .rss-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .rss-col {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    min-width: 0;
+  }
+  .rss-col-header {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .rss-item {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .rss-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .rss-item a {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    margin-bottom: 3px;
+    line-height: 1.4;
+  }
+  .rss-item a:hover { color: var(--accent); }
+  .rss-item-date {
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .rss-loading {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
 </style>
 </head>
 <body>
@@ -291,6 +385,21 @@
       <div class="sun-times" id="sun-times"></div>
       <span class="header-date" id="today"></span>
     </div>
+  </div>
+
+  <div class="icon-strip">
+    <a href="https://www.pushbullet.com/#sms" target="_blank" style="--ic-color:#6c5ce7;">
+      <img src="https://www.pushbullet.com/favicon.ico" width="28" height="28" style="border-radius:6px;" onerror="this.style.display='none'">
+      <span>SMS</span>
+    </a>
+    <a href="https://calendar.google.com/calendar/u/0/r" target="_blank" style="--ic-color:#0ea5e9;">
+      <img src="https://calendar.google.com/googlecalendar/images/favicon_v2018_256.png" width="28" height="28" style="border-radius:6px;" onerror="this.style.display='none'">
+      <span>Calendar</span>
+    </a>
+    <a href="https://forecast.weather.gov/MapClick.php?CityName=Framingham&state=MA&site=BOX&textField1=42.2793&textField2=-71.4162" target="_blank" style="--ic-color:#c2750a;">
+      <img src="https://www.weather.gov/images/nws/nwslogo_524.png" width="28" height="28" style="border-radius:6px; object-fit:contain;" onerror="this.style.display='none'">
+      <span>Hourly</span>
+    </a>
   </div>
 
   <div class="countdowns">
@@ -318,7 +427,6 @@
         <li><a href="https://www.google.com/maps/dir/Framingham,MA/51+Sawyer+Road,+Waltham,+MA" target="_blank"><i class="ti ti-car link-icon"></i>Check commute<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://calendar.google.com/calendar/u/0/r" target="_blank"><i class="ti ti-calendar link-icon"></i>Google Calendar<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://keep.google.com/u/0/" target="_blank"><i class="ti ti-note link-icon"></i>Google Keep<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://web.whatsapp.com/" target="_blank"><i class="ti ti-brand-whatsapp link-icon"></i>WhatsApp<i class="ti ti-external-link ext"></i></a></li>
       </ul>
     </div>
 
@@ -396,6 +504,7 @@
       <ul class="links">
         <li><a href="https://www.patreon.com/cw/RealityGays" target="_blank"><i class="ti ti-brand-patreon link-icon"></i>Reality Gays<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://www.patreon.com/cw/IHateBillMaher" target="_blank"><i class="ti ti-brand-patreon link-icon"></i>I Hate Bill Maher<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.patreon.com/collection/1961839" target="_blank"><i class="ti ti-brand-patreon link-icon"></i>Watch What Crappens<i class="ti ti-external-link ext"></i></a></li>
       </ul>
     </div>
 
@@ -451,6 +560,21 @@
       </ul>
     </div>
 
+  </div>
+
+  <div class="rss-section">
+    <div class="rss-col" id="rss-col-1">
+      <div class="rss-col-header">Feed 1</div>
+      <div class="rss-items" id="rss-items-1"><div class="rss-loading">Loading...</div></div>
+    </div>
+    <div class="rss-col" id="rss-col-2">
+      <div class="rss-col-header">Feed 2</div>
+      <div class="rss-items" id="rss-items-2"><div class="rss-loading">Loading...</div></div>
+    </div>
+    <div class="rss-col" id="rss-col-3">
+      <div class="rss-col-header">Feed 3</div>
+      <div class="rss-items" id="rss-items-3"><div class="rss-loading">Loading...</div></div>
+    </div>
   </div>
 
   <footer>Updated <span id="edited"></span></footer>
@@ -548,6 +672,57 @@
     });
   }
 
+  // RSS feeds -- paste your feed URLs here
+  const RSS_FEEDS = [
+    { col: 1, label: 'Feed 1', urls: [
+        'https://annehelen.substack.com/feed/',
+        'https://rss.libsyn.com/shows/304934/destinations/2436686.xml',
+      ]
+    },
+    { col: 2, label: 'Feed 2', urls: [
+        'https://www.reddit.com/.rss',
+      ]
+    },
+    { col: 3, label: 'Feed 3', urls: [] },
+  ];
+
+  async function fetchRSS(feed) {
+    const container = document.getElementById(`rss-items-${feed.col}`);
+    const header = document.getElementById(`rss-col-${feed.col}`).querySelector('.rss-col-header');
+    if (!feed.urls.length) {
+      container.innerHTML = '<div class="rss-loading">No feed URL set.</div>';
+      return;
+    }
+    try {
+      const allItems = [];
+      for (const url of feed.urls) {
+        const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}&count=30`;
+        const res = await fetch(api);
+        const data = await res.json();
+        if (data.status === 'ok') {
+          data.items.forEach(item => allItems.push(item));
+        }
+      }
+      // sort by date descending
+      allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+      if (feed.urls.length === 1) {
+        // use feed title for single feed
+      } else {
+        header.textContent = feed.label;
+      }
+      container.innerHTML = allItems.slice(0, 30).map(item => {
+        const date = new Date(item.pubDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        return `<div class="rss-item">
+          <a href="${item.link}" target="_blank">${item.title}</a>
+          <div class="rss-item-date">${date}</div>
+        </div>`;
+      }).join('');
+    } catch(e) {
+      container.innerHTML = '<div class="rss-loading">Could not load feed.</div>';
+    }
+  }
+
+  RSS_FEEDS.forEach(f => fetchRSS(f));
   fetchWeather();
 </script>
 </body>

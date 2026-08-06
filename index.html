@@ -696,22 +696,22 @@
     try {
       const allItems = [];
       for (const url of feed.urls) {
-        const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}&count=30`;
-        const res = await fetch(api);
+        const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+        const res = await fetch(proxy);
         const data = await res.json();
-        if (data.status === 'ok') {
-          data.items.forEach(item => allItems.push(item));
-        }
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(data.contents, 'text/xml');
+        const items = xml.querySelectorAll('item, entry');
+        items.forEach(item => {
+          const title = item.querySelector('title')?.textContent || '';
+          const link = item.querySelector('link')?.textContent || item.querySelector('link')?.getAttribute('href') || '';
+          const pubDate = item.querySelector('pubDate, published, updated')?.textContent || '';
+          allItems.push({ title, link, pubDate });
+        });
       }
-      // sort by date descending
       allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-      if (feed.urls.length === 1) {
-        // use feed title for single feed
-      } else {
-        header.textContent = feed.label;
-      }
       container.innerHTML = allItems.slice(0, 30).map(item => {
-        const date = new Date(item.pubDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const date = item.pubDate ? new Date(item.pubDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
         return `<div class="rss-item">
           <a href="${item.link}" target="_blank">${item.title}</a>
           <div class="rss-item-date">${date}</div>

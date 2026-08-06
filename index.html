@@ -3,659 +3,340 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+<title>Workouts — index</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Archivo+Black&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #1a1814;
-    --card-bg: #242018;
-    --border: rgba(255,247,235,0.12);
+    --bg: #15120f;
+    --surface: #1d1814;
+    --surface2: #261f19;
+    --border: rgba(255,247,235,0.08);
+    --border2: rgba(255,247,235,0.16);
     --text: #f5efe4;
-    --text-secondary: #9a9186;
-    --accent: #a89cf7;
-    --section-gap: 28px;
+    --muted: #8c8175;
+
+    --derby: #c8f55a;
+    --derby-dim: rgba(200,245,90,0.10);
+    --lane: #e8a23a;
+    --lane-dim: rgba(232,162,58,0.10);
   }
 
   body {
-    margin: 0;
-    padding: 32px 24px 64px;
     background: var(--bg);
-    font-family: 'Inter', sans-serif;
     color: var(--text);
-    font-size: 16px;
-  }
-
-  .wrap { max-width: 880px; margin: 0 auto; }
-
-  /* Header */
-  .header {
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    padding: 3rem 1.25rem 5rem;
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .header h1 {
-    font-family: 'Fraunces', Georgia, serif;
-    font-optical-sizing: auto;
-    font-size: 34px;
-    font-weight: 600;
-    font-style: italic;
-    margin: 0;
-    color: var(--accent);
-    letter-spacing: -0.01em;
-  }
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-  .header-date {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: -0.01em;
-  }
-  .weather {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .weather i { font-size: 16px; color: var(--accent); }
-  .sun-times {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 13px;
-    color: var(--text-secondary);
-    font-weight: 500;
-  }
-  .sun-times i { font-size: 14px; color: #e8a23a; }
-
-  /* Countdowns */
-  .countdowns {
-    margin-bottom: 24px;
-  }
-  .countdown-card {
-    background: var(--card-bg);
-    border: 2px solid var(--border);
-    border-left: 5px solid var(--accent);
-    border-radius: 12px;
-    padding: 14px 18px;
-    display: flex;
-    gap: 28px;
-    flex-wrap: wrap;
-    align-items: flex-start;
-  }
-  .countdown-item {
-    display: flex;
-    flex-direction: column;
-    min-width: 110px;
-  }
-  .countdown-label {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--cd-color, var(--text-secondary));
-    margin-bottom: 2px;
-  }
-  .countdown-days {
-    font-family: 'Fraunces', serif;
-    font-size: 30px;
-    font-weight: 700;
-    color: var(--cd-color, var(--accent));
-    line-height: 1;
-  }
-  .countdown-unit { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-  .countdown-date { font-size: 12px; color: var(--text-secondary); margin-top: 3px; }
-
-  /* Book club countdown -- compact 2-column */
-  .bc-countdown-card {
-    background: var(--card-bg);
-    border: 2px solid var(--border);
-    border-left: 5px solid var(--accent);
-    border-radius: 12px;
-    padding: 12px 16px;
-    margin-bottom: 14px;
-  }
-  .bc-header {
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-secondary);
-    margin-bottom: 10px;
-  }
-  .bc-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: repeat(2, auto);
-    grid-auto-flow: column;
-    gap: 8px 16px;
-  }
-  .bc-item {
-    display: flex;
-    align-items: baseline;
-    gap: 7px;
-    min-width: 0;
-  }
-  .bc-days {
-    font-family: 'Fraunces', serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--cd-color, var(--accent));
-    line-height: 1;
-    flex-shrink: 0;
-  }
-  .bc-text {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-  .bc-label {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .bc-book {
-    font-size: 10px;
-    color: var(--text-secondary);
-    font-style: italic;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .bc-date {
-    font-size: 10px;
-    color: var(--text-secondary);
-  }
-
-  .grid {
-    column-width: 220px;
-    column-gap: 14px;
-  }
-
-  /* Card */
-  .card {
-    background: var(--card-bg);
-    border: 2px solid var(--border);
-    border-left: 5px solid var(--card-color, var(--accent));
-    border-radius: 12px;
-    padding: 14px 16px;
-    margin-bottom: 14px;
-    break-inside: avoid;
-    display: inline-block;
-    width: 100%;
-  }
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  .card-header i {
-    font-size: 20px;
-    color: var(--card-color, var(--accent));
-  }
-  .swatch {
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
-    background: var(--card-color, var(--accent));
-    transform: rotate(45deg);
-    flex-shrink: 0;
-  }
-  .card-header h2 {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 19px;
-    font-weight: 600;
-    margin: 0;
-    letter-spacing: -0.005em;
-    color: var(--card-color, var(--text));
-  }
-
-  /* Icon strip */
-  .icon-strip {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
-  }
-  .icon-strip a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    gap: 6px;
-    width: 80px;
-    padding: 12px 8px;
-    border-radius: 12px;
-    background: var(--card-bg);
-    border: 2px solid var(--border);
-    text-decoration: none;
-    color: var(--text-secondary);
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    transition: border-color 0.12s, color 0.12s, background 0.12s;
-  }
-  .icon-strip a i {
-    font-size: 28px;
-    color: var(--ic-color, var(--accent));
-  }
-  .icon-strip a img {
-    width: 36px;
-    height: 36px;
-    object-fit: contain;
-  }
-  .icon-strip a:hover {
-    border-color: var(--ic-color, var(--accent));
-    color: var(--text);
-    background: rgba(255,247,235,0.07);
   }
 
-  /* Links as buttons */
-  ul.links {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  ul.links li a {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 9px 10px;
-    border-radius: 8px;
-    text-decoration: none;
-    color: var(--text);
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 15px;
-    font-weight: 500;
-    font-style: normal;
-    letter-spacing: 0.01em;
-    background: rgba(255,247,235,0.04);
-    border: 2px solid transparent;
-    transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease, transform 0.06s ease;
-  }
-  ul.links li a:hover {
-    background: var(--card-color, var(--accent));
-    border-color: var(--card-color, var(--accent));
-    color: #ffffff;
-  }
-  ul.links li a:active { transform: scale(0.98); }
-  ul.links li a:hover i.link-icon,
-  ul.links li a:hover i.ext { color: #ffffff; }
-  ul.links li a i.link-icon {
-    font-size: 15px;
-    color: var(--card-color, var(--text-secondary));
-    flex-shrink: 0;
-  }
-  ul.links li a .ext {
-    margin-left: auto;
-    font-size: 13px;
-    color: var(--text-secondary);
-    opacity: 0;
-    transition: opacity 0.12s ease;
-  }
-  ul.links li a:hover .ext { opacity: 1; }
+  .page { width: 100%; max-width: 720px; }
 
-  footer {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 13px;
-    color: var(--text-secondary);
+  header { margin-bottom: 2.5rem; }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: 10px;
   }
-
-  /* RSS feeds */
-  .rss-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 14px;
-    margin-top: 32px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-  }
-  .rss-col {
-    background: var(--card-bg);
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 16px;
-    min-width: 0;
-  }
-  .rss-col-header {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--accent);
+  h1 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 2.1rem;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
     margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
   }
+  header p { color: var(--muted); font-size: 13px; line-height: 1.6; max-width: 480px; }
+
+  /* ── environment divider — the organizing axis ── */
+  .env-divider {
+    display: flex; align-items: center; gap: 10px;
+    margin: 2.5rem 0 1rem;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+  }
+  .env-divider .line { flex: 1; height: 1px; background: var(--border2); }
+  .env-divider:first-of-type { margin-top: 0; }
+
+  /* ── card ── */
+  .card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: var(--text);
+    display: block;
+    transition: border-color 0.15s, background 0.15s;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+    background: var(--accent, var(--derby));
+  }
+  .card:hover { background: var(--surface2); border-color: var(--border2); }
+
+  .card-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 0.6rem;
+  }
+  .card-name {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+  }
+  .env-tag {
+    font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 20px;
+    border: 1px solid var(--accent, var(--derby));
+    color: var(--accent, var(--derby));
+    background: var(--accent-dim, var(--derby-dim));
+    white-space: nowrap;
+  }
+  .card-desc { font-size: 12.5px; color: var(--muted); line-height: 1.6; margin-bottom: 0.9rem; }
+
+  .meta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .meta {
+    font-size: 11px; color: var(--muted);
+    display: flex; align-items: center; gap: 5px;
+  }
+  .meta b { color: var(--text); font-weight: 500; }
+
+  /* ── lane pair grouping ── */
+  .lane-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 540px) {
+    .lane-group { grid-template-columns: 1fr; }
+  }
+
+  .lane-shared-note {
+    font-size: 11px; color: var(--muted); line-height: 1.6;
+    margin-bottom: 0.9rem; padding: 0.6rem 0.8rem;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  }
+  .lane-shared-note b { color: var(--text); }
+
+  footer { margin-top: 3rem; font-size: 11px; color: var(--muted); text-align: center; }
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="page">
 
-  <div class="header">
-    <h1>Dashboard</h1>
-    <div class="header-right">
-      <div class="weather" id="weather"><i class="ti ti-cloud"></i><span>...</span></div>
-      <div class="sun-times" id="sun-times"></div>
-      <span class="header-date" id="today"></span>
+  <header>
+    <div class="eyebrow">workout artifacts</div>
+    <h1>Derby.Fit</h1>
+    <p>Timers built for derby training — two for the 19×5ft skating lane at home, the rest for the open floor. Pick a card to open the timer.</p>
+  </header>
+
+  <a class="card" href="./weekly-schedule.html" style="--accent:#c8f55a;--accent-dim:rgba(200,245,90,0.10);margin-bottom:1rem;">
+    <div class="card-top">
+      <span class="card-name">Weekly Plan</span>
+      <span class="env-tag" style="--accent:#c8f55a;--accent-dim:rgba(200,245,90,0.10);">start here</span>
     </div>
-  </div>
+    <div class="card-desc">Overwhelmed by all the drills? Four focused sessions a week — skate, footwork, strength, flex — covers every L1 skill in about two hours. How to use these timers without burning out.</div>
+  </a>
 
-  <div class="icon-strip">
-    <a href="https://www.pushbullet.com/#sms" target="_blank" style="--ic-color:#6c5ce7;">
-      <img src="https://www.pushbullet.com/favicon.ico" width="28" height="28" style="border-radius:6px;" onerror="this.style.display='none'">
-      <span>SMS</span>
+  <div class="env-divider"><span>Off skates · pre-practice</span><div class="line"></div></div>
+
+  <a class="card" href="./pre-practice-warmup.html" style="--accent:#8fae6a;--accent-dim:rgba(143,174,106,0.10);">
+    <div class="card-top">
+      <span class="card-name">Pre-Practice<br>Warmup</span>
+      <span class="env-tag" style="--accent:#8fae6a;--accent-dim:rgba(143,174,106,0.10);">before practice</span>
+    </div>
+    <div class="card-desc">Five dynamic mobility moves — ankle circles, leg swings, hip circles, walking lunges with a twist, and a deep squat hold — one continuous flow, no rest breaks.</div>
+    <div class="meta-row">
+      <span class="meta"><b>2:00</b> per move</span>
+      <span class="meta"><b>5</b> moves</span>
+      <span class="meta"><b>10:00</b> total</span>
+    </div>
+  </a>
+
+  <div class="env-divider"><span>On skates · 19×5ft lane</span><div class="line"></div></div>
+
+  <div class="lane-shared-note">Both lane workouts assume a straight, clear 19ft × 5ft run on quads, hardwood floor, with a wall or counter nearby for balance support.</div>
+
+  <div class="lane-group">
+    <a class="card" href="./skating-lane-drills.html" style="--accent:#e8a23a;--accent-dim:rgba(232,162,58,0.10);">
+      <div class="card-top">
+        <span class="card-name">Skating Lane<br>Drills</span>
+      </div>
+      <div class="card-desc">Strides, T-stops, plow stops, forward-to-backward transitions, and scissoring (left leg forward) — the original lane circuit.</div>
+      <div class="meta-row">
+        <span class="meta"><b>60s</b>/20s</span>
+        <span class="meta"><b>10</b> moves</span>
+        <span class="meta"><b>4</b> circuits</span>
+      </div>
     </a>
-    <a href="https://calendar.google.com/calendar/u/0/r" target="_blank" style="--ic-color:#0ea5e9;">
-      <img src="https://calendar.google.com/googlecalendar/images/favicon_v2018_256.png" width="28" height="28" style="border-radius:6px;" onerror="this.style.display='none'">
-      <span>Calendar</span>
+
+    <a class="card" href="./skating-lane-2-with-hops.html" style="--accent:#e8a23a;--accent-dim:rgba(232,162,58,0.10);">
+      <div class="card-top">
+        <span class="card-name">Skating Lane 2<br>With Hops</span>
+      </div>
+      <div class="card-desc">Built around back-leg crossovers, pivot transitions, scissoring, low stance, and stationary hops.</div>
+      <div class="meta-row">
+        <span class="meta"><b>60s</b>/20s</span>
+        <span class="meta"><b>10</b> moves</span>
+        <span class="meta"><b>4</b> circuits</span>
+      </div>
     </a>
-    <a href="https://weather.com/weather/hourbyhour/l/Framingham+MA+USMA0311:1:US" target="_blank" style="--ic-color:#c2750a;">
-      <img src="https://www.weather.com/favicon.ico" width="36" height="36" style="border-radius:6px; object-fit:contain;" onerror="this.style.display='none'">
-      <span>Hourly</span>
+  </div>
+
+  <div class="env-divider"><span>On skates · dance</span><div class="line"></div></div>
+
+  <a class="card" href="./dance-skates-timers.html" style="--accent:#2dd4bf;--accent-dim:rgba(45,212,191,0.10);">
+    <div class="card-top">
+      <span class="card-name">Dance Skates</span>
+      <span class="env-tag" style="--accent:#2dd4bf;--accent-dim:rgba(45,212,191,0.10);">pick your own</span>
+    </div>
+    <div class="card-desc">Strutting, manuals, and the downtown. Tap any move to load its timer — no forced order, you choose what to run and when.</div>
+    <div class="meta-row">
+      <span class="meta"><b>5:00</b> per move</span>
+      <span class="meta"><b>10</b> moves</span>
+      <span class="meta"><b>30s</b> rest</span>
+    </div>
+  </a>
+
+  <a class="card" href="./dance-lane-hiit.html" style="--accent:#a855f7;--accent-dim:rgba(168,85,247,0.10);margin-top:10px;">
+    <div class="card-top">
+      <span class="card-name">Dance Lane</span>
+      <span class="env-tag" style="--accent:#a855f7;--accent-dim:rgba(168,85,247,0.10);">19×5ft lane</span>
+    </div>
+    <div class="card-desc">Every move travels. Grapevines, camel walk, crazy legs, cha-cha, slalom edges and crossovers, run as one sequential circuit down the lane and back.</div>
+    <div class="meta-row">
+      <span class="meta"><b>60s</b>/20s</span>
+      <span class="meta"><b>10</b> moves</span>
+      <span class="meta"><b>3</b> circuits</span>
+    </div>
+  </a>
+
+  <div class="env-divider"><span>Off skates · floor</span><div class="line"></div></div>
+
+  <a class="card" href="./derby-fit-hiit-timer.html" style="--accent:#c8f55a;--accent-dim:rgba(200,245,90,0.10);">
+    <div class="card-top">
+      <span class="card-name">Derby.Fit</span>
+      <span class="env-tag" style="--accent:#c8f55a;--accent-dim:rgba(200,245,90,0.10);">no skates</span>
+    </div>
+    <div class="card-desc">Floor-based HIIT mixing cardio, stretch, core, coordination, hip work, and 2lb weighted moves — no skates required. Good for off-lane days.</div>
+    <div class="meta-row">
+      <span class="meta"><b>30s</b>/20s</span>
+      <span class="meta"><b>10</b> moves</span>
+      <span class="meta"><b>4</b> circuits</span>
+    </div>
+  </a>
+
+  <div class="lane-group" style="margin-top:10px;">
+    <a class="card" href="./stretch-cardio-hip-hiit.html" style="--accent:#d1683f;--accent-dim:rgba(209,104,63,0.10);">
+      <div class="card-top">
+        <span class="card-name">Mix<br>HIIT</span>
+        <span class="env-tag" style="--accent:#d1683f;--accent-dim:rgba(209,104,63,0.10);">no skates</span>
+      </div>
+      <div class="card-desc">Stretching, cardio, core, coordination, and hip rotation together, with 2lb weighted core and side-bend moves woven in.</div>
+      <div class="meta-row">
+        <span class="meta"><b>45s</b>/15s</span>
+        <span class="meta"><b>10</b> moves</span>
+        <span class="meta"><b>3</b> circuits</span>
+      </div>
+    </a>
+
+    <a class="card" href="./all-cardio-medium-impact-hiit.html" style="--accent:#e0435c;--accent-dim:rgba(224,67,92,0.10);">
+      <div class="card-top">
+        <span class="card-name">All Cardio<br>(Medium Impact)</span>
+        <span class="env-tag" style="--accent:#e0435c;--accent-dim:rgba(224,67,92,0.10);">no skates</span>
+      </div>
+      <div class="card-desc">Cardio only, no jumping. Fast feet, shadow boxing, mountain climbers, and controlled bounces keep the pace up without landing shock.</div>
+      <div class="meta-row">
+        <span class="meta"><b>40s</b>/20s</span>
+        <span class="meta"><b>10</b> moves</span>
+        <span class="meta"><b>4</b> circuits</span>
+      </div>
     </a>
   </div>
 
-  <div class="countdowns">
-    <div class="countdown-card" id="countdowns"></div>
-  </div>
-
-  <div class="countdowns" style="margin-top: 14px;">
-    <div class="bc-countdown-card" id="bookclub-countdowns">
-      <div class="bc-header">Book club countdowns</div>
-      <div class="bc-grid" id="bc-grid"></div>
+  <a class="card" href="./cardio-core-hiit.html" style="--accent:#f5685a;--accent-dim:rgba(245,104,90,0.10);margin-top:10px;">
+    <div class="card-top">
+      <span class="card-name">Cardio & Core<br>HIIT</span>
+      <span class="env-tag" style="--accent:#f5685a;--accent-dim:rgba(245,104,90,0.10);">no skates</span>
     </div>
-  </div>
-
-  <div class="grid">
-
-    <div class="card" style="--card-color:#6c5ce7;">
-      <div class="card-header">
-        <i class="ti ti-checkbox"></i><span class="swatch"></span>
-        <h2>Every day</h2>
-      </div>
-      <ul class="links">
-        <li><a href="workfromhome.html" target="_blank"><i class="ti ti-calendar-event link-icon"></i>Daily schedule tracker<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="atwork.html" target="_blank"><i class="ti ti-building link-icon"></i>At work day<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="cleaning.html" target="_blank"><i class="ti ti-spray link-icon"></i>Cleaning timers<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.google.com/maps/dir/Framingham,MA/51+Sawyer+Road,+Waltham,+MA" target="_blank"><i class="ti ti-car link-icon"></i>Check commute<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://calendar.google.com/calendar/u/0/r" target="_blank"><i class="ti ti-calendar link-icon"></i>Google Calendar<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://keep.google.com/u/0/" target="_blank"><i class="ti ti-note link-icon"></i>Google Keep<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://web.whatsapp.com/" target="_blank"><i class="ti ti-brand-whatsapp link-icon"></i>WhatsApp<i class="ti ti-external-link ext"></i></a></li>
-      </ul>
+    <div class="card-desc">High knees, high skip, grapevines, and jumping jacks paired with planks, leg lifts, and 2lb weighted moves.</div>
+    <div class="meta-row">
+      <span class="meta"><b>40s</b>/20s</span>
+      <span class="meta"><b>10</b> moves</span>
+      <span class="meta"><b>4</b> circuits</span>
     </div>
+  </a>
 
-    <div class="card" style="--card-color:#e0407a;">
-      <div class="card-header">
-        <i class="ti ti-shirt-sport"></i><span class="swatch"></span>
-        <h2>Roller derby</h2>
-      </div>
-      <ul class="links">
-        <li><a href="https://discord.com/channels/1097218881367580833/1101901899638251520" target="_blank"><i class="ti ti-brand-discord link-icon"></i>Bay State Discord<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://sites.google.com/view/bsbtraining/home" target="_blank"><i class="ti ti-school link-icon"></i>BSB training<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://app.slack.com/client/TLKNPKZBN" target="_blank"><i class="ti ti-brand-slack link-icon"></i>NHRD Slack<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.facebook.com/groups/NERollerDerby" target="_blank"><i class="ti ti-brand-facebook link-icon"></i>NE Roller Derby group<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.facebook.com/groups/derbyhell" target="_blank"><i class="ti ti-brand-facebook link-icon"></i>Derby Hell group<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://docs.google.com/spreadsheets/d/1FOxOhqTrwWdaRW5XJtHvpZkfspJiQ7uQttI1NF4ZlAw/edit" target="_blank"><i class="ti ti-table link-icon"></i>Officiating history<i class="ti ti-external-link ext"></i></a></li>
-      </ul>
+  <a class="card" href="./pure-cardio-hiit.html" style="--accent:#e0399c;--accent-dim:rgba(224,57,156,0.10);margin-top:10px;">
+    <div class="card-top">
+      <span class="card-name">Pure Cardio<br>HIIT</span>
+      <span class="env-tag" style="--accent:#e0399c;--accent-dim:rgba(224,57,156,0.10);">no skates</span>
     </div>
+    <div class="card-desc">Continuous movement only — jumping jacks, high knees, grapevine, high skip, side shuffles, lunges. No rest breaks in the work window.</div>
+    <div class="meta-row">
+      <span class="meta"><b>30s</b>/20s</span>
+      <span class="meta"><b>10</b> moves</span>
+      <span class="meta"><b>4</b> circuits</span>
+    </div>
+  </a>
 
-    <div class="card" style="--card-color:#10b981;">
-      <div class="card-header">
-        <i class="ti ti-heart"></i><span class="swatch"></span>
-        <h2>Fitness</h2>
-      </div>
-      <ul class="links">
-        <li><a href="https://robin-hershkowitz.github.io/HIIT/" target="_blank"><i class="ti ti-bolt link-icon"></i>HIIT workout tool<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://claude.ai/project/019e9d6b-e779-74d6-9c80-a73cb27d1981" target="_blank"><i class="ti ti-pencil link-icon"></i>HIIT Planning<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.katalystfitnessma.com/schedule" target="_blank"><i class="ti ti-calendar link-icon"></i>Katalyst Fitness schedule<i class="ti ti-external-link ext"></i></a></li>
-      </ul>
+  <a class="card" href="./plow-jump-hiit.html" style="--accent:#f06449;--accent-dim:rgba(240,100,73,0.10);margin-top:10px;">
+    <div class="card-top">
+      <span class="card-name">Plow + Jump<br>HIIT</span>
+      <span class="env-tag" style="--accent:#f06449;--accent-dim:rgba(240,100,73,0.10);">no skates</span>
     </div>
+    <div class="card-desc">Targets adductors/hip stability for plow stops (left-leg biased) and explosive hip extension for jumps. Quality reps, not continuous grinding.</div>
+    <div class="meta-row">
+      <span class="meta"><b>40s</b>/20s</span>
+      <span class="meta"><b>10</b> moves</span>
+      <span class="meta"><b>4</b> circuits</span>
+    </div>
+  </a>
 
-    <div class="card" style="--card-color:#0ea5e9;">
-      <div class="card-header">
-        <i class="ti ti-ice-skating"></i><span class="swatch"></span>
-        <h2>Skating</h2>
-      </div>
-      <ul class="links">
-        <li><a href="https://calendly.com/bruisedboutique" target="_blank"><i class="ti ti-calendar-time link-icon"></i>Bruised Boutique booking<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://calendly.com/bruisedboutique-ramp" target="_blank"><i class="ti ti-calendar-time link-icon"></i>Bruised Boutique ramp<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.instagram.com/woo_skates/" target="_blank"><i class="ti ti-brand-instagram link-icon"></i>Woo Skates<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.instagram.com/skatehags/?hl=en" target="_blank"><i class="ti ti-brand-instagram link-icon"></i>Skate Hags<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.instagram.com/sk8_mate/" target="_blank"><i class="ti ti-brand-instagram link-icon"></i>Sk8 Mate<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.galacticrollerdisco.com/" target="_blank"><i class="ti ti-disco link-icon"></i>Galactic Roller Disco<i class="ti ti-external-link ext"></i></a></li>
-      </ul>
+  <a class="card" href="./grapevine-agility-hiit.html" style="--accent:#7c8cf8;--accent-dim:rgba(124,140,248,0.10);margin-top:10px;">
+    <div class="card-top">
+      <span class="card-name">Grapevine & Agility<br>HIIT</span>
+      <span class="env-tag" style="--accent:#7c8cf8;--accent-dim:rgba(124,140,248,0.10);">no skates</span>
     </div>
+    <div class="card-desc">Lateral footwork for on-skate grapevines — both-direction grapevines, lateral lunges, side shuffles, quick step, left-biased balance and clamshells.</div>
+    <div class="meta-row">
+      <span class="meta"><b>40s</b>/20s</span>
+      <span class="meta"><b>10</b> moves</span>
+      <span class="meta"><b>4</b> circuits</span>
+    </div>
+  </a>
 
-    <div class="card" style="--card-color:#c2750a;">
-      <div class="card-header">
-        <i class="ti ti-book"></i><span class="swatch"></span>
-        <h2>Reading</h2>
-      </div>
-      <ul class="links">
-        <li><a href="https://z-library.sk/" target="_blank"><i class="ti ti-file-text link-icon"></i>Z-Library<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://claude.ai/project/019ed7ff-6f5c-7345-b368-eb96ba22a413" target="_blank"><i class="ti ti-book link-icon"></i>Reading tracker<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://app.thestorygraph.com/" target="_blank"><i class="ti ti-chart-line link-icon"></i>StoryGraph<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.amazon.com/hz/mycd/digital-console/contentlist/pdocs/dateDsc?pageNumber=1" target="_blank"><i class="ti ti-brand-amazon link-icon"></i>Amazon digital content<i class="ti ti-external-link ext"></i></a></li>
-      </ul>
+  <a class="card" href="./upper-body-weights-hiit.html" style="--accent:#4a90d9;--accent-dim:rgba(74,144,217,0.10);margin-top:10px;">
+    <div class="card-top">
+      <span class="card-name">Upper Body<br>Weights HIIT</span>
+      <span class="env-tag" style="--accent:#4a90d9;--accent-dim:rgba(74,144,217,0.10);">no skates</span>
     </div>
+    <div class="card-desc">Every move loaded with 4lb weights — curls, presses, rows, raises, tricep extensions, plus a lat pullover, weighted twist and side-bend stretch. Arms, shoulders, and back focus.</div>
+    <div class="meta-row">
+      <span class="meta"><b>40s</b>/20s</span>
+      <span class="meta"><b>10</b> moves</span>
+      <span class="meta"><b>3</b> circuits</span>
+    </div>
+  </a>
 
-    <div class="card" style="--card-color:#0d9488;">
-      <div class="card-header">
-        <i class="ti ti-pencil"></i><span class="swatch"></span>
-        <h2>Writing</h2>
-      </div>
-      <ul class="links">
-        <li><a href="https://www.patreon.com/c/cronedidion" target="_blank"><i class="ti ti-brand-patreon link-icon"></i>Crone Didion Patreon<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://claude.ai/project/019eda8c-e20e-74ad-a9e2-3c64a88dd9c6" target="_blank"><i class="ti ti-pencil link-icon"></i>Daily Writing<i class="ti ti-external-link ext"></i></a></li>
-      </ul>
+  <a class="card" href="./level1-strength-balance.html" style="--accent:#5ab4f5;--accent-dim:rgba(90,180,245,0.10);margin-top:10px;">
+    <div class="card-top">
+      <span class="card-name">Level 1 Strength<br>& Balance</span>
+      <span class="env-tag" style="--accent:#5ab4f5;--accent-dim:rgba(90,180,245,0.10);">no skates</span>
     </div>
+    <div class="card-desc">Maps directly to Level 1 assessment skills. Variable-hold circuit, not HIIT timing — 21 exercises, left-leg bias on single-leg work.</div>
+    <div class="meta-row">
+      <span class="meta"><b>variable</b> holds</span>
+      <span class="meta"><b>21</b> moves</span>
+      <span class="meta"><b>15s</b> rest</span>
+    </div>
+  </a>
 
-    <div class="card" style="--card-color:#db2777;">
-      <div class="card-header">
-        <i class="ti ti-microphone-2"></i><span class="swatch"></span>
-        <h2>Podcasts</h2>
-      </div>
-      <ul class="links">
-        <li><a href="https://www.patreon.com/cw/RealityGays" target="_blank"><i class="ti ti-brand-patreon link-icon"></i>Reality Gays<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.patreon.com/cw/IHateBillMaher" target="_blank"><i class="ti ti-brand-patreon link-icon"></i>I Hate Bill Maher<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.patreon.com/collection/1961839" target="_blank"><i class="ti ti-brand-patreon link-icon"></i>Watch What Crappens<i class="ti ti-external-link ext"></i></a></li>
-      </ul>
-    </div>
+  <footer>Open any card on a phone or laptop in the same folder as these files.</footer>
 
-    <div class="card" style="--card-color:#2563eb;">
-      <div class="card-header">
-        <i class="ti ti-ticket"></i><span class="swatch"></span>
-        <h2>Events &amp; community</h2>
-      </div>
-      <ul class="links">
-        <li><a href="https://www.eventbrite.com/u/897504862/" target="_blank"><i class="ti ti-ticket link-icon"></i>My Eventbrite tickets<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.heylo.com/topics/f6d7daad-0c9c-412e-9577-7dadd8e949f3" target="_blank"><i class="ti ti-users link-icon"></i>Ample Access Heylo<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.literaryboston.com/readings" target="_blank"><i class="ti ti-books link-icon"></i>Literary Boston readings<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://bookclubs.com/clubs" target="_blank"><i class="ti ti-books link-icon"></i>My book clubs<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://ccae.org/" target="_blank"><i class="ti ti-school link-icon"></i>Cambridge Center for Adult Education<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.hopartscenter.org/" target="_blank"><i class="ti ti-music link-icon"></i>Hop Arts Center<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.amctheatres.com/movie-theatres/boston/amc-framingham-16" target="_blank"><i class="ti ti-movie link-icon"></i>AMC Framingham 16<i class="ti ti-external-link ext"></i></a></li>
-      </ul>
-    </div>
-
-    <div class="card" style="--card-color:#c2750a;">
-      <div class="card-header">
-        <i class="ti ti-book"></i><span class="swatch"></span>
-        <h2>Bookstores</h2>
-      </div>
-      <ul class="links">
-        <li><a href="https://portersquarebooks.com/porter-square-books-book-clubs" target="_blank"><i class="ti ti-books link-icon"></i>Porter Square book clubs<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://purplecouchbookshop.com/events-calendar-2/" target="_blank"><i class="ti ti-books link-icon"></i>Purple Couch Events<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://tridentbookscafe.com/events" target="_blank"><i class="ti ti-books link-icon"></i>Trident Booksellers Events<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.eventbrite.com/o/ten-trees-books-90035506473" target="_blank"><i class="ti ti-books link-icon"></i>Ten Trees Books Events<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://anunlikelystory.indiecommerce.com/events" target="_blank"><i class="ti ti-books link-icon"></i>Unlikely Story Events<i class="ti ti-external-link ext"></i></a></li>
-      </ul>
-    </div>
-
-    <div class="card" style="--card-color:#7c3aed;">
-      <div class="card-header">
-        <i class="ti ti-books"></i><span class="swatch"></span>
-        <h2>QT library</h2>
-      </div>
-      <ul class="links">
-        <li><a href="https://docs.google.com/spreadsheets/d/1IoTvWcZq3ydvj6MtL2CZOjVr6IawkbKwg5lgSTXcjUY/edit?usp=drive_link" target="_blank"><i class="ti ti-table link-icon"></i>Book processing signup<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://discord.com/channels/1091408754727198781/1091408755461193764" target="_blank"><i class="ti ti-brand-discord link-icon"></i>Discord channel<i class="ti ti-external-link ext"></i></a></li>
-      </ul>
-    </div>
-
-    <div class="card" style="--card-color:#ef4444;">
-      <div class="card-header">
-        <i class="ti ti-home"></i><span class="swatch"></span>
-        <h2>Home admin</h2>
-      </div>
-      <ul class="links">
-        <li><a href="https://www.eversource.com/cg/customer/Account#/select" target="_blank"><i class="ti ti-bolt link-icon"></i>Eversource<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://avalonaccess.com/Dashboard" target="_blank"><i class="ti ti-building-community link-icon"></i>Avalon Access<i class="ti ti-external-link ext"></i></a></li>
-      </ul>
-    </div>
-
-  </div>
-
-  <div class="rss-section">
-    <div class="rss-col">
-      <div class="rss-col-header">Links 1</div>
-      <ul class="links">
-        <li><a href="https://annehelen.substack.com" target="_blank"><i class="ti ti-writing link-icon"></i>Anne Helen Petersen<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.watchcrappens.com" target="_blank"><i class="ti ti-microphone-2 link-icon"></i>Watch What Crappens<i class="ti ti-external-link ext"></i></a></li>
-      </ul>
-    </div>
-    <div class="rss-col">
-      <div class="rss-col-header">Links 2</div>
-      <ul class="links">
-        <li><a href="https://www.reddit.com" target="_blank"><i class="ti ti-brand-reddit link-icon"></i>Reddit<i class="ti ti-external-link ext"></i></a></li>
-      </ul>
-    </div>
-    <div class="rss-col">
-      <div class="rss-col-header">Links 3</div>
-      <ul class="links">
-      </ul>
-    </div>
-  </div>
-
-  <footer>Updated <span id="edited"></span></footer>
 </div>
-
-<script>
-  const today = new Date();
-  document.getElementById('today').textContent = today.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-  document.getElementById('edited').textContent = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-
-  const LAT = 42.2793, LON = -71.4162;
-  const WMO = {
-    0:{'i':'ti-sun','l':'Clear'},1:{'i':'ti-sun','l':'Mostly clear'},2:{'i':'ti-cloud','l':'Partly cloudy'},
-    3:{'i':'ti-cloud','l':'Overcast'},45:{'i':'ti-cloud-fog','l':'Fog'},48:{'i':'ti-cloud-fog','l':'Fog'},
-    51:{'i':'ti-cloud-drizzle','l':'Drizzle'},53:{'i':'ti-cloud-drizzle','l':'Drizzle'},55:{'i':'ti-cloud-drizzle','l':'Drizzle'},
-    61:{'i':'ti-cloud-rain','l':'Rain'},63:{'i':'ti-cloud-rain','l':'Rain'},65:{'i':'ti-cloud-rain','l':'Heavy rain'},
-    71:{'i':'ti-snowflake','l':'Snow'},73:{'i':'ti-snowflake','l':'Snow'},75:{'i':'ti-snowflake','l':'Heavy snow'},
-    80:{'i':'ti-cloud-rain','l':'Showers'},81:{'i':'ti-cloud-rain','l':'Showers'},82:{'i':'ti-cloud-rain','l':'Heavy showers'},
-    95:{'i':'ti-cloud-storm','l':'Thunderstorm'},99:{'i':'ti-cloud-storm','l':'Thunderstorm'},
-  };
-
-  async function fetchWeather() {
-    try {
-      const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,weathercode&daily=sunrise,sunset&temperature_unit=fahrenheit&timezone=America%2FNew_York`);
-      const d = await r.json();
-      const temp = Math.round(d.current.temperature_2m);
-      const info = WMO[d.current.weathercode] || {i:'ti-cloud',l:''};
-      const fmt = s => new Date(s).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
-      document.getElementById('weather').innerHTML = `<i class="ti ${info.i}"></i><span>${temp}°F ${info.l}</span>`;
-      document.getElementById('sun-times').innerHTML = `<i class="ti ti-sunrise"></i>${fmt(d.daily.sunrise[0])} <i class="ti ti-sunset"></i>${fmt(d.daily.sunset[0])}`;
-    } catch(e) {}
-  }
-
-  const COUNTDOWNS = [
-    { label: 'Florida Trip', date: '2026-08-12', color: '#0ea5e9' },
-    { label: 'BOW',          date: '2026-09-11', color: '#10b981' },
-  ];
-  function daysUntil(d) {
-    const t = new Date(d+'T00:00:00'), n = new Date(); n.setHours(0,0,0,0);
-    return Math.ceil((t-n)/86400000);
-  }
-  function fmtDate(d) {
-    return new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-  }
-  const cdContainer = document.getElementById('countdowns');
-  const upcomingCD = COUNTDOWNS.filter(cd => daysUntil(cd.date) >= 0);
-  if (upcomingCD.length === 0) {
-    cdContainer.parentElement.style.display = 'none';
-  } else {
-    upcomingCD.forEach(cd => {
-      const days = daysUntil(cd.date);
-      const el = document.createElement('div');
-      el.className = 'countdown-item';
-      el.style.setProperty('--cd-color', cd.color);
-      el.innerHTML = `
-        <div class="countdown-label">${cd.label}</div>
-        <div class="countdown-days">${days === 0 ? 'Today!' : days}</div>
-        ${days > 0 ? '<div class="countdown-unit">days away</div>' : ''}
-        <div class="countdown-date">${fmtDate(cd.date)}</div>
-      `;
-      cdContainer.appendChild(el);
-    });
-  }
-
-  const BOOKCLUBS = [
-    { label: 'Culture Club', book: 'The Original — Nell Stevens', date: '2026-08-02', color: '#e0407a' },
-    { label: 'Horror Book Club', book: 'The Ruins', date: '2026-08-28', color: '#ef4444' },
-    { label: 'Ten Trees Classics', book: 'Poe: Selected Works', date: '2026-09-03', color: '#c2750a' },
-    { label: 'Dark Pages Society', book: 'Midnight Message — Avina St. Graves', date: '2026-09-05', color: '#7c3aed' },
-    { label: 'Ten Trees Fantasy/Sci-Fi', book: 'The Midnight Train', date: '2026-09-15', color: '#6c5ce7' },
-    { label: 'Dreadfully Queer', book: 'Muñeca — Cynthia Gómez', date: '2026-09-16', color: '#0d9488' },
-    { label: 'Sci-Fi/Fantasy (Porter Square)', book: 'All That We See or Seem', date: '2026-09-21', color: '#2563eb' },
-  ];
-
-  const bcGrid = document.getElementById('bc-grid');
-  const bcCard = document.getElementById('bookclub-countdowns');
-  const upcomingBC = BOOKCLUBS.filter(bc => daysUntil(bc.date) >= 0);
-  if (upcomingBC.length === 0) {
-    bcCard.style.display = 'none';
-  } else {
-    upcomingBC.forEach(bc => {
-      const days = daysUntil(bc.date);
-      const el = document.createElement('div');
-      el.className = 'bc-item';
-      el.style.setProperty('--cd-color', bc.color);
-      el.innerHTML = `
-        <div class="bc-days">${days === 0 ? '!' : days}</div>
-        <div class="bc-text">
-          <div class="bc-label">${bc.label}</div>
-          ${bc.book ? `<div class="bc-book">${bc.book}</div>` : ''}
-          <div class="bc-date">${days === 0 ? 'Today!' : fmtDate(bc.date)}</div>
-        </div>
-      `;
-      bcGrid.appendChild(el);
-    });
-  }
-
-  // RSS feeds -- paste your feed URLs here
-  fetchWeather();
-</script>
 </body>
 </html>

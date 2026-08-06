@@ -396,8 +396,8 @@
       <img src="https://calendar.google.com/googlecalendar/images/favicon_v2018_256.png" width="28" height="28" style="border-radius:6px;" onerror="this.style.display='none'">
       <span>Calendar</span>
     </a>
-    <a href="https://forecast.weather.gov/MapClick.php?CityName=Framingham&state=MA&site=BOX&textField1=42.2793&textField2=-71.4162" target="_blank" style="--ic-color:#c2750a;">
-      <img src="https://www.weather.gov/images/nws/nwslogo_524.png" width="28" height="28" style="border-radius:6px; object-fit:contain;" onerror="this.style.display='none'">
+    <a href="https://weather.com/weather/hourbyhour/l/Framingham+MA+USMA0311:1:US" target="_blank" style="--ic-color:#c2750a;">
+      <img src="https://www.weather.com/favicon.ico" width="36" height="36" style="border-radius:6px; object-fit:contain;" onerror="this.style.display='none'">
       <span>Hourly</span>
     </a>
   </div>
@@ -696,11 +696,11 @@
     try {
       const allItems = [];
       for (const url of feed.urls) {
-        const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+        const proxy = `https://corsfix.com/${url}`;
         const res = await fetch(proxy);
-        const data = await res.json();
+        const text = await res.text();
         const parser = new DOMParser();
-        const xml = parser.parseFromString(data.contents, 'text/xml');
+        const xml = parser.parseFromString(text, 'text/xml');
         const items = xml.querySelectorAll('item, entry');
         items.forEach(item => {
           const title = item.querySelector('title')?.textContent || '';

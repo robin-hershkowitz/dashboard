@@ -348,31 +348,6 @@
     padding-bottom: 8px;
     border-bottom: 1px solid var(--border);
   }
-  .rss-item {
-    margin-bottom: 12px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
-  }
-  .rss-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .rss-item a {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    text-decoration: none;
-    margin-bottom: 3px;
-    line-height: 1.4;
-  }
-  .rss-item a:hover { color: var(--accent); }
-  .rss-item-date {
-    font-size: 11px;
-    color: var(--text-secondary);
-  }
-  .rss-loading {
-    font-size: 12px;
-    color: var(--text-secondary);
-    font-style: italic;
-  }
 </style>
 </head>
 <body>
@@ -564,17 +539,23 @@
   </div>
 
   <div class="rss-section">
-    <div class="rss-col" id="rss-col-1">
-      <div class="rss-col-header">Feed 1</div>
-      <div class="rss-items" id="rss-items-1"><div class="rss-loading">Loading...</div></div>
+    <div class="rss-col">
+      <div class="rss-col-header">Links 1</div>
+      <ul class="links">
+        <li><a href="https://annehelen.substack.com" target="_blank"><i class="ti ti-writing link-icon"></i>Anne Helen Petersen<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.watchcrappens.com" target="_blank"><i class="ti ti-microphone-2 link-icon"></i>Watch What Crappens<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
     </div>
-    <div class="rss-col" id="rss-col-2">
-      <div class="rss-col-header">Feed 2</div>
-      <div class="rss-items" id="rss-items-2"><div class="rss-loading">Loading...</div></div>
+    <div class="rss-col">
+      <div class="rss-col-header">Links 2</div>
+      <ul class="links">
+        <li><a href="https://www.reddit.com" target="_blank"><i class="ti ti-brand-reddit link-icon"></i>Reddit<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
     </div>
-    <div class="rss-col" id="rss-col-3">
-      <div class="rss-col-header">Feed 3</div>
-      <div class="rss-items" id="rss-items-3"><div class="rss-loading">Loading...</div></div>
+    <div class="rss-col">
+      <div class="rss-col-header">Links 3</div>
+      <ul class="links">
+      </ul>
     </div>
   </div>
 
@@ -674,56 +655,6 @@
   }
 
   // RSS feeds -- paste your feed URLs here
-  const RSS_FEEDS = [
-    { col: 1, label: 'Feed 1', urls: [
-        'https://annehelen.substack.com/feed/',
-        'https://rss.libsyn.com/shows/304934/destinations/2436686.xml',
-      ]
-    },
-    { col: 2, label: 'Feed 2', urls: [
-        'https://www.reddit.com/.rss',
-      ]
-    },
-    { col: 3, label: 'Feed 3', urls: [] },
-  ];
-
-  async function fetchRSS(feed) {
-    const container = document.getElementById(`rss-items-${feed.col}`);
-    const header = document.getElementById(`rss-col-${feed.col}`).querySelector('.rss-col-header');
-    if (!feed.urls.length) {
-      container.innerHTML = '<div class="rss-loading">No feed URL set.</div>';
-      return;
-    }
-    try {
-      const allItems = [];
-      for (const url of feed.urls) {
-        const proxy = `https://corsfix.com/${url}`;
-        const res = await fetch(proxy);
-        const text = await res.text();
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(text, 'text/xml');
-        const items = xml.querySelectorAll('item, entry');
-        items.forEach(item => {
-          const title = item.querySelector('title')?.textContent || '';
-          const link = item.querySelector('link')?.textContent || item.querySelector('link')?.getAttribute('href') || '';
-          const pubDate = item.querySelector('pubDate, published, updated')?.textContent || '';
-          allItems.push({ title, link, pubDate });
-        });
-      }
-      allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-      container.innerHTML = allItems.slice(0, 30).map(item => {
-        const date = item.pubDate ? new Date(item.pubDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
-        return `<div class="rss-item">
-          <a href="${item.link}" target="_blank">${item.title}</a>
-          <div class="rss-item-date">${date}</div>
-        </div>`;
-      }).join('');
-    } catch(e) {
-      container.innerHTML = '<div class="rss-loading">Could not load feed.</div>';
-    }
-  }
-
-  RSS_FEEDS.forEach(f => fetchRSS(f));
   fetchWeather();
 </script>
 </body>

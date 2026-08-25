@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --bg: #1a1814;
     --card-bg: #242018;
@@ -18,9 +17,7 @@
     --text: #f5efe4;
     --text-secondary: #9a9186;
     --accent: #a89cf7;
-    --section-gap: 28px;
   }
-
   body {
     margin: 0;
     padding: 32px 24px 64px;
@@ -29,7 +26,6 @@
     color: var(--text);
     font-size: 16px;
   }
-
   .wrap { max-width: 880px; margin: 0 auto; }
 
   /* Header */
@@ -43,7 +39,6 @@
   }
   .header h1 {
     font-family: 'Fraunces', Georgia, serif;
-    font-optical-sizing: auto;
     font-size: 34px;
     font-weight: 600;
     font-style: italic;
@@ -83,10 +78,45 @@
   }
   .sun-times i { font-size: 14px; color: #e8a23a; }
 
-  /* Countdowns */
-  .countdowns {
-    margin-bottom: 24px;
+  /* Icon strip */
+  .icon-strip {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
   }
+  .icon-strip a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 80px;
+    padding: 12px 8px;
+    border-radius: 12px;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition: border-color 0.12s, color 0.12s, background 0.12s;
+  }
+  .icon-strip a img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+  }
+  .icon-strip a:hover {
+    border-color: var(--ic-color, var(--accent));
+    color: var(--text);
+    background: rgba(255,247,235,0.07);
+  }
+
+  /* Countdowns */
+  .countdowns { margin-bottom: 14px; }
   .countdown-card {
     background: var(--card-bg);
     border: 2px solid var(--border);
@@ -121,7 +151,7 @@
   .countdown-unit { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
   .countdown-date { font-size: 12px; color: var(--text-secondary); margin-top: 3px; }
 
-  /* Book club countdown -- compact 2-column */
+  /* Book club countdown */
   .bc-countdown-card {
     background: var(--card-bg);
     border: 2px solid var(--border);
@@ -141,8 +171,6 @@
   .bc-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: repeat(2, auto);
-    grid-auto-flow: column;
     gap: 8px 16px;
   }
   .bc-item {
@@ -159,11 +187,7 @@
     line-height: 1;
     flex-shrink: 0;
   }
-  .bc-text {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
+  .bc-text { display: flex; flex-direction: column; min-width: 0; }
   .bc-label {
     font-size: 11px;
     font-weight: 700;
@@ -180,17 +204,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .bc-date {
-    font-size: 10px;
-    color: var(--text-secondary);
-  }
+  .bc-date { font-size: 10px; color: var(--text-secondary); }
 
+  /* Grid */
   .grid {
     column-width: 220px;
     column-gap: 14px;
   }
-
-  /* Card */
   .card {
     background: var(--card-bg);
     border: 2px solid var(--border);
@@ -208,10 +228,7 @@
     gap: 10px;
     margin-bottom: 10px;
   }
-  .card-header i {
-    font-size: 20px;
-    color: var(--card-color, var(--accent));
-  }
+  .card-header i { font-size: 20px; color: var(--card-color, var(--accent)); }
   .swatch {
     width: 8px;
     height: 8px;
@@ -227,47 +244,6 @@
     margin: 0;
     letter-spacing: -0.005em;
     color: var(--card-color, var(--text));
-  }
-
-  /* Icon strip */
-  .icon-strip {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
-  }
-  .icon-strip a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    width: 80px;
-    padding: 12px 8px;
-    border-radius: 12px;
-    background: var(--card-bg);
-    border: 2px solid var(--border);
-    text-decoration: none;
-    color: var(--text-secondary);
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    transition: border-color 0.12s, color 0.12s, background 0.12s;
-  }
-  .icon-strip a i {
-    font-size: 28px;
-    color: var(--ic-color, var(--accent));
-  }
-  .icon-strip a img {
-    width: 36px;
-    height: 36px;
-    object-fit: contain;
-  }
-  .icon-strip a:hover {
-    border-color: var(--ic-color, var(--accent));
-    color: var(--text);
-    background: rgba(255,247,235,0.07);
   }
 
   /* Links as buttons */
@@ -316,82 +292,93 @@
   }
   ul.links li a:hover .ext { opacity: 1; }
 
-  footer {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 13px;
-    color: var(--text-secondary);
-  }
-
-  /* Calendar embed */
-  .cal-card {
-    background: var(--card-bg);
-    border: 2px solid var(--border);
-    border-left: 5px solid var(--accent);
-    border-radius: 12px;
-    padding: 14px 16px 16px;
-    margin-bottom: 24px;
-  }
-  .cal-card .card-header { margin-bottom: 10px; }
-  .cal-card iframe {
-    width: 100%;
-    height: 420px;
-    border: none;
-    border-radius: 8px;
-    background: var(--card-bg);
-  }
-
-  /* Pop-up cards */
-  .card-popup .card-header {
-    cursor: pointer;
-    margin-bottom: 0;
-  }
-  .card-popup .card-header .popup-hint {
-    margin-left: auto;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .card-popup .card-header:hover h2,
-  .card-popup .card-header:hover .popup-hint { color: var(--card-color, var(--accent)); }
-
+  /* Modal system */
   .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.6);
+    z-index: 100;
     align-items: center;
     justify-content: center;
-    padding: 24px;
-    z-index: 100;
+    padding: 20px;
   }
-  .modal-overlay.active { display: flex; }
-  .modal-box {
+  .modal-overlay.open { display: flex; }
+  .modal {
     background: var(--card-bg);
     border: 2px solid var(--border);
-    border-left: 5px solid var(--card-color, var(--accent));
-    border-radius: 12px;
-    padding: 18px 20px;
+    border-top: 5px solid var(--card-color, var(--accent));
+    border-radius: 14px;
+    padding: 20px 22px;
     max-width: 420px;
     width: 100%;
-    max-height: 80vh;
+    position: relative;
+    max-height: 85vh;
     overflow-y: auto;
   }
-  .modal-box .card-header { margin-bottom: 10px; }
+  .modal h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--card-color, var(--text));
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
   .modal-close {
-    margin-left: auto;
+    position: absolute;
+    top: 14px;
+    right: 14px;
     background: none;
     border: none;
     color: var(--text-secondary);
     font-size: 20px;
     cursor: pointer;
     line-height: 1;
-    padding: 0 0 0 8px;
+    padding: 4px;
   }
   .modal-close:hover { color: var(--text); }
 
+  /* Grid tile (closed state) */
+  .tile {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-left: 5px solid var(--card-color, var(--accent));
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    break-inside: avoid;
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .tile:hover {
+    background: rgba(255,247,235,0.07);
+    border-color: var(--card-color, var(--accent));
+  }
+  .tile-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .tile-header i { font-size: 20px; color: var(--card-color, var(--accent)); }
+  .tile-header h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.005em;
+    color: var(--card-color, var(--text));
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
 </style>
 </head>
 <body>
@@ -406,77 +393,90 @@
     </div>
   </div>
 
+  <!-- Icon strip -->
   <div class="icon-strip">
     <a href="https://www.pushbullet.com/#sms" target="_blank" style="--ic-color:#6c5ce7;">
-      <img src="https://www.pushbullet.com/favicon.ico" width="28" height="28" style="border-radius:6px;" onerror="this.style.display='none'">
+      <img src="https://www.pushbullet.com/favicon.ico" width="36" height="36" style="border-radius:6px;" onerror="this.style.display='none'">
       <span>SMS</span>
     </a>
     <a href="https://calendar.google.com/calendar/u/0/r" target="_blank" style="--ic-color:#0ea5e9;">
-      <img src="https://calendar.google.com/googlecalendar/images/favicon_v2018_256.png" width="28" height="28" style="border-radius:6px;" onerror="this.style.display='none'">
+      <img src="https://calendar.google.com/googlecalendar/images/favicon_v2018_256.png" width="36" height="36" style="border-radius:6px;" onerror="this.style.display='none'">
       <span>Calendar</span>
     </a>
     <a href="https://weather.com/weather/hourbyhour/l/Framingham+MA+USMA0311:1:US" target="_blank" style="--ic-color:#c2750a;">
       <img src="https://www.weather.com/favicon.ico" width="36" height="36" style="border-radius:6px; object-fit:contain;" onerror="this.style.display='none'">
       <span>Hourly</span>
     </a>
-    <a href="https://github.com/" target="_blank" style="--ic-color:#f5efe4;">
-      <img src="https://github.githubassets.com/favicons/favicon.svg" width="28" height="28" style="border-radius:6px;" onerror="this.style.display='none'">
+    <a href="https://github.com/" target="_blank" style="--ic-color:#9a9186;">
+      <img src="https://github.githubassets.com/favicons/favicon.svg" width="36" height="36" style="border-radius:6px;" onerror="this.style.display='none'">
       <span>GitHub</span>
     </a>
-    <a href="https://claude.ai" target="_blank" style="--ic-color:#d97757;">
-      <img src="https://claude.ai/favicon.ico" width="28" height="28" style="border-radius:6px;" onerror="this.style.display='none'">
+    <a href="https://claude.ai" target="_blank" style="--ic-color:#e0407a;">
+      <img src="https://claude.ai/favicon.ico" width="36" height="36" style="border-radius:6px;" onerror="this.style.display='none'">
       <span>Claude</span>
     </a>
   </div>
 
+  <!-- Trip countdowns -->
   <div class="countdowns">
     <div class="countdown-card" id="countdowns"></div>
   </div>
 
-  <div class="countdowns" style="margin-top: 14px;">
-    <div class="bc-countdown-card" id="bookclub-countdowns">
-      <div class="bc-header">Book club countdowns</div>
-      <div class="bc-grid" id="bc-grid"></div>
-    </div>
+  <!-- Book club countdowns -->
+  <div class="bc-countdown-card" id="bookclub-countdowns">
+    <div class="bc-header">Book club countdowns</div>
+    <div class="bc-grid" id="bc-grid"></div>
   </div>
 
+  <!-- Cards -->
+  <!-- Tiles -->
   <div class="grid">
+    <div class="tile" style="--card-color:#6c5ce7;" onclick="openModal('everyday')"><div class="tile-header"><i class="ti ti-checkbox"></i><span class="swatch"></span><h2>Every day</h2></div></div>
+    <div class="tile" style="--card-color:#2563eb;" onclick="openModal('events')"><div class="tile-header"><i class="ti ti-ticket"></i><span class="swatch"></span><h2>Events &amp; community</h2></div></div>
+    <div class="tile" style="--card-color:#10b981;" onclick="openModal('fitness')"><div class="tile-header"><i class="ti ti-heart"></i><span class="swatch"></span><h2>Fitness</h2></div></div>
+    <div class="tile" style="--card-color:#0ea5e9;" onclick="openModal('skating')"><div class="tile-header"><i class="ti ti-ice-skating"></i><span class="swatch"></span><h2>Skating</h2></div></div>
+    <div class="tile" style="--card-color:#c2750a;" onclick="openModal('reading')"><div class="tile-header"><i class="ti ti-book"></i><span class="swatch"></span><h2>Reading</h2></div></div>
+    <div class="tile" style="--card-color:#0d9488;" onclick="openModal('writing')"><div class="tile-header"><i class="ti ti-pencil"></i><span class="swatch"></span><h2>Writing</h2></div></div>
+    <div class="tile" style="--card-color:#db2777;" onclick="openModal('podcasts')"><div class="tile-header"><i class="ti ti-microphone-2"></i><span class="swatch"></span><h2>Podcasts</h2></div></div>
+    <div class="tile" style="--card-color:#c2750a;" onclick="openModal('bookstores')"><div class="tile-header"><i class="ti ti-book"></i><span class="swatch"></span><h2>Bookstores</h2></div></div>
+    <div class="tile" style="--card-color:#7c3aed;" onclick="openModal('qt')"><div class="tile-header"><i class="ti ti-books"></i><span class="swatch"></span><h2>QT library</h2></div></div>
+    <div class="tile" style="--card-color:#ef4444;" onclick="openModal('home')"><div class="tile-header"><i class="ti ti-home"></i><span class="swatch"></span><h2>Home admin</h2></div></div>
+    <div class="tile" style="--card-color:#e0407a;" onclick="openModal('derby')"><div class="tile-header"><i class="ti ti-shirt-sport"></i><span class="swatch"></span><h2>Roller derby</h2></div></div>
+    <div class="tile" style="--card-color:#a89cf7;" onclick="openModal('links')"><div class="tile-header"><i class="ti ti-link"></i><span class="swatch"></span><h2>Links</h2></div></div>
+  </div>
 
-    <div class="card" style="--card-color:#6c5ce7;">
-      <div class="card-header">
-        <i class="ti ti-checkbox"></i><span class="swatch"></span>
-        <h2>Every day</h2>
-      </div>
+  <!-- Modal overlay -->
+  <div class="modal-overlay" id="overlay" onclick="closeModal()">
+
+    <div class="modal" id="modal-everyday" style="--card-color:#6c5ce7;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-checkbox"></i> Every day</h2>
       <ul class="links">
         <li><a href="workfromhome.html" target="_blank"><i class="ti ti-calendar-event link-icon"></i>Daily schedule tracker<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="atwork.html" target="_blank"><i class="ti ti-building link-icon"></i>At work day<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="cleaning.html" target="_blank"><i class="ti ti-spray link-icon"></i>Cleaning timers<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.google.com/maps/dir/Framingham,MA/51+Sawyer+Road,+Waltham,+MA" target="_blank"><i class="ti ti-car link-icon"></i>Check commute<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.google.com/maps/dir/110+Riverpath+Drive,+Framingham,+MA/51+Sawyer+Road,+Waltham,+MA" target="_blank"><i class="ti ti-car link-icon"></i>Check commute<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://calendar.google.com/calendar/u/0/r" target="_blank"><i class="ti ti-calendar link-icon"></i>Google Calendar<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://keep.google.com/u/0/" target="_blank"><i class="ti ti-note link-icon"></i>Google Keep<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://web.whatsapp.com/" target="_blank"><i class="ti ti-brand-whatsapp link-icon"></i>WhatsApp<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://ymca360.org/classes" target="_blank"><i class="ti ti-swimming link-icon"></i>My YMCA<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://mychart.covh.org/MyChart/Authentication/Login?postloginurl=inside%2Easp%3Fmode%3Dhistques%26src%3Decheckin%26submit%3Dtrue%26Qtn%3D1" target="_blank"><i class="ti ti-stethoscope link-icon"></i>MyChart<i class="ti ti-external-link ext"></i></a></li>
       </ul>
     </div>
 
-    <div class="card" style="--card-color:#10b981;">
-      <div class="card-header">
-        <i class="ti ti-heart"></i><span class="swatch"></span>
-        <h2>Fitness</h2>
-      </div>
+    <div class="modal" id="modal-fitness" style="--card-color:#10b981;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-heart"></i> Fitness</h2>
       <ul class="links">
         <li><a href="https://robin-hershkowitz.github.io/HIIT/" target="_blank"><i class="ti ti-bolt link-icon"></i>HIIT workout tool<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://claude.ai/project/019e9d6b-e779-74d6-9c80-a73cb27d1981" target="_blank"><i class="ti ti-pencil link-icon"></i>HIIT Planning<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.katalystfitnessma.com/schedule" target="_blank"><i class="ti ti-calendar link-icon"></i>Katalyst Fitness schedule<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://ymca360.org/classes" target="_blank"><i class="ti ti-heart link-icon"></i>My YMCA<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.katalystfitnessma.com/schedule" target="_blank"><i class="ti ti-calendar link-icon"></i>Katalyst Fitness<i class="ti ti-external-link ext"></i></a></li>
       </ul>
     </div>
 
-    <div class="card" style="--card-color:#0ea5e9;">
-      <div class="card-header">
-        <i class="ti ti-ice-skating"></i><span class="swatch"></span>
-        <h2>Skating</h2>
-      </div>
+    <div class="modal" id="modal-skating" style="--card-color:#0ea5e9;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-ice-skating"></i> Skating</h2>
       <ul class="links">
         <li><a href="https://calendly.com/bruisedboutique" target="_blank"><i class="ti ti-calendar-time link-icon"></i>Bruised Boutique booking<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://calendly.com/bruisedboutique-ramp" target="_blank"><i class="ti ti-calendar-time link-icon"></i>Bruised Boutique ramp<i class="ti ti-external-link ext"></i></a></li>
@@ -487,36 +487,30 @@
       </ul>
     </div>
 
-    <div class="card" style="--card-color:#c2750a;">
-      <div class="card-header">
-        <i class="ti ti-book"></i><span class="swatch"></span>
-        <h2>Reading</h2>
-      </div>
+    <div class="modal" id="modal-reading" style="--card-color:#c2750a;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-book"></i> Reading</h2>
       <ul class="links">
         <li><a href="https://z-library.sk/" target="_blank"><i class="ti ti-file-text link-icon"></i>Z-Library<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://claude.ai/project/019ed7ff-6f5c-7345-b368-eb96ba22a413" target="_blank"><i class="ti ti-book link-icon"></i>Reading tracker<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://app.thestorygraph.com/" target="_blank"><i class="ti ti-chart-line link-icon"></i>StoryGraph<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://www.amazon.com/hz/mycd/digital-console/contentlist/pdocs/dateDsc?pageNumber=1" target="_blank"><i class="ti ti-brand-amazon link-icon"></i>Amazon digital content<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://open-slum.org/" target="_blank"><i class="ti ti-book link-icon"></i>SLUM<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://open-slum.org/" target="_blank"><i class="ti ti-books link-icon"></i>SLUM<i class="ti ti-external-link ext"></i></a></li>
       </ul>
     </div>
 
-    <div class="card" style="--card-color:#0d9488;">
-      <div class="card-header">
-        <i class="ti ti-pencil"></i><span class="swatch"></span>
-        <h2>Writing</h2>
-      </div>
+    <div class="modal" id="modal-writing" style="--card-color:#0d9488;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-pencil"></i> Writing</h2>
       <ul class="links">
         <li><a href="https://www.patreon.com/c/cronedidion" target="_blank"><i class="ti ti-brand-patreon link-icon"></i>Crone Didion Patreon<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://claude.ai/project/019eda8c-e20e-74ad-a9e2-3c64a88dd9c6" target="_blank"><i class="ti ti-pencil link-icon"></i>Daily Writing<i class="ti ti-external-link ext"></i></a></li>
       </ul>
     </div>
 
-    <div class="card" style="--card-color:#db2777;">
-      <div class="card-header">
-        <i class="ti ti-microphone-2"></i><span class="swatch"></span>
-        <h2>Podcasts</h2>
-      </div>
+    <div class="modal" id="modal-podcasts" style="--card-color:#db2777;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-microphone-2"></i> Podcasts</h2>
       <ul class="links">
         <li><a href="https://www.patreon.com/cw/RealityGays" target="_blank"><i class="ti ti-brand-patreon link-icon"></i>Reality Gays<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://www.patreon.com/cw/IHateBillMaher" target="_blank"><i class="ti ti-brand-patreon link-icon"></i>I Hate Bill Maher<i class="ti ti-external-link ext"></i></a></li>
@@ -524,11 +518,9 @@
       </ul>
     </div>
 
-    <div class="card" style="--card-color:#2563eb;">
-      <div class="card-header">
-        <i class="ti ti-ticket"></i><span class="swatch"></span>
-        <h2>Events &amp; community</h2>
-      </div>
+    <div class="modal" id="modal-events" style="--card-color:#2563eb;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-ticket"></i> Events &amp; community</h2>
       <ul class="links">
         <li><a href="https://www.eventbrite.com/u/897504862/" target="_blank"><i class="ti ti-ticket link-icon"></i>My Eventbrite tickets<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://www.eventbrite.com/o/artsemerson-93165776043" target="_blank"><i class="ti ti-ticket link-icon"></i>Emerson Rush Tickets<i class="ti ti-external-link ext"></i></a></li>
@@ -541,11 +533,9 @@
       </ul>
     </div>
 
-    <div class="card" style="--card-color:#c2750a;">
-      <div class="card-header">
-        <i class="ti ti-book"></i><span class="swatch"></span>
-        <h2>Bookstores</h2>
-      </div>
+    <div class="modal" id="modal-bookstores" style="--card-color:#c2750a;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-book"></i> Bookstores</h2>
       <ul class="links">
         <li><a href="https://portersquarebooks.com/porter-square-books-book-clubs" target="_blank"><i class="ti ti-books link-icon"></i>Porter Square book clubs<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://purplecouchbookshop.com/events-calendar-2/" target="_blank"><i class="ti ti-books link-icon"></i>Purple Couch Events<i class="ti ti-external-link ext"></i></a></li>
@@ -555,76 +545,62 @@
       </ul>
     </div>
 
-    <div class="card" style="--card-color:#7c3aed;">
-      <div class="card-header">
-        <i class="ti ti-books"></i><span class="swatch"></span>
-        <h2>QT library</h2>
-      </div>
+    <div class="modal" id="modal-qt" style="--card-color:#7c3aed;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-books"></i> QT library</h2>
       <ul class="links">
         <li><a href="https://docs.google.com/spreadsheets/d/1IoTvWcZq3ydvj6MtL2CZOjVr6IawkbKwg5lgSTXcjUY/edit?usp=drive_link" target="_blank"><i class="ti ti-table link-icon"></i>Book processing signup<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://discord.com/channels/1091408754727198781/1091408755461193764" target="_blank"><i class="ti ti-brand-discord link-icon"></i>Discord channel<i class="ti ti-external-link ext"></i></a></li>
       </ul>
     </div>
 
-    <div class="card" style="--card-color:#ef4444;">
-      <div class="card-header">
-        <i class="ti ti-home"></i><span class="swatch"></span>
-        <h2>Home admin</h2>
-      </div>
+    <div class="modal" id="modal-home" style="--card-color:#ef4444;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-home"></i> Home admin</h2>
       <ul class="links">
         <li><a href="https://www.eversource.com/cg/customer/Account#/select" target="_blank"><i class="ti ti-bolt link-icon"></i>Eversource<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://avalonaccess.com/Dashboard" target="_blank"><i class="ti ti-building-community link-icon"></i>Avalon Access<i class="ti ti-external-link ext"></i></a></li>
       </ul>
     </div>
 
-    <div class="card" style="--card-color:#a89cf7;">
-      <div class="card-header">
-        <i class="ti ti-link"></i><span class="swatch"></span>
-        <h2>Links</h2>
-      </div>
+    <div class="modal" id="modal-derby" style="--card-color:#e0407a;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-shirt-sport"></i> Roller derby</h2>
       <ul class="links">
-        <li><a href="https://feedly.com/i/collection/content/user/a497de88-d916-4546-8197-8747402e53a6/category/global.all" target="_blank"><i class="ti ti-rss link-icon"></i>Feedly<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.reddit.com/user/exact_negotiation_96/m/robins_feed/" target="_blank"><i class="ti ti-brand-reddit link-icon"></i>Reddit feed<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://discord.com/channels/1097218881367580833/1101901899638251520" target="_blank"><i class="ti ti-brand-discord link-icon"></i>Bay State Discord<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://sites.google.com/view/bsbtraining/home" target="_blank"><i class="ti ti-school link-icon"></i>BSB training<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://app.slack.com/client/TLKNPKZBN" target="_blank"><i class="ti ti-brand-slack link-icon"></i>NHRD Slack<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.facebook.com/groups/NERollerDerby" target="_blank"><i class="ti ti-brand-facebook link-icon"></i>NE Roller Derby group<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.facebook.com/groups/derbyhell" target="_blank"><i class="ti ti-brand-facebook link-icon"></i>Derby Hell group<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://docs.google.com/spreadsheets/d/1FOxOhqTrwWdaRW5XJtHvpZkfspJiQ7uQttI1NF4ZlAw/edit" target="_blank"><i class="ti ti-table link-icon"></i>Officiating history<i class="ti ti-external-link ext"></i></a></li>
       </ul>
     </div>
 
-    <div class="card card-popup" style="--card-color:#e0407a;" onclick="openModal('modal-derby')">
-      <div class="card-header">
-        <i class="ti ti-shirt-sport"></i><span class="swatch"></span>
-        <h2>Roller derby</h2>
-        <span class="popup-hint">Tap to open</span>
-      </div>
+    <div class="modal" id="modal-links" style="--card-color:#a89cf7;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-link"></i> Links</h2>
+      <ul class="links">
+        <li><a href="https://feedly.com/i/collection/content/user/a497de88-d916-4546-8197-8747402e53a6/category/global.all" target="_blank"><i class="ti ti-rss link-icon"></i>Feedly<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.reddit.com/user/exact_negotiation_96/m/robins_feed/" target="_blank"><i class="ti ti-brand-reddit link-icon"></i>Robin's Reddit feed<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
     </div>
+
 
   </div>
 
-  <div class="cal-card">
-    <div class="card-header">
-      <i class="ti ti-calendar"></i><span class="swatch"></span>
-      <h2>Calendar</h2>
+  <div style="margin-top: 24px;">
+    <div style="background: var(--card-bg); border: 2px solid var(--border); border-left: 5px solid #0ea5e9; border-radius: 12px; padding: 14px 16px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+        <i class="ti ti-calendar" style="font-size:20px; color:#0ea5e9;"></i>
+        <span style="font-family:'Fraunces', serif; font-size:19px; font-weight:600; color:#0ea5e9;">Calendar</span>
+      </div>
+      <div style="border-radius:8px; overflow:hidden;">
+        <iframe src="https://calendar.google.com/calendar/embed?src=robinhershkowitz%40gmail.com&src=b344fe8266ec87c0a6c15f62f44f9cd91e6ce8601cb6a73659cd251a2813d2e1%40group.calendar.google.com&src=8af9d69cfc86d747806e307599852a4d6cf94d3d7806c5e9a289bc082214edcd%40group.calendar.google.com&src=41d046f16141125eb25a8f273328fb8758d0ba4f59f34d4255bb95b0f9eeeacb%40group.calendar.google.com&ctz=America%2FNew_York&mode=AGENDA&showTitle=0&showNav=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0" style="border:0; width:100%; height:400px; border-radius:8px;" frameborder="0" scrolling="no"></iframe>
+      </div>
     </div>
-    <iframe src="https://calendar.google.com/calendar/embed?src=robinhershkowitz%40gmail.com&src=b344fe8266ec87c0a6c15f62f44f9cd91e6ce8601cb6a73659cd251a2813d2e1%40group.calendar.google.com&src=8af9d69cfc86d747806e307599852a4d6cf94d3d7806c5e9a289bc082214edcd%40group.calendar.google.com&src=41d046f16141125eb25a8f273328fb8758d0ba4f59f34d4255bb95b0f9eeeacb%40group.calendar.google.com&ctz=America%2FNew_York&mode=AGENDA&showTitle=0&showNav=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0" frameborder="0" scrolling="no"></iframe>
   </div>
 
   <footer>Updated <span id="edited"></span></footer>
-</div>
-
-<div class="modal-overlay" id="modal-derby" onclick="closeModalOnOverlay(event, 'modal-derby')">
-  <div class="modal-box" style="--card-color:#e0407a;">
-    <div class="card-header">
-      <i class="ti ti-shirt-sport"></i><span class="swatch"></span>
-      <h2>Roller derby</h2>
-      <button class="modal-close" onclick="closeModal('modal-derby')">&times;</button>
-    </div>
-    <ul class="links">
-      <li><a href="https://discord.com/channels/1097218881367580833/1101901899638251520" target="_blank"><i class="ti ti-brand-discord link-icon"></i>Bay State Discord<i class="ti ti-external-link ext"></i></a></li>
-      <li><a href="https://sites.google.com/view/bsbtraining/home" target="_blank"><i class="ti ti-school link-icon"></i>BSB training<i class="ti ti-external-link ext"></i></a></li>
-      <li><a href="https://app.slack.com/client/TLKNPKZBN" target="_blank"><i class="ti ti-brand-slack link-icon"></i>NHRD Slack<i class="ti ti-external-link ext"></i></a></li>
-      <li><a href="https://www.facebook.com/groups/NERollerDerby" target="_blank"><i class="ti ti-brand-facebook link-icon"></i>NE Roller Derby group<i class="ti ti-external-link ext"></i></a></li>
-      <li><a href="https://www.facebook.com/groups/derbyhell" target="_blank"><i class="ti ti-brand-facebook link-icon"></i>Derby Hell group<i class="ti ti-external-link ext"></i></a></li>
-      <li><a href="https://docs.google.com/spreadsheets/d/1FOxOhqTrwWdaRW5XJtHvpZkfspJiQ7uQttI1NF4ZlAw/edit" target="_blank"><i class="ti ti-table link-icon"></i>Officiating history<i class="ti ti-external-link ext"></i></a></li>
-    </ul>
-  </div>
 </div>
 
 <script>
@@ -658,7 +634,6 @@
   const COUNTDOWNS = [
     { label: 'Florida Trip', date: '2026-08-12', color: '#0ea5e9' },
     { label: 'BOW',          date: '2026-09-11', color: '#10b981' },
-    { label: 'Beginner Tap', date: '2026-09-14', color: '#e0407a' },
   ];
   function daysUntil(d) {
     const t = new Date(d+'T00:00:00'), n = new Date(); n.setHours(0,0,0,0);
@@ -667,6 +642,7 @@
   function fmtDate(d) {
     return new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
   }
+
   const cdContainer = document.getElementById('countdowns');
   const upcomingCD = COUNTDOWNS.filter(cd => daysUntil(cd.date) >= 0);
   if (upcomingCD.length === 0) {
@@ -688,16 +664,17 @@
   }
 
   const BOOKCLUBS = [
-    { label: 'Culture Club', book: 'The Original — Nell Stevens', date: '2026-08-02', color: '#e0407a' },
-    { label: 'Eastie Book Babes', book: 'Communion', date: '2026-08-09', color: '#84cc16' },
-    { label: 'Eastie Book Babes', book: 'North Woods — Daniel Mason', date: '2026-08-24', color: '#84cc16' },
-    { label: 'Horror Book Club', book: 'The Ruins', date: '2026-08-28', color: '#ef4444' },
-    { label: 'Final Girls Book Club', book: 'Slewfoot', date: '2026-08-29', color: '#2dd4bf' },
-    { label: 'Ten Trees Classics', book: 'Poe: Selected Works', date: '2026-09-03', color: '#c2750a' },
-    { label: 'Dark Pages Society', book: 'Midnight Message — Avina St. Graves', date: '2026-09-05', color: '#7c3aed' },
-    { label: 'Ten Trees Fantasy/Sci-Fi', book: 'The Midnight Train', date: '2026-09-15', color: '#6c5ce7' },
-    { label: 'Dreadfully Queer', book: 'Muñeca — Cynthia Gómez', date: '2026-09-16', color: '#0d9488' },
-    { label: 'Sci-Fi/Fantasy (Porter Square)', book: 'All That We See or Seem', date: '2026-09-21', color: '#2563eb' },
+    { label: 'Culture Club',             book: 'The Original — Nell Stevens',        date: '2026-08-02', color: '#e0407a' },
+    { label: 'Horror Book Club',          book: 'The Ruins',                          date: '2026-08-28', color: '#ef4444' },
+    { label: 'Final Girls Book Club',     book: 'Slewfoot',                           date: '2026-08-29', color: '#7c3aed' },
+    { label: 'Ten Trees Classics',        book: 'Poe: Selected Works',                date: '2026-09-03', color: '#c2750a' },
+    { label: 'Dark Pages Society',        book: 'Midnight Message — Avina St. Graves',date: '2026-09-05', color: '#6b3d6e' },
+    { label: 'Ten Trees Fantasy/Sci-Fi',  book: 'The Midnight Train',                 date: '2026-09-15', color: '#6c5ce7' },
+    { label: 'Dreadfully Queer',          book: 'Muñeca — Cynthia Gómez',            date: '2026-09-16', color: '#0d9488' },
+    { label: 'Sci-Fi/Fantasy (Porter Sq)',book: 'All That We See or Seem',            date: '2026-09-21', color: '#2563eb' },
+    { label: 'Boston Bookclub',           book: 'Klara and the Sun',                  date: '2026-09-21', color: '#0ea5e9' },
+    { label: 'Porter Square Classics',    book: 'Lonesome Dove Part I',               date: '2026-09-28', color: '#2563eb' },
+    { label: 'Porter Square Classics',    book: 'Lonesome Dove Parts II & III',       date: '2026-12-07', color: '#2563eb' },
   ];
 
   const bcGrid = document.getElementById('bc-grid');
@@ -723,23 +700,18 @@
     });
   }
 
-  // RSS feeds -- paste your feed URLs here
-  fetchWeather();
-
   function openModal(id) {
-    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+    const modal = document.getElementById('modal-' + id);
+    if (modal) modal.style.display = 'block';
+    document.getElementById('overlay').classList.add('open');
   }
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
+  function closeModal() {
+    document.getElementById('overlay').classList.remove('open');
   }
-  function closeModalOnOverlay(e, id) {
-    if (e.target.id === id) closeModal(id);
-  }
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
-    }
-  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  fetchWeather();
 </script>
 </body>
 </html>

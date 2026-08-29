@@ -41,7 +41,7 @@
     font-family: 'Fraunces', Georgia, serif;
     font-size: 34px;
     font-weight: 600;
-    font-style: italic;
+    font-style: normal;
     margin: 0;
     color: var(--accent);
     letter-spacing: -0.01em;
@@ -77,6 +77,19 @@
     font-weight: 500;
   }
   .sun-times i { font-size: 14px; color: #e8a23a; }
+  .hilo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+  .hilo span { display: flex; align-items: center; gap: 1px; }
+  .hilo i { font-size: 13px; }
+  .hilo .hi i { color: #ef7d3a; }
+  .hilo .lo i { color: #5aa9e6; }
+  .hilo .pop i { color: #38bdf8; }
 
   /* Icon strip */
   .icon-strip {
@@ -94,15 +107,16 @@
     width: 80px;
     padding: 12px 8px;
     border-radius: 12px;
-    background: var(--card-bg);
-    border: 2px solid var(--border);
+    background: color-mix(in srgb, var(--ic-color, var(--accent)) 12%, var(--card-bg));
+    border: 2px solid var(--ic-color, var(--border));
+    border-bottom-width: 5px;
     text-decoration: none;
-    color: var(--text-secondary);
+    color: var(--ic-color, var(--text-secondary));
     font-size: 10px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    transition: border-color 0.12s, color 0.12s, background 0.12s;
+    transition: border-color 0.12s, color 0.12s, background 0.12s, transform 0.12s;
   }
   .icon-strip a img {
     width: 36px;
@@ -110,9 +124,9 @@
     object-fit: contain;
   }
   .icon-strip a:hover {
-    border-color: var(--ic-color, var(--accent));
+    background: color-mix(in srgb, var(--ic-color, var(--accent)) 26%, var(--card-bg));
     color: var(--text);
-    background: rgba(255,247,235,0.07);
+    transform: translateY(-2px);
   }
 
   /* Countdowns */
@@ -205,6 +219,175 @@
     text-overflow: ellipsis;
   }
   .bc-date { font-size: 10px; color: var(--text-secondary); }
+
+  /* Upcoming books shelf */
+  .shelf-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-left: 5px solid #c2750a;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+  }
+  .shelf {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .shelf-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 92px;
+    flex-shrink: 0;
+  }
+  .shelf-cover {
+    position: relative;
+    width: 92px;
+    height: 138px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--sh-color, var(--accent)) 18%, var(--card-bg));
+    border: 2px solid var(--sh-color, var(--border));
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .shelf-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .shelf-fallback {
+    font-family: 'Fraunces', serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: center;
+    padding: 8px 8px 26px;
+    line-height: 1.25;
+  }
+  .shelf-badge {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--sh-color, var(--accent));
+    color: #1a1814;
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    padding: 3px 4px 4px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .shelf-badge .unit {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.75;
+    margin-left: 2px;
+  }
+  .shelf-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .shelf-club { font-size: 10px; color: var(--text-secondary); line-height: 1.3; }
+
+  /* Embedded calendar: invert the frame to force a dark agenda */
+  .cal-frame {
+    border: 0;
+    width: 100%;
+    height: 400px;
+    display: block;
+    border-radius: 8px;
+    filter: invert(0.92) hue-rotate(180deg);
+  }
+
+  /* Link search */
+  .search-wrap {
+    position: relative;
+    margin-bottom: 14px;
+  }
+  .search-wrap .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: var(--text-secondary);
+    pointer-events: none;
+  }
+  #link-search {
+    width: 100%;
+    padding: 12px 40px 12px 42px;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.12s;
+  }
+  #link-search::placeholder { color: var(--text-secondary); }
+  #link-search:focus { border-color: var(--accent); }
+  .search-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 2px 6px;
+  }
+  .search-clear:hover { color: var(--text); }
+  .search-wrap.has-text .search-clear { display: block; }
+  .search-results { display: none; margin-bottom: 14px; }
+  .search-results.active { display: block; }
+  .search-results a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-left: 5px solid var(--r-color, var(--accent));
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.12s;
+  }
+  .search-results a:hover { background: rgba(255,247,235,0.07); }
+  .search-results .r-cat {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--r-color, var(--accent));
+    white-space: nowrap;
+  }
+  .search-results .r-empty {
+    padding: 14px;
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
 
   /* Grid */
   .grid {
@@ -388,6 +571,7 @@
     <h1>Dashboard</h1>
     <div class="header-right">
       <div class="weather" id="weather"><i class="ti ti-cloud"></i><span>...</span></div>
+      <div class="hilo" id="hilo"></div>
       <div class="sun-times" id="sun-times"></div>
       <span class="header-date" id="today"></span>
     </div>
@@ -395,6 +579,10 @@
 
   <!-- Icon strip -->
   <div class="icon-strip">
+    <a href="https://mail.google.com/mail/u/0/" target="_blank" style="--ic-color:#ef4444;">
+      <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" width="36" height="36" style="border-radius:6px;" onerror="this.style.display='none'">
+      <span>Gmail</span>
+    </a>
     <a href="https://www.pushbullet.com/#sms" target="_blank" style="--ic-color:#6c5ce7;">
       <img src="https://www.pushbullet.com/favicon.ico" width="36" height="36" style="border-radius:6px;" onerror="this.style.display='none'">
       <span>SMS</span>
@@ -407,7 +595,7 @@
       <img src="https://www.weather.com/favicon.ico" width="36" height="36" style="border-radius:6px; object-fit:contain;" onerror="this.style.display='none'">
       <span>Hourly</span>
     </a>
-    <a href="https://github.com/" target="_blank" style="--ic-color:#9a9186;">
+    <a href="https://github.com/" target="_blank" style="--ic-color:#14b8a6;">
       <img src="https://github.githubassets.com/favicons/favicon.svg" width="36" height="36" style="border-radius:6px;" onerror="this.style.display='none'">
       <span>GitHub</span>
     </a>
@@ -428,9 +616,23 @@
     <div class="bc-grid" id="bc-grid"></div>
   </div>
 
+  <!-- Upcoming books -->
+  <div class="shelf-card" id="upcoming-books">
+    <div class="bc-header">Up next</div>
+    <div class="shelf" id="shelf"></div>
+  </div>
+
+  <!-- Link search -->
+  <div class="search-wrap">
+    <i class="ti ti-search search-icon"></i>
+    <input type="text" id="link-search" placeholder="Search all links..." autocomplete="off" spellcheck="false">
+    <button class="search-clear" id="search-clear" title="Clear">&#x00D7;</button>
+  </div>
+  <div class="search-results" id="search-results"></div>
+
   <!-- Cards -->
   <!-- Tiles -->
-  <div class="grid">
+  <div class="grid" id="tile-grid">
     <div class="tile" style="--card-color:#6c5ce7;" onclick="openModal('everyday')"><div class="tile-header"><i class="ti ti-checkbox"></i><span class="swatch"></span><h2>Every day</h2></div></div>
     <div class="tile" style="--card-color:#2563eb;" onclick="openModal('events')"><div class="tile-header"><i class="ti ti-ticket"></i><span class="swatch"></span><h2>Events &amp; community</h2></div></div>
     <div class="tile" style="--card-color:#10b981;" onclick="openModal('fitness')"><div class="tile-header"><i class="ti ti-heart"></i><span class="swatch"></span><h2>Fitness</h2></div></div>
@@ -443,6 +645,7 @@
     <div class="tile" style="--card-color:#ef4444;" onclick="openModal('home')"><div class="tile-header"><i class="ti ti-home"></i><span class="swatch"></span><h2>Home admin</h2></div></div>
     <div class="tile" style="--card-color:#e0407a;" onclick="openModal('derby')"><div class="tile-header"><i class="ti ti-shirt-sport"></i><span class="swatch"></span><h2>Roller derby</h2></div></div>
     <div class="tile" style="--card-color:#a89cf7;" onclick="openModal('links')"><div class="tile-header"><i class="ti ti-link"></i><span class="swatch"></span><h2>Links</h2></div></div>
+    <div class="tile" style="--card-color:#f59e0b;" onclick="openModal('capitalism')"><div class="tile-header"><i class="ti ti-shopping-bag"></i><span class="swatch"></span><h2>Capitalism</h2></div></div>
   </div>
 
   <!-- Modal overlay -->
@@ -459,7 +662,6 @@
         <li><a href="https://calendar.google.com/calendar/u/0/r" target="_blank"><i class="ti ti-calendar link-icon"></i>Google Calendar<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://keep.google.com/u/0/" target="_blank"><i class="ti ti-note link-icon"></i>Google Keep<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://web.whatsapp.com/" target="_blank"><i class="ti ti-brand-whatsapp link-icon"></i>WhatsApp<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://ymca360.org/classes" target="_blank"><i class="ti ti-swimming link-icon"></i>My YMCA<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://mychart.covh.org/MyChart/Authentication/Login?postloginurl=inside%2Easp%3Fmode%3Dhistques%26src%3Decheckin%26submit%3Dtrue%26Qtn%3D1" target="_blank"><i class="ti ti-stethoscope link-icon"></i>MyChart<i class="ti ti-external-link ext"></i></a></li>
       </ul>
     </div>
@@ -471,6 +673,7 @@
         <li><a href="https://robin-hershkowitz.github.io/HIIT/" target="_blank"><i class="ti ti-bolt link-icon"></i>HIIT workout tool<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://claude.ai/project/019e9d6b-e779-74d6-9c80-a73cb27d1981" target="_blank"><i class="ti ti-pencil link-icon"></i>HIIT Planning<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://www.katalystfitnessma.com/schedule" target="_blank"><i class="ti ti-calendar link-icon"></i>Katalyst Fitness<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://ymca360.org/classes" target="_blank"><i class="ti ti-swimming link-icon"></i>My YMCA<i class="ti ti-external-link ext"></i></a></li>
       </ul>
     </div>
 
@@ -585,6 +788,24 @@
       </ul>
     </div>
 
+    <div class="modal" id="modal-capitalism" style="--card-color:#f59e0b;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-shopping-bag"></i> Capitalism</h2>
+      <ul class="links">
+        <li><a href="https://www.quince.com/" target="_blank"><i class="ti ti-hanger link-icon"></i>Quince<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://lucyandyak.com/" target="_blank"><i class="ti ti-hanger link-icon"></i>Lucy &amp; Yak<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.dillards.com/" target="_blank"><i class="ti ti-building-store link-icon"></i>Dillard's<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.nordstromrack.com/" target="_blank"><i class="ti ti-building-store link-icon"></i>Nordstrom Rack<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.lacoste.com/us/" target="_blank"><i class="ti ti-shirt link-icon"></i>Lacoste<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://mokuyobi.com/" target="_blank"><i class="ti ti-backpack link-icon"></i>Mokuyobi<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://athleta.gap.com/" target="_blank"><i class="ti ti-stretching link-icon"></i>Athleta<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.outdoorvoices.com/" target="_blank"><i class="ti ti-stretching link-icon"></i>Outdoor Voices<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://girlfriend.com/" target="_blank"><i class="ti ti-stretching link-icon"></i>Girlfriend Collective<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.freepeople.com/" target="_blank"><i class="ti ti-hanger link-icon"></i>Free People<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://www.amazon.com/" target="_blank"><i class="ti ti-brand-amazon link-icon"></i>Amazon<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
 
   </div>
 
@@ -595,7 +816,7 @@
         <span style="font-family:'Fraunces', serif; font-size:19px; font-weight:600; color:#0ea5e9;">Calendar</span>
       </div>
       <div style="border-radius:8px; overflow:hidden;">
-        <iframe src="https://calendar.google.com/calendar/embed?src=robinhershkowitz%40gmail.com&src=b344fe8266ec87c0a6c15f62f44f9cd91e6ce8601cb6a73659cd251a2813d2e1%40group.calendar.google.com&src=8af9d69cfc86d747806e307599852a4d6cf94d3d7806c5e9a289bc082214edcd%40group.calendar.google.com&src=41d046f16141125eb25a8f273328fb8758d0ba4f59f34d4255bb95b0f9eeeacb%40group.calendar.google.com&ctz=America%2FNew_York&mode=AGENDA&showTitle=0&showNav=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0" style="border:0; width:100%; height:400px; border-radius:8px;" frameborder="0" scrolling="no"></iframe>
+        <iframe class="cal-frame" src="https://calendar.google.com/calendar/embed?src=robinhershkowitz%40gmail.com&src=b344fe8266ec87c0a6c15f62f44f9cd91e6ce8601cb6a73659cd251a2813d2e1%40group.calendar.google.com&src=8af9d69cfc86d747806e307599852a4d6cf94d3d7806c5e9a289bc082214edcd%40group.calendar.google.com&src=41d046f16141125eb25a8f273328fb8758d0ba4f59f34d4255bb95b0f9eeeacb%40group.calendar.google.com&ctz=America%2FNew_York&bgcolor=%23FFFFFF&mode=AGENDA&showTitle=0&showNav=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0" frameborder="0" scrolling="no"></iframe>
       </div>
     </div>
   </div>
@@ -621,19 +842,27 @@
 
   async function fetchWeather() {
     try {
-      const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,weathercode&daily=sunrise,sunset&temperature_unit=fahrenheit&timezone=America%2FNew_York`);
+      const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,weathercode&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,precipitation_probability_max&temperature_unit=fahrenheit&timezone=America%2FNew_York`);
       const d = await r.json();
       const temp = Math.round(d.current.temperature_2m);
       const info = WMO[d.current.weathercode] || {i:'ti-cloud',l:''};
       const fmt = s => new Date(s).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+      const hi = Math.round(d.daily.temperature_2m_max[0]);
+      const lo = Math.round(d.daily.temperature_2m_min[0]);
+      const pop = d.daily.precipitation_probability_max[0];
       document.getElementById('weather').innerHTML = `<i class="ti ${info.i}"></i><span>${temp}°F ${info.l}</span>`;
+      document.getElementById('hilo').innerHTML =
+        `<span class="hi"><i class="ti ti-arrow-up"></i>${hi}°</span>` +
+        `<span class="lo"><i class="ti ti-arrow-down"></i>${lo}°</span>` +
+        (pop != null ? `<span class="pop"><i class="ti ti-droplet"></i>${pop}%</span>` : '');
       document.getElementById('sun-times').innerHTML = `<i class="ti ti-sunrise"></i>${fmt(d.daily.sunrise[0])} <i class="ti ti-sunset"></i>${fmt(d.daily.sunset[0])}`;
     } catch(e) {}
   }
 
   const COUNTDOWNS = [
-    { label: 'Florida Trip', date: '2026-08-12', color: '#0ea5e9' },
-    { label: 'BOW',          date: '2026-09-11', color: '#10b981' },
+    { label: 'BOW',                 date: '2026-09-11', color: '#10b981' },
+    { label: 'Tap Class Begins',    date: '2026-09-14', color: '#f59e0b' },
+    { label: 'BSB Bootcamp Begins', date: '2026-10-01', color: '#8b5cf6' },
   ];
   function daysUntil(d) {
     const t = new Date(d+'T00:00:00'), n = new Date(); n.setHours(0,0,0,0);
@@ -664,16 +893,19 @@
   }
 
   const BOOKCLUBS = [
-    { label: 'Culture Club',             book: 'The Original — Nell Stevens',        date: '2026-08-02', color: '#e0407a' },
-    { label: 'Horror Book Club',          book: 'The Ruins',                          date: '2026-08-28', color: '#ef4444' },
-    { label: 'Final Girls Book Club',     book: 'Slewfoot',                           date: '2026-08-29', color: '#7c3aed' },
     { label: 'Ten Trees Classics',        book: 'Poe: Selected Works',                date: '2026-09-03', color: '#c2750a' },
     { label: 'Dark Pages Society',        book: 'Midnight Message — Avina St. Graves',date: '2026-09-05', color: '#6b3d6e' },
+    { label: 'Hummingbird Books',         book: 'I Who Have Never Known Men',         date: '2026-09-10', color: '#d946ef' },
+    { label: 'Sci-Fi/Fantasy (Porter Sq)',book: 'All That We See or Seem',            date: '2026-09-14', color: '#2563eb' },
     { label: 'Ten Trees Fantasy/Sci-Fi',  book: 'The Midnight Train',                 date: '2026-09-15', color: '#6c5ce7' },
+    { label: 'Queer Reads (McAuliffe)',   book: 'Summer Suns',                        date: '2026-09-15', color: '#7c3aed' },
     { label: 'Dreadfully Queer',          book: 'Muñeca — Cynthia Gómez',            date: '2026-09-16', color: '#0d9488' },
-    { label: 'Sci-Fi/Fantasy (Porter Sq)',book: 'All That We See or Seem',            date: '2026-09-21', color: '#2563eb' },
+    { label: 'Fox Library Book Group',    book: 'Sociopath: A Memoir',                date: '2026-09-16', color: '#ef4444' },
+    { label: 'Sci-Fi Book Club (Dracut)', book: 'Hyperion',                           date: '2026-09-16', color: '#059669' },
+    { label: 'Culture Study',             book: 'Last Night in Brooklyn',             date: '2026-09-20', color: '#e0407a' },
     { label: 'Boston Bookclub',           book: 'Klara and the Sun',                  date: '2026-09-21', color: '#0ea5e9' },
     { label: 'Porter Square Classics',    book: 'Lonesome Dove Part I',               date: '2026-09-28', color: '#2563eb' },
+    { label: 'Culture Study',             book: 'Country People',                     date: '2026-10-11', color: '#e0407a' },
     { label: 'Porter Square Classics',    book: 'Lonesome Dove Parts II & III',       date: '2026-12-07', color: '#2563eb' },
   ];
 
@@ -700,12 +932,125 @@
     });
   }
 
+  // Upcoming books shelf: covers for the next few book club reads
+  const shelf = document.getElementById('shelf');
+  const shelfCard = document.getElementById('upcoming-books');
+  const SHELF_COUNT = 6;
+
+  // Strip a trailing author credit so "Title — Author" searches cleanly
+  function splitBook(raw) {
+    const parts = raw.split(/\s+[—–]\s+/);
+    return { title: parts[0].trim(), author: parts[1] ? parts[1].trim() : '' };
+  }
+
+  async function findCover(title, author) {
+    try {
+      const url = 'https://openlibrary.org/search.json?limit=1&fields=cover_i'
+        + '&title=' + encodeURIComponent(title)
+        + (author ? '&author=' + encodeURIComponent(author) : '');
+      const r = await fetch(url);
+      const d = await r.json();
+      const id = d.docs && d.docs[0] && d.docs[0].cover_i;
+      return id ? `https://covers.openlibrary.org/b/id/${id}-M.jpg` : null;
+    } catch(e) { return null; }
+  }
+
+  const shelfBooks = upcomingBC.filter(bc => bc.book).slice(0, SHELF_COUNT);
+  if (shelfBooks.length === 0) {
+    shelfCard.style.display = 'none';
+  } else {
+    shelfBooks.forEach(async bc => {
+      const { title, author } = splitBook(bc.book);
+      const days = daysUntil(bc.date);
+      const el = document.createElement('div');
+      el.className = 'shelf-item';
+      el.style.setProperty('--sh-color', bc.color);
+      el.innerHTML = `
+        <div class="shelf-cover">
+          <div class="shelf-fallback">${title}</div>
+          <div class="shelf-badge">${days === 0 ? 'Today!' : days + '<span class="unit">days</span>'}</div>
+        </div>
+        <div class="shelf-title">${title}</div>
+        <div class="shelf-club">${bc.label}</div>
+      `;
+      shelf.appendChild(el);
+      const src = await findCover(title, author);
+      if (src) {
+        const img = new Image();
+        img.onload = () => {
+          const box = el.querySelector('.shelf-cover');
+          const fb = box.querySelector('.shelf-fallback');
+          box.insertBefore(img, fb);
+          fb.remove();
+        };
+        img.src = src;
+      }
+    });
+  }
+
   function openModal(id) {
     document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
     const modal = document.getElementById('modal-' + id);
     if (modal) modal.style.display = 'block';
     document.getElementById('overlay').classList.add('open');
   }
+
+  // Build a search index from every link inside every modal
+  const LINK_INDEX = [];
+  document.querySelectorAll('.modal').forEach(modal => {
+    const cat = (modal.querySelector('h2')?.textContent || '').trim();
+    const color = modal.style.getPropertyValue('--card-color') || '';
+    const icon = modal.querySelector('h2 i')?.className || 'ti ti-link';
+    modal.querySelectorAll('ul.links a').forEach(a => {
+      LINK_INDEX.push({
+        name: a.textContent.trim(),
+        href: a.getAttribute('href'),
+        target: a.getAttribute('target') || '',
+        cat, color, icon
+      });
+    });
+  });
+
+  const searchWrap = document.querySelector('.search-wrap');
+  const searchInput = document.getElementById('link-search');
+  const searchResults = document.getElementById('search-results');
+  const tileGrid = document.getElementById('tile-grid');
+
+  function renderSearch() {
+    const q = searchInput.value.trim().toLowerCase();
+    searchWrap.classList.toggle('has-text', q.length > 0);
+    if (!q) {
+      searchResults.classList.remove('active');
+      searchResults.innerHTML = '';
+      tileGrid.style.display = '';
+      return;
+    }
+    const hits = LINK_INDEX.filter(l =>
+      l.name.toLowerCase().includes(q) || l.cat.toLowerCase().includes(q)
+    ).slice(0, 25);
+    searchResults.innerHTML = hits.length
+      ? hits.map(l => `
+          <a href="${l.href}" ${l.target ? `target="${l.target}"` : ''} style="--r-color:${l.color};">
+            <i class="${l.icon}"></i>${l.name}<span class="r-cat">${l.cat}</span>
+          </a>`).join('')
+      : '<div class="r-empty">No links match that.</div>';
+    searchResults.classList.add('active');
+    tileGrid.style.display = 'none';
+  }
+
+  searchInput.addEventListener('input', renderSearch);
+  document.getElementById('search-clear').addEventListener('click', () => {
+    searchInput.value = '';
+    renderSearch();
+    searchInput.focus();
+  });
+  searchInput.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { searchInput.value = ''; renderSearch(); searchInput.blur(); }
+    if (e.key === 'Enter') {
+      const first = searchResults.querySelector('a');
+      if (first) first.click();
+    }
+  });
   function closeModal() {
     document.getElementById('overlay').classList.remove('open');
   }

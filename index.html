@@ -219,87 +219,22 @@
     text-overflow: ellipsis;
   }
   .bc-date { font-size: 10px; color: var(--text-secondary); }
+  .bc-item.tentative { opacity: 0.45; }
+  .bc-item.tentative .bc-label::after {
+    content: '?';
+    font-weight: 700;
+    margin-left: 3px;
+  }
 
-  /* Upcoming books shelf */
-  .shelf-card {
+  /* Later book clubs card (30+ days out) */
+  .bc-later-card {
     background: var(--card-bg);
     border: 2px solid var(--border);
-    border-left: 5px solid #c2750a;
+    border-left: 5px solid #5c6b7a;
     border-radius: 12px;
     padding: 12px 16px;
-    margin-bottom: 14px;
+    margin-top: 24px;
   }
-  .shelf {
-    display: flex;
-    gap: 14px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-  }
-  .shelf-item {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    width: 92px;
-    flex-shrink: 0;
-  }
-  .shelf-cover {
-    position: relative;
-    width: 92px;
-    height: 138px;
-    border-radius: 6px;
-    background: color-mix(in srgb, var(--sh-color, var(--accent)) 18%, var(--card-bg));
-    border: 2px solid var(--sh-color, var(--border));
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .shelf-cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .shelf-fallback {
-    font-family: 'Fraunces', serif;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text);
-    text-align: center;
-    padding: 8px 8px 26px;
-    line-height: 1.25;
-  }
-  .shelf-badge {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--sh-color, var(--accent));
-    color: #1a1814;
-    font-family: 'Fraunces', serif;
-    font-size: 15px;
-    font-weight: 700;
-    text-align: center;
-    padding: 3px 4px 4px;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-  }
-  .shelf-badge .unit {
-    font-family: 'Inter', sans-serif;
-    font-size: 9px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    opacity: 0.75;
-    margin-left: 2px;
-  }
-  .shelf-title {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1.3;
-  }
-  .shelf-club { font-size: 10px; color: var(--text-secondary); line-height: 1.3; }
 
   /* Embedded calendar: invert the frame to force a dark agenda */
   .cal-frame {
@@ -616,12 +551,6 @@
     <div class="bc-grid" id="bc-grid"></div>
   </div>
 
-  <!-- Upcoming books -->
-  <div class="shelf-card" id="upcoming-books">
-    <div class="bc-header">Up next</div>
-    <div class="shelf" id="shelf"></div>
-  </div>
-
   <!-- Link search -->
   <div class="search-wrap">
     <i class="ti ti-search search-icon"></i>
@@ -821,6 +750,11 @@
     </div>
   </div>
 
+  <div class="bc-later-card" id="bookclub-later">
+    <div class="bc-header">Further out</div>
+    <div class="bc-grid" id="bc-later-grid"></div>
+  </div>
+
   <footer>Updated <span id="edited"></span></footer>
 </div>
 
@@ -893,32 +827,33 @@
   }
 
   const BOOKCLUBS = [
-    { label: 'Ten Trees Classics',        book: 'Poe: Selected Works',                date: '2026-09-03', color: '#c2750a' },
-    { label: 'Dark Pages Society',        book: 'Midnight Message — Avina St. Graves',date: '2026-09-05', color: '#6b3d6e' },
-    { label: 'Hummingbird Books',         book: 'I Who Have Never Known Men',         date: '2026-09-10', color: '#d946ef' },
-    { label: 'Sci-Fi/Fantasy (Porter Sq)',book: 'All That We See or Seem',            date: '2026-09-14', color: '#2563eb' },
-    { label: 'Ten Trees Fantasy/Sci-Fi',  book: 'The Midnight Train',                 date: '2026-09-15', color: '#6c5ce7' },
-    { label: 'Queer Reads (McAuliffe)',   book: 'Summer Suns',                        date: '2026-09-15', color: '#7c3aed' },
-    { label: 'Dreadfully Queer',          book: 'Muñeca — Cynthia Gómez',            date: '2026-09-16', color: '#0d9488' },
-    { label: 'Fox Library Book Group',    book: 'Sociopath: A Memoir',                date: '2026-09-16', color: '#ef4444' },
-    { label: 'Sci-Fi Book Club (Dracut)', book: 'Hyperion',                           date: '2026-09-16', color: '#059669' },
-    { label: 'Culture Study',             book: 'Last Night in Brooklyn',             date: '2026-09-20', color: '#e0407a' },
-    { label: 'Boston Bookclub',           book: 'Klara and the Sun',                  date: '2026-09-21', color: '#0ea5e9' },
-    { label: 'Porter Square Classics',    book: 'Lonesome Dove Part I',               date: '2026-09-28', color: '#2563eb' },
-    { label: 'Culture Study',             book: 'Country People',                     date: '2026-10-11', color: '#e0407a' },
-    { label: 'Porter Square Classics',    book: 'Lonesome Dove Parts II & III',       date: '2026-12-07', color: '#2563eb' },
+    { label: 'Ten Trees Fantasy/Sci-Fi',  book: 'The Midnight Train',            date: '2026-09-15', color: '#6c5ce7', tentative: true },
+    { label: 'Queer Reads (McAuliffe)',   book: 'Summer Suns',                   date: '2026-09-15', color: '#7c3aed', tentative: true },
+    { label: 'Fox Library Book Group',    book: 'Sociopath: A Memoir',           date: '2026-09-16', color: '#ef4444', tentative: true },
+    { label: 'Culture Study',             book: 'Last Night in Brooklyn',        date: '2026-09-20', color: '#e0407a' },
+    { label: 'Boston Bookclub',           book: 'Klara and the Sun',             date: '2026-09-21', color: '#0ea5e9' },
+    { label: 'Dreadfully Queer',          book: 'Our Share of Night',            date: '2026-09-27', color: '#0d9488', tentative: true },
+    { label: 'Porter Square Classics',    book: 'Lonesome Dove Part I',          date: '2026-09-28', color: '#2563eb' },
+    { label: 'Dark Pages',                book: "X's and O's",                   date: '2026-10-03', color: '#6b3d6e' },
+    { label: 'Culture Study',             book: 'Country People',                date: '2026-10-11', color: '#e0407a' },
+    { label: 'Dreadfully Queer',          book: 'Grief Eater',                   date: '2026-10-14', color: '#0d9488', tentative: true },
+    { label: 'Boston Bookclub',           book: 'Yesteryear',                    date: '2026-10-19', color: '#0ea5e9' },
+    { label: 'Harvard Square Book Circle',book: 'Ghostland',                     date: '2026-10-25', color: '#c2750a' },
+    { label: 'Robbins Library',           book: 'A Taste for Poison',            date: '2026-10-26', color: '#059669' },
+    { label: 'Dreadfully Queer',          book: 'Bone of My Bone',               date: '2026-11-01', color: '#0d9488', tentative: true },
+    { label: 'Dreadfully Queer',          book: 'Dengue Boy',                    date: '2026-11-18', color: '#0d9488', tentative: true },
+    { label: 'Dreadfully Queer',          book: 'Carrying',                      date: '2026-11-29', color: '#0d9488', tentative: true },
+    { label: 'Porter Square Classics',    book: 'Lonesome Dove Parts II & III',  date: '2026-12-07', color: '#2563eb' },
   ];
 
-  const bcGrid = document.getElementById('bc-grid');
-  const bcCard = document.getElementById('bookclub-countdowns');
-  const upcomingBC = BOOKCLUBS.filter(bc => daysUntil(bc.date) >= 0);
-  if (upcomingBC.length === 0) {
-    bcCard.style.display = 'none';
-  } else {
-    upcomingBC.forEach(bc => {
+  const HORIZON = 30;
+
+  function renderBC(list, grid) {
+    list.forEach(bc => {
       const days = daysUntil(bc.date);
       const el = document.createElement('div');
-      el.className = 'bc-item';
+      el.className = 'bc-item'
+        + (bc.tentative ? ' tentative' : '');
       el.style.setProperty('--cd-color', bc.color);
       el.innerHTML = `
         <div class="bc-days">${days === 0 ? '!' : days}</div>
@@ -928,64 +863,26 @@
           <div class="bc-date">${days === 0 ? 'Today!' : fmtDate(bc.date)}</div>
         </div>
       `;
-      bcGrid.appendChild(el);
+      grid.appendChild(el);
     });
   }
 
-  // Upcoming books shelf: covers for the next few book club reads
-  const shelf = document.getElementById('shelf');
-  const shelfCard = document.getElementById('upcoming-books');
-  const SHELF_COUNT = 6;
+  const upcomingBC = BOOKCLUBS.filter(bc => daysUntil(bc.date) >= 0);
+  const soonBC  = upcomingBC.filter(bc => daysUntil(bc.date) <= HORIZON);
+  const laterBC = upcomingBC.filter(bc => daysUntil(bc.date) >  HORIZON);
 
-  // Strip a trailing author credit so "Title — Author" searches cleanly
-  function splitBook(raw) {
-    const parts = raw.split(/\s+[—–]\s+/);
-    return { title: parts[0].trim(), author: parts[1] ? parts[1].trim() : '' };
-  }
-
-  async function findCover(title, author) {
-    try {
-      const url = 'https://openlibrary.org/search.json?limit=1&fields=cover_i'
-        + '&title=' + encodeURIComponent(title)
-        + (author ? '&author=' + encodeURIComponent(author) : '');
-      const r = await fetch(url);
-      const d = await r.json();
-      const id = d.docs && d.docs[0] && d.docs[0].cover_i;
-      return id ? `https://covers.openlibrary.org/b/id/${id}-M.jpg` : null;
-    } catch(e) { return null; }
-  }
-
-  const shelfBooks = upcomingBC.filter(bc => bc.book).slice(0, SHELF_COUNT);
-  if (shelfBooks.length === 0) {
-    shelfCard.style.display = 'none';
+  const bcCard = document.getElementById('bookclub-countdowns');
+  if (soonBC.length === 0) {
+    bcCard.style.display = 'none';
   } else {
-    shelfBooks.forEach(async bc => {
-      const { title, author } = splitBook(bc.book);
-      const days = daysUntil(bc.date);
-      const el = document.createElement('div');
-      el.className = 'shelf-item';
-      el.style.setProperty('--sh-color', bc.color);
-      el.innerHTML = `
-        <div class="shelf-cover">
-          <div class="shelf-fallback">${title}</div>
-          <div class="shelf-badge">${days === 0 ? 'Today!' : days + '<span class="unit">days</span>'}</div>
-        </div>
-        <div class="shelf-title">${title}</div>
-        <div class="shelf-club">${bc.label}</div>
-      `;
-      shelf.appendChild(el);
-      const src = await findCover(title, author);
-      if (src) {
-        const img = new Image();
-        img.onload = () => {
-          const box = el.querySelector('.shelf-cover');
-          const fb = box.querySelector('.shelf-fallback');
-          box.insertBefore(img, fb);
-          fb.remove();
-        };
-        img.src = src;
-      }
-    });
+    renderBC(soonBC, document.getElementById('bc-grid'));
+  }
+
+  const laterCard = document.getElementById('bookclub-later');
+  if (laterBC.length === 0) {
+    laterCard.style.display = 'none';
+  } else {
+    renderBC(laterBC, document.getElementById('bc-later-grid'));
   }
 
   function openModal(id) {

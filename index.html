@@ -410,6 +410,26 @@
   }
   ul.links li a:hover .ext { opacity: 1; }
 
+  /* Grouped subheads + step notes inside link lists */
+  ul.links li.link-subhead {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-top: 10px;
+    padding: 0 2px 4px;
+    border-bottom: 1px solid rgba(255,247,235,0.10);
+  }
+  ul.links li .link-note {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 11.5px;
+    line-height: 1.35;
+    color: var(--text-secondary);
+    margin: 4px 0 2px 33px;
+  }
+
   /* Modal system */
   .modal-overlay {
     display: none;
@@ -564,6 +584,7 @@
   <div class="grid" id="tile-grid">
     <div class="tile" style="--card-color:#6c5ce7;" onclick="openModal('everyday')"><div class="tile-header"><i class="ti ti-checkbox"></i><span class="swatch"></span><h2>Every day</h2></div></div>
     <div class="tile" style="--card-color:#2563eb;" onclick="openModal('events')"><div class="tile-header"><i class="ti ti-ticket"></i><span class="swatch"></span><h2>Events &amp; community</h2></div></div>
+    <div class="tile" style="--card-color:#4d7c0f;" onclick="openModal('outdoors')"><div class="tile-header"><i class="ti ti-trees"></i><span class="swatch"></span><h2>Outdoors</h2></div></div>
     <div class="tile" style="--card-color:#10b981;" onclick="openModal('fitness')"><div class="tile-header"><i class="ti ti-heart"></i><span class="swatch"></span><h2>Fitness</h2></div></div>
     <div class="tile" style="--card-color:#0ea5e9;" onclick="openModal('skating')"><div class="tile-header"><i class="ti ti-ice-skating"></i><span class="swatch"></span><h2>Skating</h2></div></div>
     <div class="tile" style="--card-color:#c2750a;" onclick="openModal('reading')"><div class="tile-header"><i class="ti ti-book"></i><span class="swatch"></span><h2>Reading</h2></div></div>
@@ -662,6 +683,31 @@
         <li><a href="https://ccae.org/" target="_blank"><i class="ti ti-school link-icon"></i>Cambridge Center for Adult Education<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://www.hopartscenter.org/" target="_blank"><i class="ti ti-music link-icon"></i>Hop Arts Center<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://www.amctheatres.com/movie-theatres/boston/amc-framingham-16" target="_blank"><i class="ti ti-movie link-icon"></i>AMC Framingham 16<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="modal" id="modal-outdoors" style="--card-color:#4d7c0f;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-trees"></i> Outdoors</h2>
+      <ul class="links">
+        <li><a href="https://www.eventbrite.com/o/35223489473" target="_blank"><i class="ti ti-campfire link-icon"></i>Alliance for Wilderness Engagement<i class="ti ti-external-link ext"></i></a>
+          <div class="link-note">Forest therapy, night sky, and seasonal circles</div></li>
+        <li><a href="https://www.mass.gov/info-details/masswildlife-calendar" target="_blank"><i class="ti ti-calendar-event link-icon"></i>MassWildlife calendar<i class="ti ti-external-link ext"></i></a>
+          <div class="link-note">Workshops, walks, and fishing clinics statewide</div></li>
+        <li><a href="https://orienteeringusa.org/events/permanent-courses/" target="_blank"><i class="ti ti-map-pin link-icon"></i>Orienteering USA permanent courses<i class="ti ti-external-link ext"></i></a>
+          <div class="link-note">Year-round DIY courses; find by ZIP and radius</div></li>
+        <li><a href="https://www.wildlife.nh.gov/fishing-new-hampshire/learn-fish-lets-go-fishing-program" target="_blank"><i class="ti ti-fish link-icon"></i>NH Let&rsquo;s Go Fishing<i class="ti ti-external-link ext"></i></a>
+          <div class="link-note">Free intro classes; group bookings need 30 days notice</div></li>
+
+        <li class="link-subhead">Hunter education</li>
+        <li><a href="https://www.huntercourse.com/usa/massachusetts/" target="_blank"><i class="ti ti-device-laptop link-icon"></i>HUNTERcourse Massachusetts<i class="ti ti-external-link ext"></i></a>
+          <div class="link-note">MA step 1 &middot; free online study guide, 16 chapters</div></li>
+        <li><a href="https://www.mass.gov/info-details/basic-hunter-education-courses" target="_blank"><i class="ti ti-target-arrow link-icon"></i>MassWildlife basic hunter ed<i class="ti ti-external-link ext"></i></a>
+          <div class="link-note">MA step 2 &middot; register for the in-person field day and exam</div></li>
+        <li><a href="https://www.mass.gov/info-details/hunting-with-a-firearm-in-massachusetts" target="_blank"><i class="ti ti-license link-icon"></i>Hunting with a firearm in MA<i class="ti ti-external-link ext"></i></a>
+          <div class="link-note">MA licensing overview; hunter ed cert also satisfies the basic firearms course</div></li>
+        <li><a href="https://nh-events-web.s3licensing.com/Event/AllEvents?EventTypeID=166&amp;ClassActivity=21" target="_blank"><i class="ti ti-mountain link-icon"></i>NH Fish &amp; Game course listings<i class="ti ti-external-link ext"></i></a>
+          <div class="link-note">New Hampshire &middot; full traditional hunter/bowhunter course</div></li>
       </ul>
     </div>
 
@@ -797,6 +843,7 @@
     { label: 'BOW',                 date: '2026-09-11', color: '#10b981' },
     { label: 'Tap Class Begins',    date: '2026-09-14', color: '#f59e0b' },
     { label: 'BSB Bootcamp Begins', date: '2026-10-01', color: '#8b5cf6' },
+    { label: 'Thanksgiving',        date: '2026-11-26', color: '#c2750a' },
   ];
   function daysUntil(d) {
     const t = new Date(d+'T00:00:00'), n = new Date(); n.setHours(0,0,0,0);

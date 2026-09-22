@@ -558,6 +558,14 @@
       <img src="https://claude.ai/favicon.ico" width="36" height="36" style="border-radius:6px;" onerror="this.style.display='none'">
       <span>Claude</span>
     </a>
+    <a href="https://open.spotify.com/" target="_blank" style="--ic-color:#1db954;">
+      <i class="ti ti-brand-spotify" style="font-size:36px; line-height:36px;"></i>
+      <span>Spotify</span>
+    </a>
+    <a href="https://www.google.com/maps/dir/110+Riverpath+Drive,+Framingham,+MA/51+Sawyer+Road,+Waltham,+MA" target="_blank" style="--ic-color:#f59e0b;">
+      <i class="ti ti-car" style="font-size:36px; line-height:36px;"></i>
+      <span>Commute</span>
+    </a>
   </div>
 
   <!-- Trip countdowns -->
@@ -596,6 +604,7 @@
     <div class="tile" style="--card-color:#e0407a;" onclick="openModal('derby')"><div class="tile-header"><i class="ti ti-shirt-sport"></i><span class="swatch"></span><h2>Roller derby</h2></div></div>
     <div class="tile" style="--card-color:#a89cf7;" onclick="openModal('links')"><div class="tile-header"><i class="ti ti-link"></i><span class="swatch"></span><h2>Links</h2></div></div>
     <div class="tile" style="--card-color:#f59e0b;" onclick="openModal('capitalism')"><div class="tile-header"><i class="ti ti-shopping-bag"></i><span class="swatch"></span><h2>Capitalism</h2></div></div>
+    <div class="tile" style="--card-color:#e0407a;" onclick="openModal('claude')"><div class="tile-header"><i class="ti ti-sparkles"></i><span class="swatch"></span><h2>Claude</h2></div></div>
   </div>
 
   <!-- Modal overlay -->
@@ -608,7 +617,6 @@
         <li><a href="workfromhome.html" target="_blank"><i class="ti ti-calendar-event link-icon"></i>Daily schedule tracker<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="atwork.html" target="_blank"><i class="ti ti-building link-icon"></i>At work day<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="cleaning.html" target="_blank"><i class="ti ti-spray link-icon"></i>Cleaning timers<i class="ti ti-external-link ext"></i></a></li>
-        <li><a href="https://www.google.com/maps/dir/110+Riverpath+Drive,+Framingham,+MA/51+Sawyer+Road,+Waltham,+MA" target="_blank"><i class="ti ti-car link-icon"></i>Check commute<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://calendar.google.com/calendar/u/0/r" target="_blank"><i class="ti ti-calendar link-icon"></i>Google Calendar<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://keep.google.com/u/0/" target="_blank"><i class="ti ti-note link-icon"></i>Google Keep<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://web.whatsapp.com/" target="_blank"><i class="ti ti-brand-whatsapp link-icon"></i>WhatsApp<i class="ti ti-external-link ext"></i></a></li>
@@ -763,10 +771,26 @@
       </ul>
     </div>
 
+    <div class="modal" id="modal-claude" style="--card-color:#e0407a;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-sparkles"></i> Claude</h2>
+      <ul class="links">
+        <li><a href="https://claude.ai/project/019f22b1-0e09-736f-a2e9-f0245983f03a" target="_blank"><i class="ti ti-folder link-icon"></i>General organization<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://claude.ai/project/019e9d6b-e779-74d6-9c80-a73cb27d1981" target="_blank"><i class="ti ti-folder link-icon"></i>HIIT<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://claude.ai/project/019ebbfd-dc59-7755-9acc-ea5923142cdc" target="_blank"><i class="ti ti-folder link-icon"></i>Calendar and event planning<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://claude.ai/project/019e46e4-c7a4-77b7-b3ea-927786d39615" target="_blank"><i class="ti ti-folder link-icon"></i>BOLLI<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://claude.ai/project/019e7db4-50e4-764a-924e-2f05bef322be" target="_blank"><i class="ti ti-folder link-icon"></i>Skating<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://claude.ai/project/01a09fab-f35d-7277-851e-aac9e19da05e" target="_blank"><i class="ti ti-folder link-icon"></i>Tap<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://claude.ai/project/019eb3d7-d4fd-7621-a6bb-bff373e2c3e7" target="_blank"><i class="ti ti-folder link-icon"></i>Health coverage<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://claude.ai/project/019ec5c6-d96e-7362-9aeb-265ead17fc3a" target="_blank"><i class="ti ti-folder link-icon"></i>Cleaning<i class="ti ti-external-link ext"></i></a></li>
+      </ul>
+    </div>
+
     <div class="modal" id="modal-capitalism" style="--card-color:#f59e0b;" onclick="event.stopPropagation()">
       <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
       <h2><i class="ti ti-shopping-bag"></i> Capitalism</h2>
       <ul class="links">
+        <li><a href="https://claude.ai/artifact/KdDaq797wsHmPe81UTvChn" target="_blank"><i class="ti ti-arrow-back-up link-icon"></i>Keep or Return<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://www.quince.com/" target="_blank"><i class="ti ti-hanger link-icon"></i>Quince<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://lucyandyak.com/" target="_blank"><i class="ti ti-hanger link-icon"></i>Lucy &amp; Yak<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://www.dillards.com/" target="_blank"><i class="ti ti-building-store link-icon"></i>Dillard's<i class="ti ti-external-link ext"></i></a></li>
@@ -840,8 +864,6 @@
   }
 
   const COUNTDOWNS = [
-    { label: 'BOW',                 date: '2026-09-11', color: '#10b981' },
-    { label: 'Tap Class Begins',    date: '2026-09-14', color: '#f59e0b' },
     { label: 'BSB Bootcamp Begins', date: '2026-10-01', color: '#8b5cf6' },
     { label: 'Thanksgiving',        date: '2026-11-26', color: '#c2750a' },
   ];
@@ -874,23 +896,26 @@
   }
 
   const BOOKCLUBS = [
-    { label: 'Ten Trees Fantasy/Sci-Fi',  book: 'The Midnight Train',            date: '2026-09-15', color: '#6c5ce7', tentative: true },
-    { label: 'Queer Reads (McAuliffe)',   book: 'Summer Suns',                   date: '2026-09-15', color: '#7c3aed', tentative: true },
-    { label: 'Fox Library Book Group',    book: 'Sociopath: A Memoir',           date: '2026-09-16', color: '#ef4444', tentative: true },
-    { label: 'Culture Study',             book: 'Last Night in Brooklyn',        date: '2026-09-20', color: '#e0407a' },
-    { label: 'Boston Bookclub',           book: 'Klara and the Sun',             date: '2026-09-21', color: '#0ea5e9' },
-    { label: 'Dreadfully Queer',          book: 'Our Share of Night',            date: '2026-09-27', color: '#0d9488', tentative: true },
-    { label: 'Porter Square Classics',    book: 'Lonesome Dove Part I',          date: '2026-09-28', color: '#2563eb' },
-    { label: 'Dark Pages',                book: "X's and O's",                   date: '2026-10-03', color: '#6b3d6e' },
-    { label: 'Culture Study',             book: 'Country People',                date: '2026-10-11', color: '#e0407a' },
-    { label: 'Dreadfully Queer',          book: 'Grief Eater',                   date: '2026-10-14', color: '#0d9488', tentative: true },
-    { label: 'Boston Bookclub',           book: 'Yesteryear',                    date: '2026-10-19', color: '#0ea5e9' },
-    { label: 'Harvard Square Book Circle',book: 'Ghostland',                     date: '2026-10-25', color: '#c2750a' },
-    { label: 'Robbins Library',           book: 'A Taste for Poison',            date: '2026-10-26', color: '#059669' },
-    { label: 'Dreadfully Queer',          book: 'Bone of My Bone',               date: '2026-11-01', color: '#0d9488', tentative: true },
-    { label: 'Dreadfully Queer',          book: 'Dengue Boy',                    date: '2026-11-18', color: '#0d9488', tentative: true },
-    { label: 'Dreadfully Queer',          book: 'Carrying',                      date: '2026-11-29', color: '#0d9488', tentative: true },
-    { label: 'Porter Square Classics',    book: 'Lonesome Dove Parts II & III',  date: '2026-12-07', color: '#2563eb' },
+    { label: 'Thrills and Chills',         book: 'Strange Pictures',             date: '2026-09-23', color: '#b91c1c' },
+    { label: 'Trident Sci-Fi',             book: 'The Everlasting',              date: '2026-09-23', color: '#4f46e5' },
+    { label: 'An Unlikely Story SFF',      book: 'A Deadly Education',           date: '2026-09-24', color: '#9333ea' },
+    { label: 'Crose Nest',                 book: 'Black Flame',                  date: '2026-09-26', color: '#65a30d' },
+    { label: 'Porter Square Classics',     book: 'Lonesome Dove Part I',         date: '2026-09-28', color: '#2563eb' },
+    { label: 'Eastie Book Babes',          book: 'If We Were Villains',          date: '2026-09-29', color: '#be185d' },
+    { label: 'Dark Pages',                 book: "X's and O's",                  date: '2026-10-03', color: '#6b3d6e' },
+    { label: 'Culture Study',              book: 'Country People',               date: '2026-10-11', color: '#e0407a' },
+    { label: 'Porter Square SFF',          book: 'Title TBD',                    date: '2026-10-12', color: '#0891b2' },
+    { label: 'Ten Trees Literary',         book: 'Title TBD',                    date: '2026-10-13', color: '#6c5ce7' },
+    { label: 'Dreadfully Queer',           book: 'Grief Eater',                  date: '2026-10-14', color: '#0d9488', tentative: true },
+    { label: 'Boston Bookclub',            book: 'Yesteryear',                   date: '2026-10-19', color: '#0ea5e9', tentative: true },
+    { label: 'Porter Square Classics',     book: 'Meg Mason event',              date: '2026-10-19', color: '#2563eb' },
+    { label: 'Harvard Square Book Circle', book: 'Ghostland',                    date: '2026-10-25', color: '#c2750a' },
+    { label: 'Robbins Library',            book: 'A Taste for Poison',           date: '2026-10-26', color: '#059669' },
+    { label: 'Dreadfully Queer',           book: 'Bone of My Bone',              date: '2026-11-01', color: '#0d9488', tentative: true },
+    { label: 'Dreadfully Queer',           book: 'Dengue Boy',                   date: '2026-11-18', color: '#0d9488', tentative: true },
+    { label: 'Dreadfully Queer',           book: 'Carrying',                     date: '2026-11-29', color: '#0d9488', tentative: true },
+    { label: 'Porter Square Classics',     book: 'Lonesome Dove Parts II & III', date: '2026-12-07', color: '#2563eb' },
+    { label: 'Porter Square Classics',     book: 'Pick TBD',                     date: '2027-01-25', color: '#2563eb' },
   ];
 
   const HORIZON = 30;

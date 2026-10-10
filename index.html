@@ -6,7 +6,7 @@
 <title>Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -38,7 +38,7 @@
     gap: 8px;
   }
   .header h1 {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 34px;
     font-weight: 600;
     font-style: normal;
@@ -53,7 +53,7 @@
     flex-wrap: wrap;
   }
   .header-date {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 20px;
     font-weight: 600;
     color: var(--text);
@@ -156,7 +156,7 @@
     margin-bottom: 2px;
   }
   .countdown-days {
-    font-family: 'Fraunces', serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 30px;
     font-weight: 700;
     color: var(--cd-color, var(--accent));
@@ -194,8 +194,8 @@
     min-width: 0;
   }
   .bc-days {
-    font-family: 'Fraunces', serif;
-    font-size: 18px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 20px;
     font-weight: 700;
     color: var(--cd-color, var(--accent));
     line-height: 1;
@@ -203,7 +203,7 @@
   }
   .bc-text { display: flex; flex-direction: column; min-width: 0; }
   .bc-label {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--text);
     white-space: nowrap;
@@ -211,14 +211,14 @@
     text-overflow: ellipsis;
   }
   .bc-book {
-    font-size: 10px;
+    font-size: 12px;
     color: var(--text-secondary);
     font-style: italic;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .bc-date { font-size: 10px; color: var(--text-secondary); }
+  .bc-date { font-size: 11px; color: var(--text-secondary); }
   .bc-item.tentative { opacity: 0.45; }
   .bc-item.tentative .bc-label::after {
     content: '?';
@@ -356,7 +356,7 @@
     flex-shrink: 0;
   }
   .card-header h2 {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 19px;
     font-weight: 600;
     margin: 0;
@@ -379,7 +379,7 @@
     border-radius: 8px;
     text-decoration: none;
     color: var(--text);
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 15px;
     font-weight: 500;
     font-style: normal;
@@ -412,7 +412,7 @@
 
   /* Grouped subheads + step notes inside link lists */
   ul.links li.link-subhead {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.10em;
@@ -455,7 +455,7 @@
     overflow-y: auto;
   }
   .modal h2 {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 22px;
     font-weight: 600;
     color: var(--card-color, var(--text));
@@ -503,7 +503,7 @@
   }
   .tile-header i { font-size: 20px; color: var(--card-color, var(--accent)); }
   .tile-header h2 {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 19px;
     font-weight: 600;
     margin: 0;
@@ -548,7 +548,7 @@
     </a>
     <a href="https://weather.com/weather/hourbyhour/l/Framingham+MA+USMA0311:1:US" target="_blank" style="--ic-color:#c2750a;">
       <img src="https://www.weather.com/favicon.ico" width="36" height="36" style="border-radius:6px; object-fit:contain;" onerror="this.style.display='none'">
-      <span>Hourly</span>
+      <span>Weather</span>
     </a>
     <a href="https://github.com/" target="_blank" style="--ic-color:#14b8a6;">
       <img src="https://github.githubassets.com/favicons/favicon.svg" width="36" height="36" style="border-radius:6px;" onerror="this.style.display='none'">
@@ -565,6 +565,10 @@
     <a href="https://www.google.com/maps/dir/110+Riverpath+Drive,+Framingham,+MA/51+Sawyer+Road,+Waltham,+MA" target="_blank" style="--ic-color:#f59e0b;">
       <i class="ti ti-car" style="font-size:36px; line-height:36px;"></i>
       <span>Commute</span>
+    </a>
+    <a href="https://www.icloud.com/find/" target="_blank" style="--ic-color:#94a3b8;">
+      <i class="ti ti-device-mobile-search" style="font-size:36px; line-height:36px;"></i>
+      <span>Find Phone</span>
     </a>
   </div>
 
@@ -704,6 +708,8 @@
         <li><a href="https://tridentbookscafe.com/events" target="_blank"><i class="ti ti-books link-icon"></i>Trident Booksellers Events<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://www.eventbrite.com/o/ten-trees-books-90035506473" target="_blank"><i class="ti ti-books link-icon"></i>Ten Trees Books Events<i class="ti ti-external-link ext"></i></a></li>
         <li><a href="https://anunlikelystory.indiecommerce.com/events" target="_blank"><i class="ti ti-books link-icon"></i>Unlikely Story Events<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://wellesleybooks.com/upcoming-events" target="_blank"><i class="ti ti-books link-icon"></i>Wellesley Books Events<i class="ti ti-external-link ext"></i></a></li>
+        <li><a href="https://brooklinebooksmith.com/upcoming-author-events" target="_blank"><i class="ti ti-books link-icon"></i>Brookline Booksmith Events<i class="ti ti-external-link ext"></i></a></li>
       </ul>
     </div>
 
@@ -791,7 +797,7 @@
     <div style="background: var(--card-bg); border: 2px solid var(--border); border-left: 5px solid #0ea5e9; border-radius: 12px; padding: 14px 16px;">
       <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
         <i class="ti ti-calendar" style="font-size:20px; color:#0ea5e9;"></i>
-        <span style="font-family:'Fraunces', serif; font-size:19px; font-weight:600; color:#0ea5e9;">Calendar</span>
+        <span style="font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size:19px; font-weight:600; color:#0ea5e9;">Calendar</span>
       </div>
       <div style="border-radius:8px; overflow:hidden;">
         <iframe class="cal-frame" src="https://calendar.google.com/calendar/embed?src=robinhershkowitz%40gmail.com&src=b344fe8266ec87c0a6c15f62f44f9cd91e6ce8601cb6a73659cd251a2813d2e1%40group.calendar.google.com&src=8af9d69cfc86d747806e307599852a4d6cf94d3d7806c5e9a289bc082214edcd%40group.calendar.google.com&src=41d046f16141125eb25a8f273328fb8758d0ba4f59f34d4255bb95b0f9eeeacb%40group.calendar.google.com&ctz=America%2FNew_York&bgcolor=%23FFFFFF&mode=AGENDA&showTitle=0&showNav=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0" frameborder="0" scrolling="no"></iframe>
@@ -843,7 +849,6 @@
   }
 
   const COUNTDOWNS = [
-    { label: 'BSB Bootcamp Begins', date: '2026-10-01', color: '#8b5cf6' },
     { label: 'Ample Access Outdoors', date: '2026-10-17', color: '#4d7c0f' },
     { label: 'Hunter Education Field Day', date: '2026-11-14', color: '#4d7c0f' },
     { label: 'Thanksgiving',        date: '2026-11-26', color: '#c2750a' },
@@ -877,24 +882,20 @@
   }
 
   const BOOKCLUBS = [
-    { label: 'Thrills and Chills',         book: 'Strange Pictures',             date: '2026-09-23', color: '#b91c1c' },
-    { label: 'Trident Sci-Fi',             book: 'The Everlasting',              date: '2026-09-23', color: '#4f46e5' },
-    { label: 'An Unlikely Story SFF',      book: 'A Deadly Education',           date: '2026-09-24', color: '#9333ea' },
-    { label: 'Crose Nest',                 book: 'Black Flame',                  date: '2026-09-26', color: '#65a30d' },
-    { label: 'Porter Square Classics',     book: 'Lonesome Dove Part I',         date: '2026-09-28', color: '#2563eb' },
-    { label: 'Eastie Book Babes',          book: 'If We Were Villains',          date: '2026-09-29', color: '#be185d' },
-    { label: 'Dark Pages',                 book: "X's and O's",                  date: '2026-10-03', color: '#6b3d6e' },
     { label: 'Culture Study',              book: 'Country People',               date: '2026-10-11', color: '#e0407a' },
-    { label: 'Porter Square SFF',          book: 'Title TBD',                    date: '2026-10-12', color: '#0891b2' },
-    { label: 'Ten Trees Literary',         book: 'Title TBD',                    date: '2026-10-13', color: '#6c5ce7' },
-    { label: 'Dreadfully Queer',           book: 'Grief Eater',                  date: '2026-10-14', color: '#0d9488', tentative: true },
-    { label: 'Boston Bookclub',            book: 'Yesteryear',                   date: '2026-10-19', color: '#0ea5e9', tentative: true },
-    { label: 'Porter Square Classics',     book: 'Meg Mason event',              date: '2026-10-19', color: '#2563eb' },
+    { label: 'Porter Square SFF',          book: 'The Adventures of Amina al-Sirafi', date: '2026-10-12', color: '#0891b2' },
+    { label: 'Ten Trees Literary',         book: 'The Witches of Cambridge',     date: '2026-10-13', color: '#6c5ce7' },
+    { label: 'Dreadfully Queer',           book: 'Grief Eater',                  date: '2026-10-14', color: '#0d9488' },
+    { label: 'Queer Romance',              book: 'No Body, No Crime',            date: '2026-10-18', color: '#db2777' },
+    { label: 'Boston Bookclub',            book: 'Yesteryear',                   date: '2026-10-19', color: '#0ea5e9' },
+    { label: "Dani's Queer Bar",           book: 'The Z Word',                   date: '2026-10-20', color: '#7c3aed' },
+    { label: 'Thrills and Chills',         book: 'Slewfoot',                     date: '2026-10-21', color: '#b91c1c' },
+    { label: 'Speculative Fiction',        book: 'When the Moon Hits Your Eye',  date: '2026-10-21', color: '#0284c7' },
     { label: 'Harvard Square Book Circle', book: 'Ghostland',                    date: '2026-10-25', color: '#c2750a' },
     { label: 'Robbins Library',            book: 'A Taste for Poison',           date: '2026-10-26', color: '#059669' },
-    { label: 'Dreadfully Queer',           book: 'Bone of My Bone',              date: '2026-11-01', color: '#0d9488', tentative: true },
-    { label: 'Dreadfully Queer',           book: 'Dengue Boy',                   date: '2026-11-18', color: '#0d9488', tentative: true },
-    { label: 'Dreadfully Queer',           book: 'Carrying',                     date: '2026-11-29', color: '#0d9488', tentative: true },
+    { label: 'Dreadfully Queer',           book: 'Bone of My Bone',              date: '2026-11-01', color: '#0d9488' },
+    { label: 'Dreadfully Queer',           book: 'Dengue Boy',                   date: '2026-11-18', color: '#0d9488' },
+    { label: 'Dreadfully Queer',           book: 'Carrying',                     date: '2026-11-29', color: '#0d9488' },
     { label: 'Porter Square Classics',     book: 'Lonesome Dove Parts II & III', date: '2026-12-07', color: '#2563eb' },
     { label: 'Porter Square Classics',     book: 'Pick TBD',                     date: '2027-01-25', color: '#2563eb' },
   ];

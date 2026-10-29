@@ -542,7 +542,7 @@
       <img src="https://calendar.google.com/googlecalendar/images/favicon_v2018_256.png" width="36" height="36" style="border-radius:6px;" onerror="this.style.display='none'">
       <span>Calendar</span>
     </a>
-    <a href="https://weather.com/weather/hourbyhour/l/Framingham+MA+USMA0311:1:US" target="_blank" style="--ic-color:#c2750a;">
+    <a href="https://weather.com/weather/hourbyhour/l/42.2793,-71.4162" target="_blank" style="--ic-color:#c2750a;">
       <img src="https://www.weather.com/favicon.ico" width="36" height="36" style="border-radius:6px; object-fit:contain;" onerror="this.style.display='none'">
       <span>Weather</span>
     </a>
@@ -854,7 +854,7 @@
     return Math.ceil((t-n)/86400000);
   }
   function fmtDate(d) {
-    return new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    return new Date(d+'T00:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
   }
 
   const cdContainer = document.getElementById('countdowns');
@@ -881,21 +881,22 @@
     { label: 'Eastie Book Babes',          book: 'The Buffalo Hunter Hunter',    date: '2026-10-27', color: '#d97706' },
     { label: 'Hot Takes (Framingham Lib)', book: 'Soul Searching',               date: '2026-10-28', color: '#ea580c' },
     { label: 'Culture Study',              book: 'The Penelopiad',               date: '2026-11-01', color: '#e0407a' },
-    { label: 'Framingham Library (Zoom)',  book: 'Small Things Like These & Foster', date: '2026-11-03', color: '#16a34a' },
     { label: 'An Unlikely Story SFF',      book: 'Starling House',               date: '2026-11-05', color: '#06b6d4' },
     { label: 'Boston Bookclub',            book: 'Dark Matter',                  date: '2026-11-09', color: '#0ea5e9' },
     { label: 'McAuliffe Book Discussion',  book: "Lady Tan's Circle of Women",   date: '2026-11-10', color: '#65a30d' },
-    { label: 'Ten Trees Literary',         book: 'Pick TBD',                     date: '2026-11-10', color: '#6c5ce7' },
+    { label: 'Ten Trees Literary',         book: 'Ten Graces of Pear Street',    date: '2026-11-10', color: '#6c5ce7' },
     { label: 'Queer Reads (Framingham)',   book: 'Moonflow',                     date: '2026-11-17', color: '#c026d3' },
     { label: "Dani's Queer Bar",           book: 'What Is Queer Food?',          date: '2026-11-17', color: '#7c3aed' },
     { label: 'Hot Takes (Framingham Lib)', book: 'Lights Out',                   date: '2026-11-18', color: '#ea580c' },
     { label: 'Dreadfully Queer',           book: 'Dengue Boy',                   date: '2026-11-18', color: '#0d9488' },
-    { label: 'Ten Trees SFF',              book: 'Pick TBD',                     date: '2026-11-18', color: '#4f46e5' },
-    { label: 'Horror Book Club',           book: 'Pick TBD',                     date: '2026-11-20', color: '#b91c1c' },
+    { label: 'Ten Trees SFF',              book: 'Death of the Author',                   date: '2026-11-18', color: '#4f46e5' },
+    { label: 'Horror Book Club',           book: 'Hungerstone',                   date: '2026-11-20', color: '#b91c1c' },
     { label: 'Dreadfully Queer',           book: 'Carrying',                     date: '2026-11-29', color: '#0d9488' },
+    { label: 'Ten Trees Classics',         book: 'Tortilla Flat',                date: '2026-12-03', color: '#a16207' },
     { label: 'Boston Bookclub',            book: 'Piranesi',                     date: '2026-12-07', color: '#0ea5e9' },
     { label: 'Porter Square Classics',     book: 'Lonesome Dove Parts II & III', date: '2026-12-07', color: '#2563eb' },
-    { label: 'Culture Study',              book: 'Pick TBD',                     date: '2026-12-13', color: '#e0407a' },
+    { label: 'Ten Trees Literary',         book: 'May We Feed the King',         date: '2026-12-08', color: '#6c5ce7' },
+    { label: 'Culture Study',              book: 'I Capture the Castle',                   date: '2026-12-13', color: '#e0407a' },
     { label: 'Porter Square Classics',     book: 'Pick TBD',                     date: '2027-01-25', color: '#2563eb' },
   ];
 

@@ -236,6 +236,33 @@
     margin-top: 24px;
   }
 
+
+  /* Upcoming movie releases (rolling 30 days) */
+  .mv-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-left: 5px solid #8b5cf6;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-top: 24px;
+  }
+  .mv-grid {
+    columns: 3 230px;
+    column-gap: 18px;
+  }
+  .mv-item { display: flex; align-items: baseline; gap: 8px; min-width: 0; margin-bottom: 6px; break-inside: avoid; }
+  .mv-date { font-size: 11px; color: var(--text-secondary); width: 42px; flex-shrink: 0; }
+  .mv-title {
+    font-size: 13px; font-weight: 600; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+  }
+  .mv-item.limited { opacity: 0.55; }
+  .mv-tag {
+    font-size: 10px; font-weight: 600; flex-shrink: 0;
+    padding: 1px 6px; border-radius: 999px;
+    color: var(--tag-c, #a78bfa); border: 1px solid var(--tag-c, #a78bfa);
+  }
+
   /* Embedded calendar: invert the frame to force a dark agenda */
   .cal-frame {
     border: 0;
@@ -806,6 +833,11 @@
     <div class="bc-grid" id="bc-later-grid"></div>
   </div>
 
+  <div class="mv-card" id="movies-card">
+    <div class="bc-header">Movies, next 30 days</div>
+    <div class="mv-grid" id="mv-grid"></div>
+  </div>
+
   <footer>Updated <span id="edited"></span></footer>
 </div>
 
@@ -937,6 +969,84 @@
     laterCard.style.display = 'none';
   } else {
     renderBC(laterBC, document.getElementById('bc-later-grid'));
+  }
+
+  // Movie releases: hand-curated, refresh monthly.
+  // where: Wide (plays most AMCs), Limited (may skip local AMCs), Event (one-off screening), or a streaming service.
+  // Release types from the-numbers.com release schedule.
+  const MOVIES = [
+    { title: 'V for Vendetta (re-release)', date: '2026-11-01', where: 'Event' },
+    { title: "Dr. Seuss' The Cat in the Hat", date: '2026-11-06', where: 'Wide' },
+    { title: 'Godzilla Minus Zero',         date: '2026-11-06', where: 'Wide' },
+    { title: 'Wild Horse Nine',             date: '2026-11-06', where: 'Wide' },
+    { title: 'Jimmy',                       date: '2026-11-06', where: 'Wide' },
+    { title: 'Drummer Boy',                 date: '2026-11-06', where: 'Wide' },
+    { title: 'Ramayana Part 1',             date: '2026-11-06', where: 'Wide' },
+    { title: 'Being Heumann',               date: '2026-11-06', where: 'Limited' },
+    { title: 'Club Kid',                    date: '2026-11-06', where: 'Limited' },
+    { title: 'I Play Rocky',                date: '2026-11-06', where: 'Limited' },
+    { title: 'Possible Love',               date: '2026-11-06', where: 'Netflix' },
+    { title: 'Rocky (re-release)',          date: '2026-11-07', where: 'Wide' },
+    { title: 'Ghost Soldier',               date: '2026-11-11', where: 'Wide' },
+    { title: 'Ebenezer: A Christmas Carol', date: '2026-11-13', where: 'Wide' },
+    { title: 'How to Rob a Bank',           date: '2026-11-13', where: 'Wide' },
+    { title: 'Victorian Psycho',            date: '2026-11-13', where: 'Wide' },
+    { title: 'Paper Tiger',                 date: '2026-11-13', where: 'Limited' },
+    { title: 'Bitter Christmas',            date: '2026-11-13', where: 'Limited' },
+    { title: 'Being Heumann',               date: '2026-11-13', where: 'Apple TV' },
+    { title: 'Madden',                      date: '2026-11-18', where: 'Prime' },
+    { title: 'The Hunger Games: Sunrise on the Reaping', date: '2026-11-20', where: 'Wide' },
+    { title: 'I Play Rocky (goes wide)',    date: '2026-11-20', where: 'Wide' },
+    { title: 'Paper Tiger (goes wide)',     date: '2026-11-20', where: 'Wide' },
+    { title: 'Elsinore',                    date: '2026-11-20', where: 'Limited' },
+    { title: 'Josephine',                   date: '2026-11-20', where: 'Limited' },
+    { title: 'Minotaur',                    date: '2026-11-20', where: 'Limited' },
+    { title: 'Focker In-Law',               date: '2026-11-25', where: 'Wide' },
+    { title: 'Hexed',                       date: '2026-11-25', where: 'Wide' },
+    { title: 'Hershey',                     date: '2026-11-25', where: 'Wide' },
+    { title: 'Bitter Christmas (goes wide)', date: '2026-11-25', where: 'Wide' },
+    { title: 'The Further Mis-Adventures of Cliff Booth', date: '2026-11-25', where: 'Limited' },
+    { title: "Ava DuVernay's 14th",         date: '2026-11-27', where: 'Limited' },
+    { title: 'La Bola Negra',               date: '2026-12-02', where: 'Netflix' },
+    { title: 'Violent Night 2',             date: '2026-12-04', where: 'Wide' },
+    { title: 'The Gallerist',               date: '2026-12-04', where: 'Wide' },
+    { title: 'Behemoth!',                   date: '2026-12-04', where: 'Limited' },
+    { title: 'Above the Below',             date: '2026-12-04', where: 'Limited' },
+    { title: 'Zero A.D.',                   date: '2026-12-11', where: 'Wide' },
+    { title: 'Elsinore (goes wide)',        date: '2026-12-11', where: 'Wide' },
+    { title: 'The Debut',                   date: '2026-12-11', where: 'Limited' },
+    { title: 'Ink',                         date: '2026-12-11', where: 'Limited' },
+    { title: 'Clarissa',                    date: '2026-12-11', where: 'Limited' },
+    { title: 'Avengers: Doomsday',          date: '2026-12-18', where: 'Wide' },
+    { title: 'Dune: Part Three',            date: '2026-12-18', where: 'Wide' },
+    { title: 'Ray Gunn',                    date: '2026-12-18', where: 'Netflix' },
+    { title: 'The Angry Birds Movie 3',     date: '2026-12-23', where: 'Wide' },
+    { title: 'The Further Mis-Adventures of Cliff Booth', date: '2026-12-23', where: 'Netflix' },
+    { title: 'Werwulf',                     date: '2026-12-25', where: 'Wide' },
+    { title: 'Jumanji: Open World',         date: '2026-12-25', where: 'Wide' },
+    { title: 'Mr. Irrelevant',              date: '2026-12-25', where: 'Wide' },
+    { title: 'Artificial',                  date: '2026-12-25', where: 'Wide' },
+  ];
+  const MV_TAG_COLORS = { 'Wide': '#a78bfa', 'Limited': '#9ca3af', 'Event': '#fbbf24', 'Netflix': '#f87171', 'Prime': '#38bdf8', 'Apple TV': '#cbd5e1' };
+
+  const mvList = MOVIES
+    .filter(m => { const d = daysUntil(m.date); return d >= 0 && d <= HORIZON; })
+    .sort((a, b) => a.date.localeCompare(b.date));
+  const mvCard = document.getElementById('movies-card');
+  if (mvList.length === 0) {
+    mvCard.style.display = 'none';
+  } else {
+    const mvGrid = document.getElementById('mv-grid');
+    mvList.forEach(m => {
+      const el = document.createElement('div');
+      el.className = 'mv-item' + (m.where === 'Limited' ? ' limited' : '');
+      el.innerHTML = `
+        <span class="mv-date">${daysUntil(m.date) === 0 ? 'Today' : new Date(m.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span>
+        <span class="mv-title" title="${m.title.replace(/"/g, '&quot;')}">${m.title}</span>
+        <span class="mv-tag" style="--tag-c:${MV_TAG_COLORS[m.where] || '#a78bfa'}">${m.where}</span>
+      `;
+      mvGrid.appendChild(el);
+    });
   }
 
   function openModal(id) {

@@ -219,6 +219,15 @@
     text-overflow: ellipsis;
   }
   .bc-date { font-size: 11px; color: var(--text-secondary); }
+  .bc-read {
+    display: inline-flex; align-items: center; gap: 2px;
+    font-size: 10px; font-weight: 700; font-style: normal;
+    letter-spacing: 0.03em; text-transform: uppercase;
+    color: #6ee7b7; background: rgba(16, 185, 129, 0.16);
+    border-radius: 999px; padding: 1px 6px 1px 4px; margin-right: 5px;
+    vertical-align: 1px;
+  }
+  .bc-read i { font-size: 11px; }
   .bc-item.tentative { opacity: 0.45; }
   .bc-item.tentative .bc-label::after {
     content: '?';
@@ -910,26 +919,26 @@
   }
 
   const BOOKCLUBS = [
-    { label: 'Culture Study',              book: 'The Penelopiad',               date: '2026-11-01', color: '#e0407a' },
+    { label: 'Culture Study',              book: 'The Penelopiad',               date: '2026-11-01', color: '#e0407a', read: true },
     { label: 'An Unlikely Story SFF',      book: 'Starling House',               date: '2026-11-05', color: '#06b6d4' },
-    { label: 'Boston Bookclub',            book: 'Dark Matter',                  date: '2026-11-09', color: '#0ea5e9' },
+    { label: 'Boston Bookclub',            book: 'Dark Matter',                  date: '2026-11-09', color: '#0ea5e9', read: true },
     { label: 'McAuliffe Book Discussion',  book: "Lady Tan's Circle of Women",   date: '2026-11-10', color: '#65a30d' },
     { label: 'Ten Trees Literary',         book: 'Ten Graces of Pear Street',    date: '2026-11-10', color: '#6c5ce7' },
     { label: 'Queer Reads (Framingham)',   book: 'Moonflow',                     date: '2026-11-17', color: '#c026d3' },
     { label: "Dani's Queer Bar",           book: 'What Is Queer Food?',          date: '2026-11-17', color: '#7c3aed' },
-    { label: 'Hot Takes (Framingham Lib)', book: 'Lights Out',                   date: '2026-11-18', color: '#ea580c' },
+    { label: 'Hot Takes (Framingham Lib)', book: 'Lights Out',                   date: '2026-11-18', color: '#ea580c', read: true },
     { label: 'Dreadfully Queer',           book: 'Dengue Boy',                   date: '2026-11-18', color: '#0d9488' },
     { label: 'Framingham Library Sci-Fi',  book: 'Dungeon Crawler Carl',         date: '2026-11-18', color: '#0891b2' },
     { label: 'Ten Trees SFF',              book: 'Death of the Author',                   date: '2026-11-18', color: '#4f46e5' },
-    { label: 'Horror Book Club',           book: 'Hungerstone',                   date: '2026-11-20', color: '#b91c1c' },
+    { label: 'Horror Book Club',           book: 'Hungerstone',                   date: '2026-11-20', color: '#b91c1c', read: true },
     { label: 'Final Girls Book Club',      book: 'Bring your own horror/thriller', date: '2026-11-28', color: '#be123c' },
     { label: 'Dreadfully Queer',           book: 'Carrying',                     date: '2026-11-29', color: '#0d9488' },
     { label: 'Ten Trees Classics',         book: 'Tortilla Flat',                date: '2026-12-03', color: '#a16207' },
-    { label: 'Boston Bookclub',            book: 'Piranesi',                     date: '2026-12-07', color: '#0ea5e9' },
+    { label: 'Boston Bookclub',            book: 'Piranesi',                     date: '2026-12-07', color: '#0ea5e9', read: true },
     { label: 'Porter Square Classics',     book: 'Lonesome Dove Parts II & III', date: '2026-12-07', color: '#2563eb' },
     { label: 'Ten Trees Literary',         book: 'May We Feed the King',         date: '2026-12-08', color: '#6c5ce7' },
     { label: 'Culture Study',              book: 'I Capture the Castle',                   date: '2026-12-13', color: '#e0407a' },
-    { label: 'McAuliffe Book Discussion',  book: 'The House in the Cerulean Sea', date: '2026-12-15', color: '#65a30d' },
+    { label: 'McAuliffe Book Discussion',  book: 'The House in the Cerulean Sea', date: '2026-12-15', color: '#65a30d', read: true },
     { label: 'Hot Takes (Framingham Lib)', book: 'A Touch of Darkness',          date: '2026-12-16', color: '#ea580c' },
     { label: 'Porter Square Classics',     book: 'Pick TBD',                     date: '2027-01-25', color: '#2563eb' },
   ];
@@ -948,7 +957,7 @@
         <div class="bc-text">
           <div class="bc-label">${bc.label}</div>
           ${bc.book ? `<div class="bc-book">${bc.book}</div>` : ''}
-          <div class="bc-date">${days === 0 ? 'Today!' : fmtDate(bc.date)}</div>
+          <div class="bc-date">${bc.read ? '<span class="bc-read"><i class="ti ti-check"></i>Read</span>' : ''}${days === 0 ? 'Today!' : fmtDate(bc.date)}</div>
         </div>
       `;
       grid.appendChild(el);

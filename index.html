@@ -514,6 +514,17 @@
   }
   .modal-close:hover { color: var(--text); }
 
+  /* Book club popup */
+  .bc-item { cursor: pointer; border-radius: 8px; padding: 2px 4px; margin: -2px -4px; transition: background 0.12s; }
+  .bc-item:hover, .bc-item:focus-visible { background: rgba(255,255,255,0.05); outline: none; }
+  .bc-pop-book { font-size: 15px; font-style: italic; color: var(--text-secondary); margin: -6px 0 14px; }
+  .bc-pop-row { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--text); margin-bottom: 10px; line-height: 1.4; }
+  .bc-pop-row > i { font-size: 18px; color: var(--card-color, var(--accent)); flex-shrink: 0; margin-top: 1px; }
+  .bc-pop-row a { color: var(--text); text-decoration: underline; text-decoration-color: rgba(255,255,255,0.3); text-underline-offset: 3px; }
+  .bc-pop-sub { font-size: 12px; color: var(--text-secondary); }
+  .bc-pop-note { font-size: 13px; color: var(--text-secondary); }
+  #modal-bc ul.links { margin-top: 14px; }
+
   /* Grid tile (closed state) */
   .tile {
     background: var(--card-bg);
@@ -645,6 +656,8 @@
 
   <!-- Modal overlay -->
   <div class="modal-overlay" id="overlay" onclick="closeModal()">
+    <div class="modal" id="modal-bc" onclick="event.stopPropagation()" role="dialog" aria-modal="true"></div>
+
 
     <div class="modal" id="modal-everyday" style="--card-color:#6c5ce7;" onclick="event.stopPropagation()">
       <button class="modal-close" onclick="closeModal()">&#x00D7;</button>
@@ -919,28 +932,28 @@
   }
 
   const BOOKCLUBS = [
-    { label: 'Culture Study',              book: 'The Penelopiad',               date: '2026-11-01', color: '#e0407a', read: true },
-    { label: 'An Unlikely Story SFF',      book: 'Starling House',               date: '2026-11-05', color: '#06b6d4' },
-    { label: 'Boston Bookclub',            book: 'Dark Matter',                  date: '2026-11-09', color: '#0ea5e9', read: true },
-    { label: 'McAuliffe Book Discussion',  book: "Lady Tan's Circle of Women",   date: '2026-11-10', color: '#65a30d' },
-    { label: 'Ten Trees Literary',         book: 'Ten Graces of Pear Street',    date: '2026-11-10', color: '#6c5ce7' },
-    { label: 'Queer Reads (Framingham)',   book: 'Moonflow',                     date: '2026-11-17', color: '#c026d3' },
-    { label: "Dani's Queer Bar",           book: 'What Is Queer Food?',          date: '2026-11-17', color: '#7c3aed' },
-    { label: 'Hot Takes (Framingham Lib)', book: 'Lights Out',                   date: '2026-11-18', color: '#ea580c', read: true },
-    { label: 'Dreadfully Queer',           book: 'Dengue Boy',                   date: '2026-11-18', color: '#0d9488' },
-    { label: 'Framingham Library Sci-Fi',  book: 'Dungeon Crawler Carl',         date: '2026-11-18', color: '#0891b2' },
-    { label: 'Ten Trees SFF',              book: 'Death of the Author',                   date: '2026-11-18', color: '#4f46e5' },
-    { label: 'Horror Book Club',           book: 'Hungerstone',                   date: '2026-11-20', color: '#b91c1c', read: true },
-    { label: 'Final Girls Book Club',      book: 'Bring your own horror/thriller', date: '2026-11-28', color: '#be123c' },
-    { label: 'Dreadfully Queer',           book: 'Carrying',                     date: '2026-11-29', color: '#0d9488' },
-    { label: 'Ten Trees Classics',         book: 'Tortilla Flat',                date: '2026-12-03', color: '#a16207' },
-    { label: 'Boston Bookclub',            book: 'Piranesi',                     date: '2026-12-07', color: '#0ea5e9', read: true },
-    { label: 'Porter Square Classics',     book: 'Lonesome Dove Parts II & III', date: '2026-12-07', color: '#2563eb' },
-    { label: 'Ten Trees Literary',         book: 'May We Feed the King',         date: '2026-12-08', color: '#6c5ce7' },
-    { label: 'Culture Study',              book: 'I Capture the Castle',                   date: '2026-12-13', color: '#e0407a' },
-    { label: 'McAuliffe Book Discussion',  book: 'The House in the Cerulean Sea', date: '2026-12-15', color: '#65a30d', read: true },
-    { label: 'Hot Takes (Framingham Lib)', book: 'A Touch of Darkness',          date: '2026-12-16', color: '#ea580c' },
-    { label: 'Porter Square Classics',     book: 'Pick TBD',                     date: '2027-01-25', color: '#2563eb' },
+    { label: "Culture Study", book: "The Penelopiad", date: "2026-11-01", color: "#e0407a", read: true, time: "2:00 PM", place: "Mighty Squirrel Brewing", address: "411 Waverley Oaks Rd, Waltham, MA 02452", note: "No registration. Details are in the Culture Study WhatsApp group.", links: [["WhatsApp", "https://web.whatsapp.com/"]] },
+    { label: "An Unlikely Story SFF", book: "Starling House", date: "2026-11-05", color: "#06b6d4", time: "6:30 PM", place: "An Unlikely Story (2nd floor event space)", address: "111 South St, Plainville, MA 02762", note: "Free drop-in, no registration needed.", links: [["Event page", "https://anunlikelystory.indiecommerce.com/sff19"]] },
+    { label: "Boston Bookclub", book: "Dark Matter", date: "2026-11-09", color: "#0ea5e9", read: true, time: "6:30 PM", place: "Boston Public Library", address: "700 Boylston St, Boston, MA 02116", note: "No longer on your calendar. Check Bookclubs before going.", links: [["My book clubs (Bookclubs)", "https://bookclubs.com/clubs"]] },
+    { label: "McAuliffe Book Discussion", book: "Lady Tan's Circle of Women", date: "2026-11-10", color: "#65a30d", time: "7:00 PM", place: "Framingham Library, McAuliffe Branch (Community Room)", address: "746 Water St, Framingham, MA 01701", note: "No longer on your calendar. Check the library calendar before going.", links: [["Library calendar", "https://framinghamlibrary.org/calendar"]] },
+    { label: "Ten Trees Literary", book: "Ten Graces of Pear Street", date: "2026-11-10", color: "#6c5ce7", time: "7:00 PM", place: "Ten Trees Books", address: "29 Main St, Natick, MA 01760", note: "Attendees get 15% off the book.", links: [["RSVP on Eventbrite", "https://www.eventbrite.com/e/literary-book-club-ten-trees-books-tickets-2002755110448"]] },
+    { label: "Queer Reads (Framingham)", book: "Moonflow", date: "2026-11-17", color: "#c026d3", time: "7:00 PM", place: "Framingham Library, McAuliffe Branch (Community Room)", address: "746 Water St, Framingham, MA 01701", links: [["Event page", "https://framinghamlibrary.org/calendar/event/queer-reads-moonflow-by-bitter-karella"]] },
+    { label: "Dani's Queer Bar", book: "What Is Queer Food?", date: "2026-11-17", color: "#7c3aed", time: "7:00 PM", place: "Dani's Queer Bar", address: "909 Boylston St, Boston, MA 02115", note: "Registration required, limited capacity, no refunds. $7 ticket, or $21.24 with the book (pick up at All She Wrote, Somerville).", links: [["Register", "https://www.allshewrotebooks.com/events-1/danis-queer-bar-x-all-she-wrote-books-book-club-november"]] },
+    { label: "Hot Takes (Framingham Lib)", book: "Lights Out", date: "2026-11-18", color: "#ea580c", read: true, time: "6:00 PM", place: "Framingham Library, Main (J Program Room)", address: "49 Lexington St, Framingham, MA 01702", links: [["Event page", "https://framinghamlibrary.org/calendar/event/hot-takes-lights-out-by-navessa-allen"]] },
+    { label: "Dreadfully Queer", book: "Dengue Boy", date: "2026-11-18", color: "#0d9488", time: "7:00 PM", place: "Jaho Coffee Roaster & Wine Bar", address: "Derby St, Salem, MA", links: [["RSVP on Bookclubs", "https://bookclubs.com/dreadfully-queer-book-club/meetings"]] },
+    { label: "Framingham Library Sci-Fi", book: "Dungeon Crawler Carl", date: "2026-11-18", color: "#0891b2", time: "7:00 PM", place: "Framingham Library, Main (Costin Room)", address: "49 Lexington St, Framingham, MA 01702", links: [["Event page", "https://framinghamlibrary.org/calendar/event/sci-fi-book-discussion-dungeon-crawler-carl-by-matt-dinniman"]] },
+    { label: "Ten Trees SFF", book: "Death of the Author", date: "2026-11-18", color: "#4f46e5", time: "7:00 PM", place: "Ten Trees Books", address: "29 Main St, Natick, MA 01760", note: "RSVP required. Attendees get 15% off the book.", links: [["RSVP on Eventbrite", "https://www.eventbrite.com/e/fantasy-science-fiction-book-club-ten-trees-books-tickets-2002762083304"]] },
+    { label: "Horror Book Club", book: "Hungerstone", date: "2026-11-20", color: "#b91c1c", read: true, time: "6:00 PM", note: "Location is not on your calendar yet.", links: [] },
+    { label: "Final Girls Book Club", book: "Bring your own horror/thriller", date: "2026-11-28", color: "#be123c", time: "12:00 PM", place: "Crose Nest Apothecary", address: "Main St, Hudson, MA", note: "Bring any horror or thriller book to tell the group about.", links: [["RSVP on Bookclubs", "https://bookclubs.com/final-girls-book-club/meetings/1137839"]] },
+    { label: "Dreadfully Queer", book: "Carrying", date: "2026-11-29", color: "#0d9488", time: "11:00 AM", place: "The Babe", address: "Washington St, Salem, MA", links: [["RSVP on Bookclubs", "https://bookclubs.com/dreadfully-queer-book-club/meetings"]] },
+    { label: "Ten Trees Classics", book: "Tortilla Flat", date: "2026-12-03", color: "#a16207", time: "7:00 PM", place: "Ten Trees Books", address: "29 Main St, Natick, MA 01760", note: "Attendees get 15% off in-store purchases.", links: [["RSVP on Eventbrite", "https://www.eventbrite.com/e/classics-book-club-ten-trees-books-tickets-2003831703567"]] },
+    { label: "Boston Bookclub", book: "Piranesi", date: "2026-12-07", color: "#0ea5e9", read: true, time: "6:30 PM", place: "Boston Public Library", address: "700 Boylston St, Boston, MA 02116", links: [["My book clubs (Bookclubs)", "https://bookclubs.com/clubs"]] },
+    { label: "Porter Square Classics", book: "Lonesome Dove Parts II & III", date: "2026-12-07", color: "#2563eb", time: "7:00 PM", place: "Porter Square Books", address: "25 White St, Cambridge, MA 02140", note: "The group may push Part III to January if the pace is too fast.", links: [["Porter Square events", "https://portersquarebooks.com/events/calendar"]] },
+    { label: "Ten Trees Literary", book: "May We Feed the King", date: "2026-12-08", color: "#6c5ce7", time: "7:00 PM", place: "Ten Trees Books", address: "29 Main St, Natick, MA 01760", note: "Attendees get 15% off the book.", links: [["RSVP on Eventbrite", "https://www.eventbrite.com/e/literary-book-club-ten-trees-books-tickets-2003986989030"]] },
+    { label: "Culture Study", book: "I Capture the Castle", date: "2026-12-13", color: "#e0407a", time: "11:30 AM", place: "Watertown Free Public Library", address: "123 Main St, Watertown, MA 02472", note: "No registration. Details are in the Culture Study WhatsApp group.", links: [["WhatsApp", "https://web.whatsapp.com/"]] },
+    { label: "McAuliffe Book Discussion", book: "The House in the Cerulean Sea", date: "2026-12-15", color: "#65a30d", read: true, time: "7:00 PM (estimated)", place: "Framingham Library, McAuliffe Branch", address: "746 Water St, Framingham, MA 01701", note: "The library has only posted the date so far. Confirm the time closer to the meeting.", links: [["Library calendar", "https://framinghamlibrary.org/calendar"]] },
+    { label: "Hot Takes (Framingham Lib)", book: "A Touch of Darkness", date: "2026-12-16", color: "#ea580c", time: "6:00 PM (estimated)", place: "Framingham Library, Main", address: "49 Lexington St, Framingham, MA 01702", note: "The library has only posted the date so far. Confirm the time and room closer to the meeting.", links: [["Library calendar", "https://framinghamlibrary.org/calendar"]] },
+    { label: "Porter Square Classics", book: "Pick TBD", date: "2027-01-25", color: "#2563eb", time: "7:00 PM", place: "Porter Square Books", address: "25 White St, Cambridge, MA 02140", note: "Time and place assumed to be the usual.", links: [["Porter Square events", "https://portersquarebooks.com/events/calendar"]] },
   ];
 
   const HORIZON = 30;
@@ -951,6 +964,10 @@
       const el = document.createElement('div');
       el.className = 'bc-item'
         + (bc.tentative ? ' tentative' : '');
+      el.tabIndex = 0;
+      el.setAttribute('role', 'button');
+      el.addEventListener('click', () => openBC(bc));
+      el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openBC(bc); } });
       el.style.setProperty('--cd-color', bc.color);
       el.innerHTML = `
         <div class="bc-days">${days === 0 ? '!' : days}</div>
@@ -962,6 +979,32 @@
       `;
       grid.appendChild(el);
     });
+  }
+
+  function escHTML(t) { return String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function openBC(bc) {
+    const m = document.getElementById('modal-bc');
+    m.style.setProperty('--card-color', bc.color);
+    const days = daysUntil(bc.date);
+    const when = fmtDate(bc.date) + (bc.time ? ' · ' + bc.time : '');
+    const away = days === 0 ? 'Today' : days === 1 ? 'Tomorrow' : days + ' days away';
+    let html = `<button class="modal-close" onclick="closeModal()">&#x00D7;</button>
+      <h2><i class="ti ti-book-2"></i> ${escHTML(bc.label)}</h2>`;
+    if (bc.book) html += `<div class="bc-pop-book">${bc.read ? '<span class="bc-read"><i class="ti ti-check"></i>Read</span>' : ''}${escHTML(bc.book)}</div>`;
+    html += `<div class="bc-pop-row"><i class="ti ti-clock"></i><div>${escHTML(when)}<div class="bc-pop-sub">${away}</div></div></div>`;
+    if (bc.place || bc.address) {
+      const q = encodeURIComponent([bc.place, bc.address].filter(Boolean).join(', '));
+      html += `<div class="bc-pop-row"><i class="ti ti-map-pin"></i><div>${escHTML(bc.place || '')}`
+        + (bc.address ? `<div class="bc-pop-sub"><a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank">${escHTML(bc.address)}</a></div>` : '')
+        + `</div></div>`;
+    }
+    if (bc.note) html += `<div class="bc-pop-row"><i class="ti ti-info-circle"></i><div class="bc-pop-note">${escHTML(bc.note)}</div></div>`;
+    if (bc.links && bc.links.length) {
+      html += '<ul class="links">' + bc.links.map(([label, url]) =>
+        `<li><a href="${escHTML(url)}" target="_blank"><i class="ti ti-ticket link-icon"></i>${escHTML(label)}<i class="ti ti-external-link ext"></i></a></li>`).join('') + '</ul>';
+    }
+    m.innerHTML = html;
+    openModal('bc');
   }
 
   const upcomingBC = BOOKCLUBS.filter(bc => daysUntil(bc.date) >= 0);

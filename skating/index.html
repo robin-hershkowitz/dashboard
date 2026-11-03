@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skating</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --floor: #EEF1E8;
+    --paper: #FBFCF7;
+    --ink: #1D2340;
+    --soft: #5B6080;
+    --pink: #EC3E7C;
+    --teal: #129C92;
+    --mustard: #F2B31B;
+    --line: #D3D8CB;
+    --display: 'Shrikhand', Georgia, serif;
+    --body: 'Bricolage Grotesque', system-ui, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--floor); color: var(--ink); font: 16px/1.5 var(--body); padding-bottom: 64px; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; border-radius: 6px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+  .stripes { height: 14px; background: linear-gradient(var(--pink) 0 33%, var(--mustard) 33% 66%, var(--teal) 66%); }
+  .back { display: inline-block; margin-top: 18px; font-weight: 500; font-size: 15px; text-decoration: none; color: var(--soft); }
+  .back:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Hero */
+  .hero { padding: 16px 0 30px; }
+  h1 {
+    font-family: var(--display); font-weight: 400;
+    font-size: clamp(60px, 12vw, 112px); line-height: .95;
+    color: var(--paper);
+    -webkit-text-stroke: 2px var(--ink);
+    text-shadow: 4px 4px 0 var(--pink), 8px 8px 0 var(--mustard), 12px 12px 0 var(--teal);
+    transform: rotate(-3deg); transform-origin: left bottom;
+    margin-bottom: 16px;
+  }
+  .tenure { font-size: 20px; }
+  .tenure strong { font-weight: 700; }
+
+  /* Link tiles */
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 36px; }
+  .tile {
+    font: inherit; cursor: pointer; text-align: left;
+    background: var(--c); color: var(--tc, var(--paper));
+    border: 2px solid var(--ink); border-radius: 16px;
+    padding: 14px 14px 12px; min-height: 92px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform .08s, box-shadow .08s;
+  }
+  .tile:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+  .tile:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+  .tile .t-name { font-family: var(--display); font-size: 21px; line-height: 1.1; }
+  .tile .t-count { font-size: 13px; font-weight: 500; opacity: .85; }
+
+  /* Assessment, condensed */
+  .assess-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 14px; }
+  .assess-head h2 { font-family: var(--display); font-weight: 400; font-size: 30px; line-height: 1.1; }
+  .assess-head a { font-size: 15px; font-weight: 500; color: var(--soft); text-underline-offset: 3px; }
+  .assess-head a:hover { color: var(--ink); }
+  .parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .part { background: var(--paper); border: 2px solid var(--ink); border-top: 8px solid var(--c); border-radius: 14px; padding: 12px 14px 10px; }
+  .part h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .part ul { list-style: none; }
+  .part li { padding: 6px 0; border-top: 1px dashed var(--line); font-size: 14.5px; line-height: 1.35; }
+  .part li b { font-weight: 700; display: block; font-size: 15px; }
+  .part li span { color: var(--soft); }
+  .note { margin-top: 12px; font-size: 13px; color: var(--soft); }
+
+  .cal { margin-top: 36px; }
+  .cal h2 { font-family: var(--display); font-weight: 400; font-size: 30px; line-height: 1.1; margin-bottom: 14px; }
+  .cal-box { background: var(--paper); border: 2px solid var(--ink); border-top: 8px solid var(--pink); border-radius: 14px; padding: 6px; overflow: hidden; }
+  .cal-box iframe { display: block; width: 100%; height: 420px; border: 0; border-radius: 8px; }
+
+  /* Popups */
+  dialog {
+    border: 2px solid var(--ink); border-radius: 18px; padding: 0;
+    width: min(400px, calc(100vw - 32px)); background: var(--paper); color: var(--ink);
+    box-shadow: 6px 6px 0 var(--ink); margin: auto;
+  }
+  dialog::backdrop { background: rgba(29, 35, 64, .45); }
+  .d-head { background: var(--c); color: var(--tc, var(--paper)); padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--ink); }
+  .d-head h2 { font-family: var(--display); font-weight: 400; font-size: 26px; line-height: 1.1; }
+  .d-close { background: none; border: 0; font: inherit; font-size: 28px; line-height: 1; color: inherit; cursor: pointer; padding: 0 4px; }
+  .d-body { padding: 8px 18px 16px; }
+  .d-body h3 { font-size: 14px; font-weight: 700; color: var(--soft); margin: 12px 0 2px; }
+  .d-body ul { list-style: none; }
+  .d-body li { border-bottom: 1px dashed var(--line); }
+  .d-body li:last-child { border-bottom: 0; }
+  .d-body a { display: block; padding: 10px 0; font-weight: 500; text-decoration: none; }
+  .d-body a:hover { text-decoration: underline; text-decoration-color: var(--c); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .d-body small { color: var(--soft); font-weight: 400; margin-left: 6px; }
+
+  @media (max-width: 820px) {
+    .parts { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .tiles { grid-template-columns: repeat(2, 1fr); }
+    h1 { text-shadow: 3px 3px 0 var(--pink), 6px 6px 0 var(--mustard), 9px 9px 0 var(--teal); }
+  }
+  @media (prefers-reduced-motion: reduce) { .tile { transition: none; } }
+</style>
+</head>
+<body>
+<div class="stripes"></div>
+<div class="wrap">
+
+  <a class="back" href="https://robin-hershkowitz.github.io/dashboard/">← Dashboard</a>
+
+  <header class="hero">
+    <h1>Skating</h1>
+    <p class="tenure" id="tenure">On wheels since September 2023.</p>
+  </header>
+
+  <nav class="tiles" aria-label="Links">
+    <button class="tile" style="--c: var(--teal)" data-open="d-hiit"><span class="t-name">Skating HIIT</span><span class="t-count">9 workouts</span></button>
+    <button class="tile" style="--c: var(--pink)" data-open="d-videos"><span class="t-name">How-to videos</span><span class="t-count">2 videos</span></button>
+    <button class="tile" style="--c: var(--ink)" data-open="d-book"><span class="t-name">Book a session</span><span class="t-count">3 links</span></button>
+    <button class="tile" style="--c: var(--mustard); --tc: var(--ink)" data-open="d-bsb"><span class="t-name">Bay State</span><span class="t-count">3 links</span></button>
+    <button class="tile" style="--c: #8E7CF0" data-open="d-derby"><span class="t-name">Roller derby</span><span class="t-count">4 links</span></button>
+    <button class="tile" style="--c: var(--paper); --tc: var(--ink)" data-open="d-insp"><span class="t-name">Inspiration</span><span class="t-count">4 links</span></button>
+  </nav>
+
+  <section aria-labelledby="l1">
+    <div class="assess-head">
+      <h2 id="l1">Level 1 assessment</h2>
+      <a href="https://drive.google.com/file/d/1kjQAaErOK9XB56xAZNTKPrjZkk2N5h7J/view" target="_blank" rel="noopener">Full criteria (PDF)</a>
+    </div>
+    <div class="parts">
+      <div class="part" style="--c: var(--pink)">
+        <h3>Skating skills</h3>
+        <ul>
+          <li><b>Posture</b><span>Low, knees bent, up within 3 seconds of a fall</span></li>
+          <li><b>Stride and crossovers</b><span>Push with both feet, skate the diamond, reverse crossovers</span></li>
+          <li><b>Speed</b><span>5 laps in a minute, 1 lap from standstill in 13 seconds</span></li>
+          <li><b>Stops</b><span>T-stop and plow within 4 seconds, both sides</span></li>
+          <li><b>Other</b><span>One-foot glides, sticky skates, big weaves, one backwards lap</span></li>
+        </ul>
+      </div>
+      <div class="part" style="--c: var(--teal)">
+        <h3>Recovery falls</h3>
+        <ul>
+          <li><b>Knee taps</b><span>Keep pace the whole time</span></li>
+          <li><b>Knee falls</b><span>Skating again within 3 seconds</span></li>
+          <li><b>Double knee slides</b><span>One, two, not together</span></li>
+          <li><b>Four point fall</b><span>Knees, then arms, head tucked</span></li>
+        </ul>
+        <p class="note">From brisk pace, no hands.</p>
+      </div>
+      <div class="part" style="--c: var(--mustard)">
+        <h3>Balance and agility</h3>
+        <ul>
+          <li><b>Stepping</b><span>Forward, back, side, grapevine, shuffle, happy feet</span></li>
+          <li><b>One-foot balance</b><span>30 seconds each foot</span></li>
+          <li><b>Hops</b><span>Over the noodle, forward and lateral</span></li>
+          <li><b>Focus</b><span>Look left, right, behind while skating</span></li>
+          <li><b>Weaving</b><span>10 cones, and through a moving pack</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="cal" aria-labelledby="cal-title">
+    <h2 id="cal-title">Skate calendar</h2>
+    <div class="cal-box">
+      <iframe title="Skate calendar" loading="lazy" src="https://calendar.google.com/calendar/embed?src=b344fe8266ec87c0a6c15f62f44f9cd91e6ce8601cb6a73659cd251a2813d2e1%40group.calendar.google.com&amp;ctz=America%2FNew_York&amp;bgcolor=%23FBFCF7&amp;mode=AGENDA&amp;showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0"></iframe>
+    </div>
+  </section>
+</div>
+
+<!-- Popups -->
+<dialog id="d-hiit" style="--c: var(--teal)">
+  <div class="d-head"><h2>Skating HIIT</h2><button class="d-close" aria-label="Close">×</button></div>
+  <div class="d-body">
+    <h3>On skates</h3>
+    <ul>
+      <li><a href="https://robin-hershkowitz.github.io/HIIT/skating-lane-drills.html" target="_blank" rel="noopener">Skating Lane Drills</a></li>
+      <li><a href="https://robin-hershkowitz.github.io/HIIT/skating-lane-2-with-hops.html" target="_blank" rel="noopener">Skating Lane 2 With Hops</a></li>
+      <li><a href="https://robin-hershkowitz.github.io/HIIT/noodle-strength-onskates.html" target="_blank" rel="noopener">Noodle + Strength</a></li>
+      <li><a href="https://robin-hershkowitz.github.io/HIIT/dance-skates-timers.html" target="_blank" rel="noopener">Dance Skates</a></li>
+      <li><a href="https://robin-hershkowitz.github.io/HIIT/dance-lane-hiit.html" target="_blank" rel="noopener">Dance Lane</a></li>
+      <li><a href="https://robin-hershkowitz.github.io/HIIT/dance-aerobics-5x5.html" target="_blank" rel="noopener">Dance Aerobics</a></li>
+    </ul>
+    <h3>Off skates</h3>
+    <ul>
+      <li><a href="https://robin-hershkowitz.github.io/HIIT/weekly-schedule.html" target="_blank" rel="noopener">Weekly Plan</a></li>
+      <li><a href="https://robin-hershkowitz.github.io/HIIT/pre-practice-warmup.html" target="_blank" rel="noopener">Pre-Practice Warmup</a></li>
+      <li><a href="https://robin-hershkowitz.github.io/HIIT/level1-strength-balance.html" target="_blank" rel="noopener">Level 1 Strength &amp; Balance</a></li>
+    </ul>
+  </div>
+</dialog>
+
+<dialog id="d-videos" style="--c: var(--pink)">
+  <div class="d-head"><h2>How-to videos</h2><button class="d-close" aria-label="Close">×</button></div>
+  <div class="d-body">
+    <ul>
+      <li><a href="https://www.youtube.com/watch?v=1bVQieHpje0&amp;t=158" target="_blank" rel="noopener">Downtown<small>from 2:38</small></a></li>
+      <li><a href="https://www.youtube.com/watch?v=j9cEoRuRdag&amp;t=645" target="_blank" rel="noopener">Backwards crossover<small>from 10:45</small></a></li>
+    </ul>
+  </div>
+</dialog>
+
+<dialog id="d-book" style="--c: var(--ink)">
+  <div class="d-head"><h2>Book a session</h2><button class="d-close" aria-label="Close">×</button></div>
+  <div class="d-body">
+    <ul>
+      <li><a href="https://calendly.com/bruisedboutique" target="_blank" rel="noopener">Bruised Boutique</a></li>
+      <li><a href="https://calendly.com/bruisedboutique-ramp" target="_blank" rel="noopener">Bruised Boutique ramp</a></li>
+      <li><a href="https://www.galacticrollerdisco.com/" target="_blank" rel="noopener">Galactic Roller Disco</a></li>
+    </ul>
+  </div>
+</dialog>
+
+<dialog id="d-bsb" style="--c: var(--mustard); --tc: var(--ink)">
+  <div class="d-head"><h2>Bay State</h2><button class="d-close" aria-label="Close">×</button></div>
+  <div class="d-body">
+    <ul>
+      <li><a href="https://sites.google.com/view/bsbtraining/home" target="_blank" rel="noopener">BSB training</a></li>
+      <li><a href="https://discord.com/channels/1097218881367580833/1101901899638251520" target="_blank" rel="noopener">Bay State Discord</a></li>
+      <li><a href="https://docs.google.com/spreadsheets/d/1DrEHvNEvjDsapiAYcQK4-inC1fjkOsPuIcBGSaWf9lA/edit?gid=1248502802" target="_blank" rel="noopener">Attendance tracker</a></li>
+    </ul>
+  </div>
+</dialog>
+
+<dialog id="d-derby" style="--c: #8E7CF0">
+  <div class="d-head"><h2>Roller derby</h2><button class="d-close" aria-label="Close">×</button></div>
+  <div class="d-body">
+    <ul>
+      <li><a href="https://app.slack.com/client/TLKNPKZBN" target="_blank" rel="noopener">NHRD Slack</a></li>
+      <li><a href="https://www.facebook.com/groups/NERollerDerby" target="_blank" rel="noopener">NE Roller Derby group</a></li>
+      <li><a href="https://www.facebook.com/groups/derbyhell" target="_blank" rel="noopener">Derby Hell group</a></li>
+      <li><a href="https://docs.google.com/spreadsheets/d/1FOxOhqTrwWdaRW5XJtHvpZkfspJiQ7uQttI1NF4ZlAw/edit" target="_blank" rel="noopener">Officiating history</a></li>
+    </ul>
+  </div>
+</dialog>
+
+<dialog id="d-insp" style="--c: var(--paper); --tc: var(--ink)">
+  <div class="d-head"><h2>Inspiration</h2><button class="d-close" aria-label="Close">×</button></div>
+  <div class="d-body">
+    <ul>
+      <li><a href="https://www.instagram.com/woo_skates/" target="_blank" rel="noopener">Woo Skates</a></li>
+      <li><a href="https://www.instagram.com/skatehags/?hl=en" target="_blank" rel="noopener">Skate Hags</a></li>
+      <li><a href="https://www.instagram.com/sk8_mate/" target="_blank" rel="noopener">Sk8 Mate</a></li>
+      <li><a href="https://claude.ai/project/019e7db4-50e4-764a-924e-2f05bef322be" target="_blank" rel="noopener">Skating project in Claude</a></li>
+    </ul>
+  </div>
+</dialog>
+
+<script>
+  // Time on wheels
+  const now = new Date();
+  const months = (now.getFullYear() - 2023) * 12 + (now.getMonth() - 8);
+  const y = Math.floor(months / 12), m = months % 12;
+  const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
+  document.getElementById('tenure').innerHTML =
+    `<strong>${plural(y, 'year')}${m ? ', ' + plural(m, 'month') : ''}</strong> on wheels, since September 2023.`;
+
+  // Popups
+  document.querySelectorAll('[data-open]').forEach(btn =>
+    btn.addEventListener('click', () => document.getElementById(btn.dataset.open).showModal()));
+  document.querySelectorAll('dialog').forEach(d => {
+    d.querySelector('.d-close').addEventListener('click', () => d.close());
+    d.addEventListener('click', e => { if (e.target === d) d.close(); }); // click outside closes
+  });
+</script>
+</body>
+</html>
